@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Card Password</string>
+    
+    <string name="hint_login">Введите логин..</string>
+    <string name="hint_password">Введите пароль..</string>
+    <string name="btn_log_in">Войти</string>
+    
+    <string name="text_card_number">Номер карты</string>
+    <string name="text_cvs">CVS/CVV</string>
+    <string name="text_card_holder">Владелец</string>
+    <string name="text_validity">Срок действия</string>
+    <string name="text_password">Пароль</string>
+    <string name="text_card_type">Тип карты</string>
+    <string name="btn_registration">Создать аккаунт</string>
+
+    <string name="text_view_card_number">XXXX-XXXX-XXXX-XXXX</string>
+    <string name="text_view_cvc">CVC/CVV</string>
+    <string name="text_view_validity">MM/YY</string>
+    <string name="text_view_card_holder_name">Ivan</string>
+    <string name="text_view_card_holder_surname">Ivanov</string>
+
+    <string name="check_string_card_type_mc">Master Card</string>
+    <string name="check_string_card_type_visa">Visa</string>
+
+    <string name="menu_delete_card">Удалить карту</string>
+    <string name="menu_edit_card">Изменить карту</string>
+
+    <string name="hint_card_number">Номер карты</string>
+    <string name="hint_card_cvc_cvv">CVC/CVV</string>
+    <string name="hint_card_validity">Valid THRU</string>
+    <string name="hint_card_holders_name">Имя</string>
+    <string name="hint_card_holders_surname">Фамилия</string>
+    <string name="hint_card_pin">PIN</string>
+    <string name="text_spinner">VISA/MASTERCARD</string>
+    <string name="btn_text_save_card">Сохранить карту</string>
+
+    <string name="error_text_void_string">Поле не может быть пустым</string>
+    <string name="error_text_incomplete_string">Заполните поле полностью</string>
+    
+    <string-array name="card_type_array">
+
+        <item>Visa</item>
+        <item>MasterCard</item>
+    </string-array>
+</resources>
