@@ -9,10 +9,6 @@ public interface ListContract {
         void blur();
 
         void showCardList();
-
-        void showToast();
-
-        void checkIdExistence(int pI);
     }
 
     interface Model {
@@ -33,7 +29,5 @@ public interface ListContract {
         void editCard();
 
         void getData();
-
-        void cardExistence(int pI);
     }
 }

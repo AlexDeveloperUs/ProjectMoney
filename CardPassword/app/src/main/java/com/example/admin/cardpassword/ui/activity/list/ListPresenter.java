@@ -28,9 +28,4 @@ public class ListPresenter implements ListContract.Presenter {
     public void getData() {
 
     }
-
-    @Override
-    public void cardExistence(int pI) {
-
-    }
 }
