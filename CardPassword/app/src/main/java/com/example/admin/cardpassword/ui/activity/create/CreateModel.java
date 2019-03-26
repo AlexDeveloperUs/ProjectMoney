@@ -4,7 +4,6 @@ import com.example.admin.cardpassword.App;
 import com.example.admin.cardpassword.data.AppDataBase;
 import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.data.models.Card;
-import com.example.admin.cardpassword.data.repository.CardRepository;
 
 public class CreateModel implements CreateContract.Model {
 

@@ -1,5 +1,7 @@
 package com.example.admin.cardpassword.ui.activity.create;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -11,10 +13,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
+import com.example.admin.cardpassword.data.DatabaseClient;
+import com.example.admin.cardpassword.data.models.Card;
+import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 import com.github.pinball83.maskededittext.MaskedEditText;
 
 import butterknife.BindView;
@@ -24,9 +30,12 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
 
     private static final String EMPTY_STRING = "";
     private CreatePresenter mPresenter;
+    private String mCardType = "";
 
-    @BindView(R.id.spinner)
-    Spinner mSpinner;
+    @BindView(R.id.btn_visa)
+    RadioButton mButtonVisa;
+    @BindView(R.id.btn_master_card)
+    RadioButton mButtonMasterCard;
     @BindView(R.id.edit_text_card_number)
     MaskedEditText mCardNumber;
     @BindView(R.id.edit_text_card_cvc_cvv)
@@ -43,6 +52,10 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
     Button mBtnSaveCard;
     @BindView(R.id.card_number_layout)
     TextInputLayout mNumberLayout;
+    @BindView(R.id.card_cvc_layout)
+    TextInputLayout mCvcLayout;
+    @BindView(R.id.card_pin_layout)
+    TextInputLayout mPinLayout;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,17 +64,18 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
         ButterKnife.bind(this);
 
         mPresenter = new CreatePresenter(this);
-        setSpinnerData();
         textChangeListener();
 
         mBtnSaveCard.setOnClickListener(this);
+        mButtonVisa.setOnClickListener(this);
+        mButtonMasterCard.setOnClickListener(this);
     }
 
     @Override
     protected void onPostResume() {
 
         super.onPostResume();
-        Toast.makeText(this, "Внимание! Заполните обязательные поля: номер карты, PIN, CVC", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Внимание! Для корректной работы приложения, заполните все поля", Toast.LENGTH_LONG).show();
     }
 
     private void textChangeListener() {
@@ -91,13 +105,6 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
         });
     }
 
-    private void setSpinnerData() {
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.card_type_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(adapter);
-    }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
@@ -112,15 +119,101 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
     @Override
     public void onClick(View v) {
 
-        String number = mCardNumber.getText().toString();
-        mPresenter.cardNumberValidation(number);
+        switch (v.getId()) {
 
+            case R.id.btn_visa:
+
+                mCardType = "visa";
+                Toast.makeText(this, "Visa", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_master_card:
+
+                mCardType = "mastercard";
+                Toast.makeText(this, "MasterCard", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_save_card:
+
+                String number = mCardNumber.getText().toString();
+                mPresenter.cardNumberValidation(number);
+
+                saveCard();
+                break;
+        }
+    }
+
+    private void saveCard() {
+
+        final String cardNumber = mCardNumber.getText().toString().trim();
+        final String cvc = mCardCvc.getText().toString().trim();
+        final String validity = mCardValidity.getText().toString().trim();
+        final String cardHoldersName = mCardHoldersName.getText().toString().trim();
+        final String cardHoldersSurname = mCardHoldersSurname.getText().toString().trim();
+        final String pin = mCardPin.getText().toString().trim();
+
+
+        if (cardNumber.isEmpty()) {
+
+            mNumberLayout.setError("Введите корректный номер карты");
+            mCardNumber.requestFocus();
+            return;
+        }
+
+
+        if (cvc.isEmpty()) {
+
+            mCvcLayout.setError("Заполните cvc");
+            mCardCvc.requestFocus();
+            return;
+        }
+
+        if (pin.isEmpty()) {
+
+            mPinLayout.setError("Введите пин-код");
+            mCardPin.requestFocus();
+            return;
+        }
+
+        class SaveCard extends AsyncTask<Void, Void, Void> {
+
+            private Byte mByteCardNumber = Byte.valueOf(cardNumber);
+            private Byte mByteCvc = Byte.valueOf(cvc);
+            private Byte mByteValidity = Byte.valueOf(validity);
+            private Byte mBytePin = Byte.valueOf(pin);
+
+            @Override
+            protected Void doInBackground(Void... pVoids) {
+
+                Card card = new Card();
+                card.setCardNumber(mByteCardNumber);
+                card.setCVC(mByteCvc);
+                card.setValidity(mByteValidity);
+                card.setCardHolderName(cardHoldersName);
+                card.setCardHolderSurname(cardHoldersSurname);
+                card.setCardType(mCardType);
+                card.setPin(mBytePin);
+
+                DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().insert(card);
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void pVoid) {
+
+                super.onPostExecute(pVoid);
+                finish();
+                startActivity(new Intent(getApplicationContext(), ListActivity.class));
+            }
+        }
+
+        
     }
 
     @Override
     public void showError() {
 
         mNumberLayout.setError("Введите корректные данные");
+
     }
 
     @Override

@@ -4,8 +4,10 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "cards")
-public class Card {
+public class Card implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "cardId")

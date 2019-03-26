@@ -36,6 +36,9 @@
 
     <string name="error_text_void_string">Поле не может быть пустым</string>
     <string name="error_text_incomplete_string">Заполните поле полностью</string>
+
+    <string name="switch_left_side"><b>&lt;-</b></string>
+    <string name="switch_right_side"><b>-&gt;</b></string>
     
     <string-array name="card_type_array">
 

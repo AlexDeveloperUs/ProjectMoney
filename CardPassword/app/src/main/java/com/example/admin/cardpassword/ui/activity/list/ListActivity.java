@@ -12,9 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.admin.cardpassword.App;
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
+import com.example.admin.cardpassword.App;
 import com.example.admin.cardpassword.data.AppDataBase;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.data.dao.CardDao;
@@ -28,12 +28,10 @@ import butterknife.ButterKnife;
 
 public class ListActivity extends AppCompatActivity implements ListContract.View, CardListAdapter.OnClickListener, View.OnClickListener {
 
-    public static final int CREATE_CARD_REQUEST = 1;
-    public static final int EDIT_CARD_REQUEST = 2;
+    public static final int EDIT_CARD_REQUEST = 1;
     private CardListAdapter mAdapter;
     private List<Card> mCardList = new ArrayList<>();
     Card mCard;
-    AppDataBase mDataBase;
     private ListPresenter mPresenter;
 
     LinearLayoutManager mLinearLayoutManager;
@@ -45,13 +43,13 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_list);
         ButterKnife.bind(this);
 
-        mButtonAdd.setOnClickListener(this);
         initRecyclerView();
+
+        mButtonAdd.setOnClickListener(this);
     }
 
     public void initRecyclerView() {
@@ -62,14 +60,12 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         mAdapter = new CardListAdapter(this, mCardList, this);
         mRecyclerView.setAdapter(mAdapter);
+        registerForContextMenu(mRecyclerView);
 
-
-        mDataBase = App.getmInstance().getDataBase();
-        CardDao cardDao = mDataBase.mCardDao();
+        AppDataBase dataBase = App.getmInstance().getDataBase();
+        CardDao cardDao = dataBase.mCardDao();
 
         Card card = new Card();
-
-        registerForContextMenu(mRecyclerView);
     }
 
     @Override
@@ -80,18 +76,22 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @Override
     public void showCardList() {
 
-        mDataBase.mCardDao().getAll();
+    }
+
+    @Override
+    public void showToast() {
+
+    }
+
+    @Override
+    public void checkIdExistence(int pI) {
+
+
     }
 
     @Override
     public void onItemClick(View pView, int pI) {
 
-
-    }
-
-    public void registerForContextMenu(View pView) {
-
-        pView.setOnCreateContextMenuListener(this);
     }
 
     @Override
@@ -136,13 +136,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @Override
     public void onClick(View v) {
 
-        Intent intent = new Intent(this, CreateActivity.class);
-        startActivityForResult(intent, CREATE_CARD_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
+        
     }
 }

@@ -137,21 +137,6 @@
             android:gravity="center"/>
     </android.support.design.widget.TextInputLayout>
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_large"
-        android:layout_marginLeft="@dimen/margin_large"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="@dimen/margin_medium"
-        android:layout_marginRight="@dimen/margin_medium"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_create_card"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_holders_name_layout" />
-
     <android.support.design.widget.TextInputLayout
         android:layout_width="80dp"
         android:layout_height="wrap_content"
@@ -187,4 +172,53 @@
         android:layout_margin="@dimen/margin_extra_large"
         android:text="@string/btn_text_save_card"
         android:enabled="true"/>
+
+    <RadioGroup
+        android:id="@+id/toggle"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginLeft="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_extra_large"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/pink_out_line"
+        android:checkedButton="@+id/btn_visa"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_create_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/card_holders_name_layout">
+
+        <RadioButton
+            android:id="@+id/btn_visa"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_widget_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="Visa"
+            android:textStyle="bold"
+            android:textColor="@color/white" />
+
+        <RadioButton
+            android:id="@+id/btn_master_card"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_widget_background"
+            android:button="@null"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="MasterCard"
+            android:textColor="@color/white" />
+    </RadioGroup>
+
+
 </android.support.constraint.ConstraintLayout>
