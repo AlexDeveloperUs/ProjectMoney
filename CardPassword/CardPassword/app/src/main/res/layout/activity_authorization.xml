@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.auth.AuthActivity">
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline_main"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.2"/>
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_text_login"
+        app:layout_constraintTop_toTopOf="@id/guideline_main"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="@dimen/margin_large"
+        android:hint="@string/hint_login"/>
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit_text_password"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_login"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="@dimen/margin_large"
+        android:hint="@string/hint_password"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_log_in"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_password"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="@dimen/margin_large"
+        android:text="@string/btn_log_in"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_registration"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_password"
+        app:layout_constraintRight_toLeftOf="@id/btn_log_in"
+        android:layout_margin="@dimen/margin_large"
+        android:text="@string/btn_registration"
+        />
+
+</android.support.constraint.ConstraintLayout>

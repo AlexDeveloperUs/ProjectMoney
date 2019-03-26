@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="switchTrack">#ffd600</color>
+    <color name="white">#ffff</color>
+    <color name="switchTrackActive">#1565c0</color>
+    <color name="transparent">#FF6C00</color>
+    <color name="dark_pink">#e75480</color>
+    <color name="pink">#ad1457</color>
+    <color name="switchThumbkNormal">#64b5f6</color>
+</resources>

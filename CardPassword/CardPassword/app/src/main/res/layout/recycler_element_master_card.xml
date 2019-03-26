@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="160dp"
+        android:background="@drawable/rectangle_rounded"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="@dimen/margin_extra_large"
+        android:layout_marginRight="@dimen/margin_extra_large"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:id="@+id/card"/>
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/guideline_element_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="@id/card"
+        app:layout_constraintGuide_percent="0.07"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_element_vertical_left_side"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.13" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_element_vertical_right_side"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.87" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_card_number"
+        app:layout_constraintTop_toTopOf="@id/guideline_element_horizontal"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side"
+        app:layout_constraintRight_toRightOf="@id/guideline_element_vertical_right_side"
+        android:layout_marginTop="@dimen/margin_small"
+        android:textStyle="bold"
+        android:textColor="#ffffff"
+        android:id="@+id/text_card_number_element"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_cvc"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side"
+        app:layout_constraintTop_toBottomOf="@id/text_card_number_element"
+        android:layout_marginLeft="@dimen/margin_extra_large"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_extra_large"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        android:id="@+id/text_card_cvc_element"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_validity"
+        android:id="@+id/text_card_validity_element"
+        app:layout_constraintRight_toRightOf="@id/guideline_element_vertical_right_side"
+        app:layout_constraintTop_toBottomOf="@id/text_card_number_element"
+        android:layout_marginRight="@dimen/margin_extra_large"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_extra_large"
+        android:textStyle="bold"
+        android:textColor="#ffffff"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_card_holder_name"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side"
+        app:layout_constraintTop_toBottomOf="@id/text_card_cvc_element"
+        android:layout_marginLeft="@dimen/margin_extra_large"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_extra_large"
+        android:id="@+id/text_card_holder_name_element"
+        android:textColor="#ffffff"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text_card_holder_surname_element"
+        app:layout_constraintTop_toBottomOf="@id/text_card_cvc_element"
+        app:layout_constraintLeft_toLeftOf="@id/text_card_holder_name_element"
+        android:text="@string/text_view_card_holder_surname"
+        android:layout_marginLeft="@dimen/margin_extra_large"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_extra_large"
+        android:textColor="#ffffff"
+        android:textStyle="bold"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/master_card"
+        app:layout_constraintRight_toRightOf="@id/guideline_element_vertical_right_side"
+        app:layout_constraintTop_toTopOf="@id/text_card_validity_element"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_extra_large"
+        android:layout_marginRight="@dimen/margin_extra_large"
+        android:id="@+id/image_element_master_card"/>
+
+</android.support.constraint.ConstraintLayout>
