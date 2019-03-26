@@ -23,6 +23,8 @@ import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 import com.github.pinball83.maskededittext.MaskedEditText;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -133,9 +135,6 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
                 break;
             case R.id.btn_save_card:
 
-                String number = mCardNumber.getText().toString();
-                mPresenter.cardNumberValidation(number);
-
                 saveCard();
                 break;
         }
@@ -143,7 +142,7 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void saveCard() {
 
-        final String cardNumber = mCardNumber.getText().toString().trim();
+        final String cardNumber = Objects.requireNonNull(mCardNumber.getText()).toString().trim();
         final String cvc = mCardCvc.getText().toString().trim();
         final String validity = mCardValidity.getText().toString().trim();
         final String cardHoldersName = mCardHoldersName.getText().toString().trim();
@@ -151,7 +150,7 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
         final String pin = mCardPin.getText().toString().trim();
 
 
-        if (cardNumber.isEmpty()) {
+        if (cardNumber.toLowerCase().contains("x")) {
 
             mNumberLayout.setError("Введите корректный номер карты");
             mCardNumber.requestFocus();
@@ -161,6 +160,7 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
 
         if (cvc.isEmpty()) {
 
+            mNumberLayout.setError(EMPTY_STRING);
             mCvcLayout.setError("Заполните cvc");
             mCardCvc.requestFocus();
             return;
@@ -206,7 +206,8 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
             }
         }
 
-        
+        SaveCard saveCard = new SaveCard();
+        saveCard.execute();
     }
 
     @Override

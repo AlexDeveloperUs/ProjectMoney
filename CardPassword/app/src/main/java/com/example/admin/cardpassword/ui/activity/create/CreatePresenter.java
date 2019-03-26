@@ -14,16 +14,4 @@ public class CreatePresenter implements CreateContract.Presenter{
 
         mCreateActivity = pCreateActivity;
     }
-
-    @Override
-    public void cardNumberValidation(String pNumber) {
-
-        if (pNumber.toLowerCase().contains("x") || mCreateActivity.shouldShowError()) {
-
-            mCreateActivity.showError();
-        } else {
-
-            mCreateActivity.hideError();
-        }
-    }
 }

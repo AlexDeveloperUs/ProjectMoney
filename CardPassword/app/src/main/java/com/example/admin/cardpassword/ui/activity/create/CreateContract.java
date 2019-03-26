@@ -15,7 +15,6 @@ public interface CreateContract {
 
     interface Presenter {
 
-        void cardNumberValidation(String pNumber);
     }
 
     interface Model {
