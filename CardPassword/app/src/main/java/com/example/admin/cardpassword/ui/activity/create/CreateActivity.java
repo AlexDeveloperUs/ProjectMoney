@@ -9,12 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
@@ -23,12 +20,10 @@ import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 import com.github.pinball83.maskededittext.MaskedEditText;
 
-import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CreateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, CreateContract.View, View.OnClickListener {
+public class CreateActivity extends AppCompatActivity implements CreateContract.View, View.OnClickListener {
 
     private static final String EMPTY_STRING = "";
     private CreatePresenter mPresenter;
@@ -108,17 +103,6 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
@@ -142,25 +126,27 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void saveCard() {
 
-        final String cardNumber = Objects.requireNonNull(mCardNumber.getText()).toString().trim();
-        final String cvc = mCardCvc.getText().toString().trim();
-        final String validity = mCardValidity.getText().toString().trim();
-        final String cardHoldersName = mCardHoldersName.getText().toString().trim();
-        final String cardHoldersSurname = mCardHoldersSurname.getText().toString().trim();
-        final String pin = mCardPin.getText().toString().trim();
+        final String cvc = mCardCvc.getText().toString();
+        final String cardNumber;
+        final String validity;
+        final String cardHoldersName;
+        final String cardHoldersSurname;
+        final String pin = mCardPin.getText().toString();
+        String mValidityContains = mCardValidity.getText().toString();
+        String mCardNumberCheck = mCardNumber.getText().toString();
+        String holdersName = mCardHoldersName.getText().toString();
+        String holdersSurname = mCardHoldersSurname.getText().toString();
 
 
-        if (cardNumber.toLowerCase().contains("x")) {
+        if (mCardNumberCheck.toLowerCase().contains("x")) {
 
             mNumberLayout.setError("Введите корректный номер карты");
             mCardNumber.requestFocus();
             return;
         }
 
-
         if (cvc.isEmpty()) {
 
-            mNumberLayout.setError(EMPTY_STRING);
             mCvcLayout.setError("Заполните cvc");
             mCardCvc.requestFocus();
             return;
@@ -168,17 +154,43 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
 
         if (pin.isEmpty()) {
 
+            mCvcLayout.setError(EMPTY_STRING);
             mPinLayout.setError("Введите пин-код");
             mCardPin.requestFocus();
             return;
         }
 
+        if (!holdersName.isEmpty()) {
+
+            cardHoldersName = holdersName;
+        } else cardHoldersName = "";
+
+        if (!holdersSurname.isEmpty()) {
+
+            cardHoldersSurname = holdersSurname;
+        } else cardHoldersSurname = "";
+
+
+        if (!mValidityContains.equals("") && mValidityContains.contains("/")) {
+
+            validity = mValidityContains.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
+        } else
+            validity = "0";
+
+        if (mCardNumberCheck.contains("-")) {
+            mNumberLayout.setError(EMPTY_STRING);
+
+            cardNumber = mCardNumberCheck.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
+            mPinLayout.setError(EMPTY_STRING);
+        } else cardNumber = null;
+
+
         class SaveCard extends AsyncTask<Void, Void, Void> {
 
-            private Byte mByteCardNumber = Byte.valueOf(cardNumber);
-            private Byte mByteCvc = Byte.valueOf(cvc);
-            private Byte mByteValidity = Byte.valueOf(validity);
-            private Byte mBytePin = Byte.valueOf(pin);
+            private Long mByteCardNumber = Long.parseLong(cardNumber);
+            private short mByteCvc = Short.parseShort(cvc);
+            private short mByteValidity = Short.parseShort(validity);
+            private short mBytePin = Short.valueOf(pin);
 
             @Override
             protected Void doInBackground(Void... pVoids) {
@@ -203,30 +215,11 @@ public class CreateActivity extends AppCompatActivity implements AdapterView.OnI
                 super.onPostExecute(pVoid);
                 finish();
                 startActivity(new Intent(getApplicationContext(), ListActivity.class));
+                Toast.makeText(getApplicationContext(), mByteCardNumber + "\n" + mByteCvc + " " + mByteValidity + " " + mBytePin, Toast.LENGTH_LONG).show();
             }
         }
 
         SaveCard saveCard = new SaveCard();
         saveCard.execute();
-    }
-
-    @Override
-    public void showError() {
-
-        mNumberLayout.setError("Введите корректные данные");
-
-    }
-
-    @Override
-    public boolean shouldShowError() {
-
-        int length = mCardNumber.length();
-        return length >= 0 && length < 16;
-    }
-
-    @Override
-    public void hideError() {
-
-        mNumberLayout.setError(EMPTY_STRING);
     }
 }

@@ -14,13 +14,13 @@ public class Card implements Serializable {
     public long mId;
 
     @ColumnInfo(name = "cardNumber")
-    public byte mCardNumber;
+    public long mCardNumber;
 
     @ColumnInfo(name = "cardCVC")
-    public byte mCVC;
+    public short mCVC;
 
     @ColumnInfo(name = "cardValidity")
-    public byte mValidity;
+    public short mValidity;
 
     @ColumnInfo(name = "cardHoldersName")
     public String mCardHolderName;
@@ -37,7 +37,7 @@ public class Card implements Serializable {
     public Card() {
     }
 
-    public Card(byte pCardNumber, byte pCVC, byte pValidity, String pCardHolderName, String pCardHolderSurname, String pCardType, short pPin) {
+    public Card(long pCardNumber, short pCVC, short pValidity, String pCardHolderName, String pCardHolderSurname, String pCardType, short pPin) {
 
         mCardNumber = pCardNumber;
         mCVC = pCVC;
@@ -68,32 +68,32 @@ public class Card implements Serializable {
         return mId;
     }
 
-    public void setCardNumber(byte pCardNumber) {
+    public void setCardNumber(long pCardNumber) {
 
         mCardNumber = pCardNumber;
     }
 
-    public byte getCardNumber() {
+    public long getCardNumber() {
 
         return mCardNumber;
     }
 
-    public void setCVC(byte pCVC) {
+    public void setCVC(short pCVC) {
 
         mCVC = pCVC;
     }
 
-    public byte getCVC() {
+    public short getCVC() {
 
         return mCVC;
     }
 
-    public byte getValidity() {
+    public short getValidity() {
 
         return mValidity;
     }
 
-    public void setValidity(byte pValidity) {
+    public void setValidity(short pValidity) {
 
         mValidity = pValidity;
     }

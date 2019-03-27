@@ -1,8 +1,10 @@
 package com.example.admin.cardpassword.ui.activity.list;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.admin.cardpassword.R;
+import com.example.admin.cardpassword.data.DatabaseClient;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.App;
 import com.example.admin.cardpassword.data.AppDataBase;
@@ -39,7 +42,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.btn_floating_action_add)
-    Button mButtonAdd;
+    FloatingActionButton mButtonAdd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,6 +53,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         initRecyclerView();
 
         mButtonAdd.setOnClickListener(this);
+
+        getCards();
     }
 
     public void initRecyclerView() {
@@ -79,13 +84,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     }
 
     @Override
-    public void showToast() {
-
-    }
-
-    @Override
     public void checkIdExistence(int pI) {
-
 
     }
 
@@ -96,7 +95,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     @Override
     public void onLongClickListener(View pView, int pI) {
-
 
     }
 
@@ -137,5 +135,34 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public void onClick(View v) {
 
         
+    }
+
+    private void getCards() {
+
+        class GetCards extends AsyncTask<Void, Void, List<Card>> {
+
+
+            @Override
+            protected List<Card> doInBackground(Void... pVoids) {
+
+                List<Card> cardList = DatabaseClient.getmInstance(getApplicationContext())
+                        .getAppDataBase()
+                        .mCardDao()
+                        .getAll();
+
+                return cardList;
+            }
+
+            @Override
+            protected void onPostExecute(List<Card> pCards) {
+
+                super.onPostExecute(pCards);
+                CardListAdapter adapter = new CardListAdapter(ListActivity.this, pCards, ListActivity.this);
+                mRecyclerView.setAdapter(adapter);
+            }
+        }
+
+        GetCards getCards = new GetCards();
+        getCards.execute();
     }
 }

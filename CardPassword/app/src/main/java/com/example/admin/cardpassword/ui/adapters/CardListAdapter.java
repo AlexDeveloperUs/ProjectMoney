@@ -101,7 +101,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
         void bind(Card pCard) {
 
-            cardNumber.setText(pCard.getCardNumber());
+            cardNumber.setText((int) pCard.getCardNumber());
             cvc.setText(pCard.getCVC());
             validity.setText(pCard.getValidity());
             cardHolderName.setText(pCard.getCardHolderName());

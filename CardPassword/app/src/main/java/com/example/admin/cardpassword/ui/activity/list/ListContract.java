@@ -10,8 +10,6 @@ public interface ListContract {
 
         void showCardList();
 
-        void showToast();
-
         void checkIdExistence(int pI);
     }
 
