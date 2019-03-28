@@ -31,7 +31,8 @@ import butterknife.ButterKnife;
 
 public class ListActivity extends AppCompatActivity implements ListContract.View, CardListAdapter.OnClickListener, View.OnClickListener {
 
-    public static final int EDIT_CARD_REQUEST = 1;
+    private static final int CREATE_CARD_REQUEST = 1;
+    private static final int EDIT_CARD_REQUEST = 2;
     private CardListAdapter mAdapter;
     private List<Card> mCardList = new ArrayList<>();
     Card mCard;
@@ -63,8 +64,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        mAdapter = new CardListAdapter(this, mCardList, this);
-        mRecyclerView.setAdapter(mAdapter);
+        mAdapter = new CardListAdapter(this, mCardList, this, this);
         registerForContextMenu(mRecyclerView);
 
         AppDataBase dataBase = App.getmInstance().getDataBase();
@@ -127,14 +127,15 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     protected void onResume() {
 
         super.onResume();
-        mAdapter = new CardListAdapter(this, mCardList, this);
+        mAdapter = new CardListAdapter(this, mCardList, this, this);
         mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View v) {
 
-        
+        Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
+        startActivityForResult(intent, CREATE_CARD_REQUEST);
     }
 
     private void getCards() {
@@ -157,12 +158,19 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
             protected void onPostExecute(List<Card> pCards) {
 
                 super.onPostExecute(pCards);
-                CardListAdapter adapter = new CardListAdapter(ListActivity.this, pCards, ListActivity.this);
+                CardListAdapter adapter = new CardListAdapter(ListActivity.this, pCards, ListActivity.this, ListActivity.this);
                 mRecyclerView.setAdapter(adapter);
             }
         }
 
         GetCards getCards = new GetCards();
         getCards.execute();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        assert data != null;
+        mAdapter.addItem();
     }
 }

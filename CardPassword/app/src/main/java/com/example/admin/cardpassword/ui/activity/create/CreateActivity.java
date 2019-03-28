@@ -119,12 +119,12 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
                 break;
             case R.id.btn_save_card:
 
-                saveCard();
+                saveCard(mCardType);
                 break;
         }
     }
 
-    private void saveCard() {
+    private void saveCard(String pCardType) {
 
         final String cvc = mCardCvc.getText().toString();
         final String cardNumber;
@@ -185,6 +185,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         } else cardNumber = null;
 
 
+
         class SaveCard extends AsyncTask<Void, Void, Void> {
 
             private Long mByteCardNumber = Long.parseLong(cardNumber);
@@ -201,7 +202,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
                 card.setValidity(mByteValidity);
                 card.setCardHolderName(cardHoldersName);
                 card.setCardHolderSurname(cardHoldersSurname);
-                card.setCardType(mCardType);
+                card.setCardType(pCardType);
                 card.setPin(mBytePin);
 
                 DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().insert(card);
@@ -214,7 +215,11 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
 
                 super.onPostExecute(pVoid);
                 finish();
-                startActivity(new Intent(getApplicationContext(), ListActivity.class));
+
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+
                 Toast.makeText(getApplicationContext(), mByteCardNumber + "\n" + mByteCvc + " " + mByteValidity + " " + mBytePin, Toast.LENGTH_LONG).show();
             }
         }

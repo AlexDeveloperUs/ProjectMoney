@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.cardpassword.R;
+import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.data.models.Card;
+import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 
 import java.util.List;
 
@@ -20,16 +22,17 @@ import butterknife.ButterKnife;
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
 
     private List<Card> mCardList;
+    private ListActivity mListActivity;
     private OnClickListener mOnClickListener;
     private Card mCard;
+    CardDao mCardDao;
     private int mPosition;
-    private Context mContext;
 
-    public CardListAdapter(Context pContext, List<Card> pCardList, OnClickListener pOnClickListener) {
+    public CardListAdapter(Context pContext, List<Card> pCardList, OnClickListener pOnClickListener, ListActivity pListActivity) {
 
+        mListActivity = pListActivity;
         mCardList = pCardList;
         mOnClickListener = pOnClickListener;
-        mContext = pContext;
     }
 
     @NonNull
@@ -61,8 +64,8 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
     public void addItem() {
 
-        mCardList.add(mCardList.size() - 1, new Card(mCard.mCardNumber, mCard.mCVC, mCard.mValidity, mCard.mCardHolderName, mCard.mCardHolderSurname, mCard.mCardType, mCard.mPin));
-        notifyItemChanged(mCardList.size() - 1);
+        mCardList.add(mCardDao.getById(mPosition));
+        notifyDataSetChanged();
     }
 
     public void editItem() {
@@ -101,9 +104,12 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
         void bind(Card pCard) {
 
-            cardNumber.setText((int) pCard.getCardNumber());
-            cvc.setText(pCard.getCVC());
-            validity.setText(pCard.getValidity());
+            String num = Long.toString(pCard.getCardNumber());
+            String cvC = Short.toString(pCard.getCVC());
+            String valitadion = Short.toString(pCard.getValidity());
+            cardNumber.setText(num);
+            cvc.setText(cvC);
+            validity.setText(valitadion);
             cardHolderName.setText(pCard.getCardHolderName());
             cardHolderSurname.setText(pCard.getCardHolderSurname());
 
