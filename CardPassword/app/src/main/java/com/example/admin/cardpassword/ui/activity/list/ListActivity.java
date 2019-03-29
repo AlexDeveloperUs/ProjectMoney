@@ -36,6 +36,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private CardListAdapter mAdapter;
     private List<Card> mCardList = new ArrayList<>();
     Card mCard;
+    CardDao mDao;
     private ListPresenter mPresenter;
 
     LinearLayoutManager mLinearLayoutManager;
@@ -54,8 +55,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         initRecyclerView();
 
         mButtonAdd.setOnClickListener(this);
-
-        getCards();
     }
 
     public void initRecyclerView() {
@@ -98,6 +97,29 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     }
 
+    private void deleteAll() {
+
+        class DeleteCardsAsyncTask extends AsyncTask<Void, Void, Void> {
+
+            private CardDao mCardDao;
+
+            DeleteCardsAsyncTask(CardDao pCardDao) {
+
+                mCardDao = pCardDao;
+            }
+
+            @Override
+            protected Void doInBackground(Void... pVoids) {
+
+                mCardDao.deleteAll();
+                return null;
+            }
+        }
+
+        DeleteCardsAsyncTask deleteCardsAsyncTask = new DeleteCardsAsyncTask(mDao);
+        deleteCardsAsyncTask.execute();
+    }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
@@ -127,6 +149,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     protected void onResume() {
 
         super.onResume();
+        getCards();
         mAdapter = new CardListAdapter(this, mCardList, this, this);
         mAdapter.notifyDataSetChanged();
     }
@@ -134,8 +157,10 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @Override
     public void onClick(View v) {
 
-        Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
-        startActivityForResult(intent, CREATE_CARD_REQUEST);
+        deleteAll();
+
+//        Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
+//        startActivityForResult(intent, CREATE_CARD_REQUEST);
     }
 
     private void getCards() {
