@@ -22,10 +22,11 @@ import butterknife.ButterKnife;
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
 
     private List<Card> mCardList;
+    private final LayoutInflater mInflater;
     private ListActivity mListActivity;
     private OnClickListener mOnClickListener;
     private Card mCard;
-    CardDao mCardDao;
+    private CardDao mCardDao;
     private int mPosition;
 
     public CardListAdapter(Context pContext, List<Card> pCardList, OnClickListener pOnClickListener, ListActivity pListActivity) {
@@ -33,13 +34,14 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         mListActivity = pListActivity;
         mCardList = pCardList;
         mOnClickListener = pOnClickListener;
+        mInflater = LayoutInflater.from(pContext);
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup pViewGroup, int pI) {
 
-        View view = LayoutInflater.from(pViewGroup.getContext()).inflate(R.layout.recycler_element_visa, pViewGroup, false);
+        View view = mInflater.inflate(R.layout.recycler_element_visa, pViewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -76,7 +78,10 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     @Override
     public int getItemCount() {
 
-        return mCardList.size();
+        if (mCardList != null) {
+
+            return mCardList.size();
+        } else return 0;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {

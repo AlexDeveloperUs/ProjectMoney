@@ -1,5 +1,6 @@
 package com.example.admin.cardpassword.data.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -16,7 +17,7 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 public interface CardDao {
 
     @Query("Select * from cards")
-    List<Card> getAll();
+    LiveData<List<Card>> getAll();
 
     @Query("Select * from cards where cardId = :id")
     Card  getById(long id);
