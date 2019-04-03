@@ -20,7 +20,10 @@ public interface CardDao {
     LiveData<List<Card>> getAll();
 
     @Query("Select * from cards where cardId = :id")
-    Card  getById(long id);
+    Card getById(long id);
+
+    @Query("Select * from cards LIMIT 1")
+    Card[] getAnyCard();
 
     @Insert(onConflict = REPLACE)
     void insert(Card pCard);
@@ -33,4 +36,7 @@ public interface CardDao {
 
     @Query("Delete from cards")
     void deleteAll();
+
+    @Delete
+    void deleteCard(Card pCard);
 }

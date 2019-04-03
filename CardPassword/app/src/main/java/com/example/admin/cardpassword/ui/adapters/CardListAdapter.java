@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.cardpassword.R;
+import com.example.admin.cardpassword.data.AppDataBase;
 import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
@@ -28,6 +29,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     private Card mCard;
     private CardDao mCardDao;
     private int mPosition;
+
 
     public CardListAdapter(Context pContext, List<Card> pCardList, OnClickListener pOnClickListener, ListActivity pListActivity) {
 
@@ -66,13 +68,27 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
     public void addItem() {
 
-        mCardList.add(mCardDao.getById(mPosition));
+//        ViewHolder viewHolder;
+//        mCardList.add(mCardList.size()-1, mCardDao.getById(mCardList.size()-1));
+//        mCardList.add(mCardDao.getById(0));
+        mCardList.add(new Card(mCard.getCardNumber(), mCard.getCVC(), mCard.getValidity(), mCard.getCardHolderName(), mCard.getCardHolderSurname(), mCard.getCardType(), mCard.getPin()));
         notifyDataSetChanged();
     }
 
     public void editItem() {
 
 
+    }
+
+    public Card getCardAtPosition(int pI) {
+
+        return mCardList.get(pI);
+    }
+
+    public void setCards(List<Card> pCards) {
+
+        mCardList = pCards;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -110,8 +126,8 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         void bind(Card pCard) {
 
             String num = Long.toString(pCard.getCardNumber());
-            String cvC = Short.toString(pCard.getCVC());
-            String valitadion = Short.toString(pCard.getValidity());
+            String cvC = Integer.toString(pCard.getCVC());
+            String valitadion = Integer.toString(pCard.getValidity());
             cardNumber.setText(num);
             cvc.setText(cvC);
             validity.setText(valitadion);

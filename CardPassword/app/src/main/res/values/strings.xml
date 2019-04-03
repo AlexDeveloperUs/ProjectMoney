@@ -39,6 +39,8 @@
 
     <string name="switch_left_side"><b>&lt;-</b></string>
     <string name="switch_right_side"><b>-&gt;</b></string>
+
+    <string name="options_menu_delete_all">Удалить все карты</string>
     
     <string-array name="card_type_array">
 

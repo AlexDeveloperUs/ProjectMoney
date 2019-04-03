@@ -21,7 +21,7 @@ public class CardViewModel extends AndroidViewModel {
         mAllCards = mRepository.getAllCards();
     }
 
-    LiveData<List<Card>> getAllCards() {
+    public LiveData<List<Card>> getAllCards() {
 
         return mAllCards;
     }
@@ -31,5 +31,13 @@ public class CardViewModel extends AndroidViewModel {
         mRepository.insert(pCard);
     }
 
+    public void deleteAll() {
 
+        mRepository.deleteAll();
+    }
+
+    public void deleteCard(Card pCard) {
+
+        mRepository.deleteCard(pCard);
+    }
 }
