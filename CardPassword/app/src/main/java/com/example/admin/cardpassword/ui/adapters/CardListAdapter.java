@@ -48,8 +48,16 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder pViewHolder, int pI) {
 
-        pViewHolder.bind(mCardList.get(pI));
-        mPosition = pViewHolder.getAdapterPosition();
+        if (mCardList != null) {
+            pViewHolder.bind(mCardList.get(pI));
+            mPosition = pViewHolder.getAdapterPosition();
+        }
+    }
+
+    void setCardList(List<Card> pCards) {
+
+        mCardList = pCards;
+        notifyDataSetChanged();
     }
 
     public void clearItems() {

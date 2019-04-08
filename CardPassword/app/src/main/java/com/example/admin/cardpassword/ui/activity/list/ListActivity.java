@@ -1,9 +1,8 @@
 package com.example.admin.cardpassword.ui.activity.list;
 
-import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -14,9 +13,9 @@ import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.admin.cardpassword.R;
+import com.example.admin.cardpassword.ThreadExecutors;
 import com.example.admin.cardpassword.data.DatabaseClient;
 import com.example.admin.cardpassword.data.models.CardViewModel;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
@@ -39,9 +38,10 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private CardListAdapter mAdapter;
     private List<Card> mCardList = new ArrayList<>();
     private CardViewModel mViewModel;
-    Card mCard;
-    CardDao mDao;
+    private Card mCard;
+    private CardDao mDao;
     private ListPresenter mPresenter;
+    private ThreadExecutors mExecutor;
 
     LinearLayoutManager mLinearLayoutManager;
 
@@ -74,8 +74,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         AppDataBase dataBase = App.getmInstance().getDataBase();
         CardDao cardDao = dataBase.mCardDao();
-
-        Card card = new Card();
     }
 
     @Override
@@ -105,25 +103,25 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     private void deleteAll() {
 
-        class DeleteCardsAsyncTask extends AsyncTask<Void, Void, Void> {
-
-            private CardDao mCardDao;
-
-            DeleteCardsAsyncTask(CardDao pCardDao) {
-
-                mCardDao = pCardDao;
-            }
-
-            @Override
-            protected Void doInBackground(Void... pVoids) {
-
-                mCardDao.deleteAll();
-                return null;
-            }
-        }
-
-        DeleteCardsAsyncTask deleteCardsAsyncTask = new DeleteCardsAsyncTask(mDao);
-        deleteCardsAsyncTask.execute();
+//        class DeleteCardsAsyncTask extends AsyncTask<Void, Void, Void> {
+//
+//            private CardDao mCardDao;
+//
+//            DeleteCardsAsyncTask(CardDao pCardDao) {
+//
+//                mCardDao = pCardDao;
+//            }
+//
+//            @Override
+//            protected Void doInBackground(Void... pVoids) {
+//
+//                mCardDao.deleteAll();
+//                return null;
+//            }
+//        }
+//
+//        DeleteCardsAsyncTask deleteCardsAsyncTask = new DeleteCardsAsyncTask(mDao);
+//        deleteCardsAsyncTask.execute();
     }
 
     @Override
@@ -196,6 +194,19 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 //
 //        GetCards getCards = new GetCards();
 //        getCards.execute();
+
+        mExecutor.getDbThreadExecutor().execute(() -> {
+
+            LiveData<List<Card>> cards = DatabaseClient.getmInstance(getApplicationContext())
+                    .getAppDataBase()
+                    .mCardDao()
+                    .getAll();
+            runOnUiThread(() -> {
+
+                CardListAdapter adapter = new CardListAdapter(this, (List<Card>) cards, this, this);
+                mRecyclerView.setAdapter(adapter);
+            });
+        });
     }
 
     @Override

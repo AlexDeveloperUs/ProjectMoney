@@ -21,7 +21,7 @@ public class CardViewModel extends AndroidViewModel {
         mAllCards = mRepository.getAllCards();
     }
 
-    LiveData<List<Card>> getAllCards() {
+    public LiveData<List<Card>> getAllCards() {
 
         return mAllCards;
     }
