@@ -1,5 +1,7 @@
 package com.example.admin.cardpassword.ui.activity.list;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.Button;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.DatabaseClient;
+import com.example.admin.cardpassword.data.models.CardViewModel;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.App;
 import com.example.admin.cardpassword.data.AppDataBase;
@@ -35,6 +38,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private static final int EDIT_CARD_REQUEST = 2;
     private CardListAdapter mAdapter;
     private List<Card> mCardList = new ArrayList<>();
+    private CardViewModel mViewModel;
     Card mCard;
     CardDao mDao;
     private ListPresenter mPresenter;
@@ -53,6 +57,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         ButterKnife.bind(this);
 
         initRecyclerView();
+
+        mViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
 
         mButtonAdd.setOnClickListener(this);
     }
@@ -165,31 +171,31 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     private void getCards() {
 
-        class GetCards extends AsyncTask<Void, Void, List<Card>> {
-
-
-            @Override
-            protected List<Card> doInBackground(Void... pVoids) {
-
-                List<Card> cardList = DatabaseClient.getmInstance(getApplicationContext())
-                        .getAppDataBase()
-                        .mCardDao()
-                        .getAll();
-
-                return cardList;
-            }
-
-            @Override
-            protected void onPostExecute(List<Card> pCards) {
-
-                super.onPostExecute(pCards);
-                CardListAdapter adapter = new CardListAdapter(ListActivity.this, pCards, ListActivity.this, ListActivity.this);
-                mRecyclerView.setAdapter(adapter);
-            }
-        }
-
-        GetCards getCards = new GetCards();
-        getCards.execute();
+//        class GetCards extends AsyncTask<Void, Void, List<Card>> {
+//
+//
+//            @Override
+//            protected List<Card> doInBackground(Void... pVoids) {
+//
+//                List<Card> cardList = DatabaseClient.getmInstance(getApplicationContext())
+//                        .getAppDataBase()
+//                        .mCardDao()
+//                        .getAll();
+//
+//                return cardList;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(List<Card> pCards) {
+//
+//                super.onPostExecute(pCards);
+//                CardListAdapter adapter = new CardListAdapter(ListActivity.this, pCards, ListActivity.this, ListActivity.this);
+//                mRecyclerView.setAdapter(adapter);
+//            }
+//        }
+//
+//        GetCards getCards = new GetCards();
+//        getCards.execute();
     }
 
     @Override
