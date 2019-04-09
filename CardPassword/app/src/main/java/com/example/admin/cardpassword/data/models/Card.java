@@ -17,10 +17,10 @@ public class Card implements Serializable {
     public long mCardNumber;
 
     @ColumnInfo(name = "cardCVC")
-    public short mCVC;
+    public int mCVC;
 
     @ColumnInfo(name = "cardValidity")
-    public short mValidity;
+    public int mValidity;
 
     @ColumnInfo(name = "cardHoldersName")
     public String mCardHolderName;
@@ -32,12 +32,12 @@ public class Card implements Serializable {
     public String mCardType;
 
     @ColumnInfo(name = "cardPIN")
-    public short mPin;
+    public int mPin;
 
     public Card() {
     }
 
-    public Card(long pCardNumber, short pCVC, short pValidity, String pCardHolderName, String pCardHolderSurname, String pCardType, short pPin) {
+    public Card(long pCardNumber, int pCVC, int pValidity, String pCardHolderName, String pCardHolderSurname, String pCardType, int pPin) {
 
         mCardNumber = pCardNumber;
         mCVC = pCVC;
@@ -78,22 +78,22 @@ public class Card implements Serializable {
         return mCardNumber;
     }
 
-    public void setCVC(short pCVC) {
+    public void setCVC(int pCVC) {
 
         mCVC = pCVC;
     }
 
-    public short getCVC() {
+    public int getCVC() {
 
         return mCVC;
     }
 
-    public short getValidity() {
+    public int getValidity() {
 
         return mValidity;
     }
 
-    public void setValidity(short pValidity) {
+    public void setValidity(int pValidity) {
 
         mValidity = pValidity;
     }
@@ -118,12 +118,12 @@ public class Card implements Serializable {
         mCardHolderSurname = pCardHolderSurname;
     }
 
-    public short getPin() {
+    public int getPin() {
 
         return mPin;
     }
 
-    public void setPin(short pPin) {
+    public void setPin(int pPin) {
 
         mPin = pPin;
     }

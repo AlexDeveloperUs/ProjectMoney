@@ -1,21 +1,30 @@
 package com.example.admin.cardpassword.ui.activity.list;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.DatabaseClient;
+import com.example.admin.cardpassword.data.models.CardViewModel;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.App;
 import com.example.admin.cardpassword.data.AppDataBase;
@@ -35,9 +44,10 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private static final int EDIT_CARD_REQUEST = 2;
     private CardListAdapter mAdapter;
     private List<Card> mCardList = new ArrayList<>();
-    Card mCard;
-    CardDao mDao;
+    private Card mCard;
+    private CardDao mDao;
     private ListPresenter mPresenter;
+    private CardViewModel mCardViewModel;
 
     LinearLayoutManager mLinearLayoutManager;
 
@@ -50,6 +60,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_list);
+        initCards();
         ButterKnife.bind(this);
 
         initRecyclerView();
@@ -65,11 +76,49 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         mAdapter = new CardListAdapter(this, mCardList, this, this);
         registerForContextMenu(mRecyclerView);
-
         AppDataBase dataBase = App.getmInstance().getDataBase();
+        mCardViewModel = ViewModelProviders.of(this).get(CardViewModel.class);
+        mCardViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
+
+            @Override
+            public void onChanged(@Nullable List<Card> pCards) {
+
+                mAdapter.setCards(pCards);
+            }
+        });
+
         CardDao cardDao = dataBase.mCardDao();
 
         Card card = new Card();
+
+        touchHelper();
+    }
+
+    private void touchHelper() {
+
+        ItemTouchHelper helper = new ItemTouchHelper(
+
+                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+                    @Override
+                    public boolean onMove(@NonNull RecyclerView pRecyclerView, @NonNull RecyclerView.ViewHolder pViewHolder, @NonNull RecyclerView.ViewHolder pViewHolder1) {
+
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(@NonNull RecyclerView.ViewHolder pViewHolder, int pI) {
+
+                        int pos = pViewHolder.getAdapterPosition();
+                        Card myCard = mAdapter.getCardAtPosition(pos);
+                        Toast.makeText(ListActivity.this, "Deleting " + myCard.getId(), Toast.LENGTH_LONG).show();
+
+                        mCardViewModel.deleteCard(myCard);
+                    }
+                }
+        );
+
+        helper.attachToRecyclerView(mRecyclerView);
     }
 
     @Override
@@ -99,25 +148,25 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     private void deleteAll() {
 
-        class DeleteCardsAsyncTask extends AsyncTask<Void, Void, Void> {
-
-            private CardDao mCardDao;
-
-            DeleteCardsAsyncTask(CardDao pCardDao) {
-
-                mCardDao = pCardDao;
-            }
-
-            @Override
-            protected Void doInBackground(Void... pVoids) {
-
-                mCardDao.deleteAll();
-                return null;
-            }
-        }
-
-        DeleteCardsAsyncTask deleteCardsAsyncTask = new DeleteCardsAsyncTask(mDao);
-        deleteCardsAsyncTask.execute();
+//        class DeleteCardsAsyncTask extends AsyncTask<Void, Void, Void> {
+//
+//            private CardDao mCardDao;
+//
+//            DeleteCardsAsyncTask(CardDao pCardDao) {
+//
+//                mCardDao = pCardDao;
+//            }
+//
+//            @Override
+//            protected Void doInBackground(Void... pVoids) {
+//
+//                mCardDao.deleteAll();
+//                return null;
+//            }
+//        }
+//
+//        DeleteCardsAsyncTask deleteCardsAsyncTask = new DeleteCardsAsyncTask(mDao);
+//        deleteCardsAsyncTask.execute();
     }
 
     @Override
@@ -149,7 +198,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     protected void onResume() {
 
         super.onResume();
-        getCards();
+//        getCards();
         mAdapter = new CardListAdapter(this, mCardList, this, this);
         mAdapter.notifyDataSetChanged();
     }
@@ -157,14 +206,14 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @Override
     public void onClick(View v) {
 
-        deleteAll();
+//        deleteAll();
 
-//        Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
-//        startActivityForResult(intent, CREATE_CARD_REQUEST);
+        Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
+        startActivityForResult(intent, CREATE_CARD_REQUEST);
     }
 
-    private void getCards() {
-
+//    private void getCards() {
+//
 //        class GetCards extends AsyncTask<Void, Void, List<Card>> {
 //
 //
@@ -190,12 +239,70 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 //
 //        GetCards getCards = new GetCards();
 //        getCards.execute();
-    }
+//    }
 
+<<<<<<< HEAD
+//        class GetCards extends AsyncTask<Void, Void, List<Card>> {
+//
+//
+//            @Override
+//            protected List<Card> doInBackground(Void... pVoids) {
+//
+//                List<Card> cardList = DatabaseClient.getmInstance(getApplicationContext())
+//                        .getAppDataBase()
+//                        .mCardDao()
+//                        .getAll();
+//
+//                return cardList;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(List<Card> pCards) {
+//
+//                super.onPostExecute(pCards);
+//                CardListAdapter adapter = new CardListAdapter(ListActivity.this, pCards, ListActivity.this, ListActivity.this);
+//                mRecyclerView.setAdapter(adapter);
+//            }
+//        }
+//
+//        GetCards getCards = new GetCards();
+//        getCards.execute();
+=======
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         assert data != null;
         mAdapter.addItem();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        if (id == R.id.clear_data) {
+
+            mCardViewModel.deleteAll();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+>>>>>>> f22fa29dd2aa4f178003bf05687e5b202f3b08ff
+    }
+
+    public void initCards() {
+
+        mCardList.add(new Card(1234567812345678L, 123, 1213, "Alex", "Awsq", "visa", 1234));
+        mCardList.add(new Card(8765432187654321L, 321, 3121, "Pasha", "Dsawq", "mastercard", 4321));
+        mCardList.add(new Card(1111111111111111L, 111, 1111, "Dima", "Qwerty", "visa", 1111));
+        mCardList.add(new Card(2222222222222222L, 222, 2222, "Roman", "Asdfg", "mastercard", 2222));
     }
 }
