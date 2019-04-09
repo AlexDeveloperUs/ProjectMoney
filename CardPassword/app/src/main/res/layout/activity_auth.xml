@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/one_button_selector"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_two"
+        android:id="@+id/btn_one"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/margin_medium"/>
+
+    <ImageButton
+        android:id="@+id/btn_two"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="152dp"
+        android:layout_marginLeft="152dp"
+        android:background="@drawable/two_button_selector"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/three_button_selector"
+        app:layout_constraintLeft_toRightOf="@id/btn_two"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/btn_three"/>
+
+    <ImageButton
+        android:id="@+id/btn_four"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/four_button_selector"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_five"
+        app:layout_constraintTop_toBottomOf="@id/btn_one" />
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/five_button_selector"
+        app:layout_constraintTop_toBottomOf="@id/btn_two"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/btn_five"/>
+
+    <ImageButton
+        android:id="@+id/btn_six"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/six_button_selector"
+        app:layout_constraintLeft_toRightOf="@id/btn_five"
+        app:layout_constraintTop_toBottomOf="@id/btn_three"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/seven_button_selector"
+        app:layout_constraintTop_toBottomOf="@id/btn_four"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_eight"
+        android:id="@+id/btn_seven"/>
+
+    <ImageButton
+        android:id="@+id/btn_eight"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/eight_button_selector"
+        app:layout_constraintTop_toBottomOf="@id/btn_five"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/nine_button_selector"
+        app:layout_constraintLeft_toRightOf="@id/btn_eight"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_six"
+        android:id="@+id/btn_nine"/>
+
+    <ImageButton
+        android:id="@+id/btn_zero"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/zero_button_selector"
+        app:layout_constraintTop_toBottomOf="@id/btn_eight"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+</android.support.constraint.ConstraintLayout>

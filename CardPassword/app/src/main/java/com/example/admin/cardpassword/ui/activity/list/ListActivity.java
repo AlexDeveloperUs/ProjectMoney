@@ -165,31 +165,31 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     private void getCards() {
 
-        class GetCards extends AsyncTask<Void, Void, List<Card>> {
-
-
-            @Override
-            protected List<Card> doInBackground(Void... pVoids) {
-
-                List<Card> cardList = DatabaseClient.getmInstance(getApplicationContext())
-                        .getAppDataBase()
-                        .mCardDao()
-                        .getAll();
-
-                return cardList;
-            }
-
-            @Override
-            protected void onPostExecute(List<Card> pCards) {
-
-                super.onPostExecute(pCards);
-                CardListAdapter adapter = new CardListAdapter(ListActivity.this, pCards, ListActivity.this, ListActivity.this);
-                mRecyclerView.setAdapter(adapter);
-            }
-        }
-
-        GetCards getCards = new GetCards();
-        getCards.execute();
+//        class GetCards extends AsyncTask<Void, Void, List<Card>> {
+//
+//
+//            @Override
+//            protected List<Card> doInBackground(Void... pVoids) {
+//
+//                List<Card> cardList = DatabaseClient.getmInstance(getApplicationContext())
+//                        .getAppDataBase()
+//                        .mCardDao()
+//                        .getAll();
+//
+//                return cardList;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(List<Card> pCards) {
+//
+//                super.onPostExecute(pCards);
+//                CardListAdapter adapter = new CardListAdapter(ListActivity.this, pCards, ListActivity.this, ListActivity.this);
+//                mRecyclerView.setAdapter(adapter);
+//            }
+//        }
+//
+//        GetCards getCards = new GetCards();
+//        getCards.execute();
     }
 
     @Override
