@@ -35,8 +35,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private static final int EDIT_CARD_REQUEST = 2;
     private CardListAdapter mAdapter;
     private List<Card> mCardList = new ArrayList<>();
-    Card mCard;
-    CardDao mDao;
+    private Card mCard;
+    private CardDao mDao;
     private ListPresenter mPresenter;
 
     LinearLayoutManager mLinearLayoutManager;

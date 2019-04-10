@@ -18,5 +18,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.create.CreateActivity" />
+        <activity android:name=".ui.activity.list.ListActivity" />
     </application>
 </manifest>
