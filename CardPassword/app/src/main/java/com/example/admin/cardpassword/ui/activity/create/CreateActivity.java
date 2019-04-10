@@ -17,11 +17,11 @@ import android.widget.Toast;
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.DatabaseClient;
 import com.example.admin.cardpassword.data.models.Card;
+import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 import com.github.pinball83.maskededittext.MaskedEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class CreateActivity extends AppCompatActivity implements CreateContract.View, View.OnClickListener {
 
@@ -54,7 +54,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     @BindView(R.id.card_pin_layout)
     TextInputLayout mPinLayout;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +62,10 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
 
         mPresenter = new CreatePresenter(this);
         textChangeListener();
+
+        mBtnSaveCard.setOnClickListener(this);
+        mButtonVisa.setOnClickListener(this);
+        mButtonMasterCard.setOnClickListener(this);
     }
 
     @Override
@@ -99,7 +102,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         });
     }
 
-    @OnClick({R.id.btn_master_card, R.id.btn_visa, R.id.btn_save_card})
+    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
@@ -180,6 +183,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
             cardNumber = mCardNumberCheck.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
             mPinLayout.setError(EMPTY_STRING);
         } else cardNumber = null;
+
 
 
         class SaveCard extends AsyncTask<Void, Void, Void> {

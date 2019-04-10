@@ -27,16 +27,6 @@ public class CardRepository {
         return mAllCards;
     }
 
-    public void deleteAll() {
-
-        new deleteAllCardsAsyncTask(mCardDao).execute();
-    }
-
-    public void deleteCard(Card pCard) {
-
-        new deleteCardAsyncTask(mCardDao).execute(pCard);
-    }
-
     public void insert(Card pCard) {
 
         new insertAsyncTask(mCardDao).execute(pCard);
@@ -55,40 +45,6 @@ public class CardRepository {
         protected Void doInBackground(Card... pCards) {
 
             mAsyncTaskDao.insert(pCards[0]);
-            return null;
-        }
-    }
-
-    private static class deleteAllCardsAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        private CardDao mAsyncTaskDao;
-
-        deleteAllCardsAsyncTask(CardDao pCardDao) {
-
-            mAsyncTaskDao = pCardDao;
-        }
-
-        @Override
-        protected Void doInBackground(Void... pVoids) {
-
-            mAsyncTaskDao.deleteAll();
-            return null;
-        }
-    }
-
-    private static class deleteCardAsyncTask extends AsyncTask<Card, Void, Void> {
-
-        private CardDao mAsyncCardDao;
-
-        deleteCardAsyncTask (CardDao pCardDao) {
-
-            mAsyncCardDao = pCardDao;
-        }
-
-        @Override
-        protected Void doInBackground(Card... pCards) {
-
-            mAsyncCardDao.deleteCard(pCards[0]);
             return null;
         }
     }
