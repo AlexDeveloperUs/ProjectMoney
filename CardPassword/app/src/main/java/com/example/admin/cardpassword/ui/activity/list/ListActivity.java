@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,12 +23,15 @@ import com.example.admin.cardpassword.data.AppDataBase;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
+import com.example.admin.cardpassword.utils.ThreadExecutors;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class ListActivity extends AppCompatActivity implements ListContract.View, CardListAdapter.OnClickListener, View.OnClickListener {
 
@@ -38,6 +42,10 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private Card mCard;
     private CardDao mDao;
     private ListPresenter mPresenter;
+    private AppDataBase mDataBase;
+    private ThreadExecutors mExecutors = new ThreadExecutors();
+    private ListPresenter.RequestListener mRequestListener;
+    private Disposable mDisposable;
 
     LinearLayoutManager mLinearLayoutManager;
 
@@ -55,6 +63,22 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         initRecyclerView();
 
         mButtonAdd.setOnClickListener(this);
+
+        show();
+    }
+
+    private void show() {
+
+        mExecutors.dbExecutor().execute(() -> {
+
+            try {
+
+                mDisposable = DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().getAll()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(pCards -> mRequestListener.onSuccess(pCards));
+            } catch (Exception pE) {
+            }
+        });
     }
 
     public void initRecyclerView() {
@@ -65,11 +89,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         mAdapter = new CardListAdapter(this, mCardList, this, this);
         registerForContextMenu(mRecyclerView);
-
-        AppDataBase dataBase = App.getmInstance().getDataBase();
-        CardDao cardDao = dataBase.mCardDao();
-
-        Card card = new Card();
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -99,25 +119,27 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     private void deleteAll() {
 
-        class DeleteCardsAsyncTask extends AsyncTask<Void, Void, Void> {
+//        class DeleteCardsAsyncTask extends AsyncTask<Void, Void, Void> {
+//
+//            private CardDao mCardDao;
+//
+//            DeleteCardsAsyncTask(CardDao pCardDao) {
+//
+//                mCardDao = pCardDao;
+//            }
+//
+//            @Override
+//            protected Void doInBackground(Void... pVoids) {
+//
+//                mCardDao.deleteAll();
+//                return null;
+//            }
+//        }
+//
+//        DeleteCardsAsyncTask deleteCardsAsyncTask = new DeleteCardsAsyncTask(mDao);
+//        deleteCardsAsyncTask.execute();
 
-            private CardDao mCardDao;
-
-            DeleteCardsAsyncTask(CardDao pCardDao) {
-
-                mCardDao = pCardDao;
-            }
-
-            @Override
-            protected Void doInBackground(Void... pVoids) {
-
-                mCardDao.deleteAll();
-                return null;
-            }
-        }
-
-        DeleteCardsAsyncTask deleteCardsAsyncTask = new DeleteCardsAsyncTask(mDao);
-        deleteCardsAsyncTask.execute();
+        mExecutors.dbExecutor().execute(() -> DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().deleteAll());
     }
 
     @Override
@@ -157,10 +179,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @Override
     public void onClick(View v) {
 
-        deleteAll();
-
-//        Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
-//        startActivityForResult(intent, CREATE_CARD_REQUEST);
+        Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
+        startActivityForResult(intent, CREATE_CARD_REQUEST);
     }
 
     private void getCards() {
@@ -190,6 +210,22 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 //
 //        GetCards getCards = new GetCards();
 //        getCards.execute();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        deleteAll();
+        mAdapter.clearItems();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

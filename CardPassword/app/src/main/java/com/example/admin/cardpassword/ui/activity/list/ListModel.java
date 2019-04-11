@@ -9,6 +9,7 @@ public class ListModel implements ListContract.Model {
 
     private CardDao mCardDao;
     private AppDataBase mDataBase;
+    private ListContract.Presenter.RequestListener mListener;
 
     ListModel() {
 
@@ -32,5 +33,10 @@ public class ListModel implements ListContract.Model {
     public void setEditedCardData(Card pCard) {
 
         mCardDao.update(pCard);
+    }
+
+    void addRequestListener(ListContract.Presenter.RequestListener pListener) {
+
+        mListener = pListener;
     }
 }

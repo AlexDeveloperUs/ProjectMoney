@@ -25,7 +25,6 @@ public abstract class AppDataBase extends RoomDatabase {
 
                     INSTANCE = Room.databaseBuilder(pContext.getApplicationContext(),
                             AppDataBase.class, "cards")
-                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

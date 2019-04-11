@@ -9,10 +9,12 @@ import com.example.admin.cardpassword.data.repository.CardRepository;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 public class CardViewModel extends AndroidViewModel {
 
     private CardRepository mRepository;
-    private LiveData<List<Card>> mAllCards;
+    private Flowable<List<Card>> mAllCards;
 
     public CardViewModel(@NonNull Application application) {
 
@@ -21,7 +23,7 @@ public class CardViewModel extends AndroidViewModel {
         mAllCards = mRepository.getAllCards();
     }
 
-    LiveData<List<Card>> getAllCards() {
+    Flowable<List<Card>> getAllCards() {
 
         return mAllCards;
     }

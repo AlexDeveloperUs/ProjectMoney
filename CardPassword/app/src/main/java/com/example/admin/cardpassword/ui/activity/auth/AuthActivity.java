@@ -27,16 +27,18 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.btn_skip)
     Button mButtonSkip;
 
-    private static final String SP_NAME = "spName";
-    private static final String SP_KEY_FIRST_LAUNCH = "spKeyFirstStart";
+    private static final String SP_NAME = "2";
+    private static final String SP_KEY_FIRST_LAUNCH = "2";
+
+    boolean firstLaunch;
 
     Intent intent;
 
-    SharedPreferences mPreferencess;
-    SharedPreferences mSharedPreferencess;
+    SharedPreferences mPreferences;
+    SharedPreferences mSharedPreferences;
     String confirmedPassword = "";
 
-    final String SHORT_PASSWORD = "pas";
+    final String SHORT_PASSWORD = "2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,55 +47,23 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
 
         firstLaunchCheck();
-        createShortPass();
 
-        mPreferencess = getPreferences(MODE_PRIVATE);
+        mPreferences = getPreferences(MODE_PRIVATE);
     }
 
     private void firstLaunchCheck() {
 
-        mSharedPreferencess = getSharedPreferences(SP_NAME, MODE_PRIVATE);
-        boolean firstLaunch = mSharedPreferencess.getBoolean(SP_KEY_FIRST_LAUNCH, true);
+        mSharedPreferences = getSharedPreferences(SP_NAME, MODE_PRIVATE);
+        firstLaunch = mSharedPreferences.getBoolean(SP_KEY_FIRST_LAUNCH, true);
         if (firstLaunch) {
 
-            mSharedPreferencess.edit().putBoolean(SP_KEY_FIRST_LAUNCH, false).apply();
-            createShortPass();
-        } else {
+            mSharedPreferences.edit().putBoolean(SP_KEY_FIRST_LAUNCH, false).apply();
+        } else mButtonSkip.setVisibility(View.INVISIBLE);
 
-            checkPassword();
-        }
+        shortPass();
     }
 
-    private void checkPassword() {
-
-        mTextPass.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                String password = s.toString();
-
-                if (s.length() == 4 && password.equals(mPreferencess.getString(SHORT_PASSWORD, ""))) {
-
-                    startListActivity();
-                } else if (s.length() == 4 && !password.equals(mPreferencess.getString(SHORT_PASSWORD, ""))){
-
-                    Toast.makeText(AuthActivity.this, "Wrong password", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
-
-    private void createShortPass() {
+    private void shortPass() {
 
         mTextPass.addTextChangedListener(new TextWatcher() {
 
@@ -112,27 +82,43 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
 
                 String password = s.toString();
 
-                if (s.length() == 4 && mButtonCancel.getVisibility() == View.INVISIBLE) {
+                if (firstLaunch) {
 
-                    confirmedPassword = password;
-                    Toast.makeText(AuthActivity.this, "" + password, Toast.LENGTH_SHORT).show();
+                    if (s.length() == 4 && mButtonCancel.getVisibility() == View.INVISIBLE) {
 
-                    mTextPass.setText("");
+                        confirmedPassword = password;
+                        Toast.makeText(AuthActivity.this, "" + password, Toast.LENGTH_SHORT).show();
+
+                        mTextPass.setText("");
+                        mButtonSkip.setVisibility(View.INVISIBLE);
+                        mButtonCancel.setVisibility(View.VISIBLE);
+                        s.clear();
+                    } else if (s.length() == 4 && mButtonCancel.getVisibility() == View.VISIBLE) {
+
+                        String str = s.toString();
+
+                        if (confirmedPassword.equals(str)) {
+
+                            SharedPreferences.Editor editor = mPreferences.edit();
+                            editor.putString(SHORT_PASSWORD, mTextPass.getText().toString());
+                            editor.apply();
+
+                            startListActivity();
+
+                            Toast.makeText(AuthActivity.this, "Confirmed Password", Toast.LENGTH_SHORT).show();
+                        } else
+                            Toast.makeText(AuthActivity.this, "The password are not", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
                     mButtonSkip.setVisibility(View.INVISIBLE);
-                    mButtonCancel.setVisibility(View.VISIBLE);
-                } else if (s.length() == 4 && mButtonCancel.getVisibility() == View.VISIBLE) {
 
-                    if (password.equals(confirmedPassword)) {
-
-                        SharedPreferences.Editor editor = mPreferencess.edit();
-                        editor.putString(SHORT_PASSWORD, mTextPass.getText().toString());
-                        editor.apply();
+                    if (s.length() == 4 && password.equals(mPreferences.getString(SHORT_PASSWORD, ""))) {
 
                         startListActivity();
+                    } else if (s.length() == 4 && !password.equals(mPreferences.getString(SHORT_PASSWORD, ""))){
 
-                        Toast.makeText(AuthActivity.this, "Confirmed Password", Toast.LENGTH_SHORT).show();
-                    } else
-                        Toast.makeText(AuthActivity.this, "The password are not", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AuthActivity.this, "Wrong password", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
@@ -183,9 +169,12 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_backspace:
                 String string = mTextPass.getText().toString();
-                String stringWithoutLastChar = string.substring(0, string.length() - 1);
-                mTextPass.setText(stringWithoutLastChar);
-                mTextPass.setSelection(mTextPass.getText().length());
+                if (!string.equals("")) {
+
+                    String stringWithoutLastChar = string.substring(0, string.length() - 1);
+                    mTextPass.setText(stringWithoutLastChar);
+                    mTextPass.setSelection(mTextPass.getText().length());
+                }
                 break;
             case R.id.btn_skip:
                 startListActivity();

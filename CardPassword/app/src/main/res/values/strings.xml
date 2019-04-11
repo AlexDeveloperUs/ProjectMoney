@@ -24,6 +24,7 @@
 
     <string name="menu_delete_card">Удалить карту</string>
     <string name="menu_edit_card">Изменить карту</string>
+    <string name="menu_delete_all_cards">Удалить все карты</string>
 
     <string name="hint_card_number">Номер карты</string>
     <string name="hint_card_cvc_cvv">CVC/CVV</string>

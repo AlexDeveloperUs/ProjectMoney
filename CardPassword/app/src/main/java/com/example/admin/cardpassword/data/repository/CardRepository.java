@@ -10,10 +10,12 @@ import com.example.admin.cardpassword.data.models.Card;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
+
 public class CardRepository {
 
     private CardDao mCardDao;
-    private LiveData<List<Card>> mAllCards;
+    private Flowable<List<Card>> mAllCards;
 
     public CardRepository(Application pApplication) {
 
@@ -22,7 +24,7 @@ public class CardRepository {
         mAllCards = mCardDao.getAll();
     }
 
-    public LiveData<List<Card>> getAllCards() {
+    public Flowable<List<Card>> getAllCards() {
 
         return mAllCards;
     }

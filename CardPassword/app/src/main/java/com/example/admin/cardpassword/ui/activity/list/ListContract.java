@@ -2,6 +2,8 @@ package com.example.admin.cardpassword.ui.activity.list;
 
 import com.example.admin.cardpassword.data.models.Card;
 
+import java.util.List;
+
 public interface ListContract {
 
     interface View {
@@ -33,5 +35,12 @@ public interface ListContract {
         void getData();
 
         void cardExistence(int pI);
+
+        interface RequestListener {
+
+            void onSuccess(List<Card> pCards);
+
+            void onFailed(Exception pE);
+        }
     }
 }

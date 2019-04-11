@@ -70,11 +70,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public void editItem() {
-
-
-    }
-
     @Override
     public int getItemCount() {
 

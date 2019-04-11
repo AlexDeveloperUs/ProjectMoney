@@ -15,9 +15,11 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
+import com.example.admin.cardpassword.data.AppDataBase;
 import com.example.admin.cardpassword.data.DatabaseClient;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
+import com.example.admin.cardpassword.utils.ThreadExecutors;
 import com.github.pinball83.maskededittext.MaskedEditText;
 
 import butterknife.BindView;
@@ -28,6 +30,8 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     private static final String EMPTY_STRING = "";
     private CreatePresenter mPresenter;
     private String mCardType = "";
+    private ThreadExecutors mExecutors = new ThreadExecutors();
+    private AppDataBase mAppDataBase;
 
     @BindView(R.id.btn_visa)
     RadioButton mButtonVisa;
@@ -119,12 +123,55 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
                 break;
             case R.id.btn_save_card:
 
-                saveCard(mCardType);
+                insert(mCardType);
                 break;
         }
     }
 
     private void saveCard(String pCardType) {
+
+
+
+//        class SaveCard extends AsyncTask<Void, Void, Void> {
+//
+//
+//
+//            @Override
+//            protected Void doInBackground(Void... pVoids) {
+//
+//                Card card = new Card();
+//                card.setCardNumber(mByteCardNumber);
+//                card.setCVC(mByteCvc);
+//                card.setValidity(mByteValidity);
+//                card.setCardHolderName(cardHoldersName);
+//                card.setCardHolderSurname(cardHoldersSurname);
+//                card.setCardType(pCardType);
+//                card.setPin(mBytePin);
+//
+//                DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().insert(card);
+//
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Void pVoid) {
+//
+//                super.onPostExecute(pVoid);
+//                finish();
+//
+//                Intent intent = new Intent();
+//                setResult(RESULT_OK, intent);
+//                finish();
+//
+//                Toast.makeText(getApplicationContext(), mByteCardNumber + "\n" + mByteCvc + " " + mByteValidity + " " + mBytePin, Toast.LENGTH_LONG).show();
+//            }
+        }
+
+//        SaveCard saveCard = new SaveCard();
+//        saveCard.execute();
+//    }
+
+    private void insert(String pCardType) {
 
         final String cvc = mCardCvc.getText().toString();
         final String cardNumber;
@@ -184,47 +231,15 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
             mPinLayout.setError(EMPTY_STRING);
         } else cardNumber = null;
 
+        Long mByteCardNumber = Long.parseLong(cardNumber);
+        short mByteCvc = Short.parseShort(cvc);
+        short mByteValidity = Short.parseShort(validity);
+        short mBytePin = Short.valueOf(pin);
 
+        mExecutors.dbExecutor().execute(() -> DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().insert(new Card(mByteCardNumber, mByteCvc, mByteValidity, cardHoldersName, cardHoldersSurname, pCardType, mBytePin)));
 
-        class SaveCard extends AsyncTask<Void, Void, Void> {
-
-            private Long mByteCardNumber = Long.parseLong(cardNumber);
-            private short mByteCvc = Short.parseShort(cvc);
-            private short mByteValidity = Short.parseShort(validity);
-            private short mBytePin = Short.valueOf(pin);
-
-            @Override
-            protected Void doInBackground(Void... pVoids) {
-
-                Card card = new Card();
-                card.setCardNumber(mByteCardNumber);
-                card.setCVC(mByteCvc);
-                card.setValidity(mByteValidity);
-                card.setCardHolderName(cardHoldersName);
-                card.setCardHolderSurname(cardHoldersSurname);
-                card.setCardType(pCardType);
-                card.setPin(mBytePin);
-
-                DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().insert(card);
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void pVoid) {
-
-                super.onPostExecute(pVoid);
-                finish();
-
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
-                finish();
-
-                Toast.makeText(getApplicationContext(), mByteCardNumber + "\n" + mByteCvc + " " + mByteValidity + " " + mBytePin, Toast.LENGTH_LONG).show();
-            }
-        }
-
-        SaveCard saveCard = new SaveCard();
-        saveCard.execute();
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
