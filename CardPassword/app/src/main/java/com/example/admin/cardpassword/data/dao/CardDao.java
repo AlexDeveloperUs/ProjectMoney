@@ -21,7 +21,7 @@ public interface CardDao {
     Flowable<List<Card>> getAll();
 
     @Query("Select * from cards where cardId = :id")
-    Card  getById(long id);
+    Card getById(long id);
 
     @Insert(onConflict = REPLACE)
     void insert(Card pCard);

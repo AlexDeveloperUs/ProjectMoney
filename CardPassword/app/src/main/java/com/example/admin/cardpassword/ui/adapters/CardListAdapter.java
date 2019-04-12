@@ -52,6 +52,12 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         mPosition = pViewHolder.getAdapterPosition();
     }
 
+    public void addItems(List<Card> pCards) {
+
+        mCardList = pCards;
+        notifyDataSetChanged();
+    }
+
     public void clearItems() {
 
         mCardList.clear();

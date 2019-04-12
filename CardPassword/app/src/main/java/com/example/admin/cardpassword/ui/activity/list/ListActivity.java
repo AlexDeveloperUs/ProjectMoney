@@ -1,10 +1,8 @@
 package com.example.admin.cardpassword.ui.activity.list;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,16 +11,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.example.admin.cardpassword.R;
-import com.example.admin.cardpassword.data.DatabaseClient;
-import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
-import com.example.admin.cardpassword.App;
 import com.example.admin.cardpassword.data.AppDataBase;
-import com.example.admin.cardpassword.data.models.Card;
+import com.example.admin.cardpassword.data.DatabaseClient;
 import com.example.admin.cardpassword.data.dao.CardDao;
+import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
+import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.utils.ThreadExecutors;
 
 import java.util.ArrayList;
@@ -30,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
@@ -51,8 +48,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    @BindView(R.id.btn_floating_action_add)
-    FloatingActionButton mButtonAdd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,10 +56,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         ButterKnife.bind(this);
 
         initRecyclerView();
-
-        mButtonAdd.setOnClickListener(this);
-
-        show();
     }
 
     private void show() {
@@ -75,8 +66,10 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
                 mDisposable = DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().getAll()
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(pCards -> mRequestListener.onSuccess(pCards));
+                        .subscribe(pCards -> mAdapter.addItems(pCards));
             } catch (Exception pE) {
+
+                mRequestListener.onFailed(pE);
             }
         });
     }
@@ -171,12 +164,10 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     protected void onResume() {
 
         super.onResume();
-        getCards();
-        mAdapter = new CardListAdapter(this, mCardList, this, this);
-        mAdapter.notifyDataSetChanged();
+        show();
     }
 
-    @Override
+    @OnClick(R.id.btn_floating_action_add)
     public void onClick(View v) {
 
         Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
@@ -223,7 +214,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        deleteAll();
         mAdapter.clearItems();
         return super.onOptionsItemSelected(item);
     }
@@ -232,6 +222,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         assert data != null;
-        mAdapter.addItem();
+//        mAdapter.addItem();
     }
 }

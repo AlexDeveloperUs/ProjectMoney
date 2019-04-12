@@ -24,6 +24,7 @@ import com.github.pinball83.maskededittext.MaskedEditText;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class CreateActivity extends AppCompatActivity implements CreateContract.View, View.OnClickListener {
 
@@ -33,10 +34,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     private ThreadExecutors mExecutors = new ThreadExecutors();
     private AppDataBase mAppDataBase;
 
-    @BindView(R.id.btn_visa)
-    RadioButton mButtonVisa;
-    @BindView(R.id.btn_master_card)
-    RadioButton mButtonMasterCard;
     @BindView(R.id.edit_text_card_number)
     MaskedEditText mCardNumber;
     @BindView(R.id.edit_text_card_cvc_cvv)
@@ -49,8 +46,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     EditText mCardHoldersSurname;
     @BindView(R.id.edit_text_card_pin)
     EditText mCardPin;
-    @BindView(R.id.btn_save_card)
-    Button mBtnSaveCard;
     @BindView(R.id.card_number_layout)
     TextInputLayout mNumberLayout;
     @BindView(R.id.card_cvc_layout)
@@ -66,10 +61,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
 
         mPresenter = new CreatePresenter(this);
         textChangeListener();
-
-        mBtnSaveCard.setOnClickListener(this);
-        mButtonVisa.setOnClickListener(this);
-        mButtonMasterCard.setOnClickListener(this);
     }
 
     @Override
@@ -106,31 +97,26 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         });
     }
 
-    @Override
+    @OnClick({R.id.btn_visa, R.id.btn_master_card, R.id.btn_save_card})
     public void onClick(View v) {
 
         switch (v.getId()) {
 
             case R.id.btn_visa:
-
                 mCardType = "visa";
                 Toast.makeText(this, "Visa", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_master_card:
-
                 mCardType = "mastercard";
                 Toast.makeText(this, "MasterCard", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_save_card:
-
                 insert(mCardType);
                 break;
         }
     }
 
     private void saveCard(String pCardType) {
-
-
 
 //        class SaveCard extends AsyncTask<Void, Void, Void> {
 //
@@ -165,7 +151,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
 //
 //                Toast.makeText(getApplicationContext(), mByteCardNumber + "\n" + mByteCvc + " " + mByteValidity + " " + mBytePin, Toast.LENGTH_LONG).show();
 //            }
-        }
+    }
 
 //        SaveCard saveCard = new SaveCard();
 //        saveCard.execute();
@@ -190,6 +176,40 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
             mNumberLayout.setError("Введите корректный номер карты");
             mCardNumber.requestFocus();
             return;
+        } else {
+
+            long count = 0;
+            long character;
+
+            long number = Long.parseLong(mCardNumberCheck.replaceAll("[^0-9]", ""));
+            for (int i = 16; i > 0; i--) {
+
+                character = number % 10;
+                number /= 10;
+
+                if (i % 2 == 1) {
+
+                    int check = (int) (character * 2);
+
+                    if (check > 9) {
+
+                        count += check - 9;
+                    } else {
+
+                        count += check;
+                    }
+                } else {
+
+                    count += character;
+                }
+            }
+
+            if (!(count % 10 == 0)) {
+
+                mNumberLayout.setError("Карты с таким номером не существует!");
+                mCardNumber.requestFocus();
+                return;
+            } else mNumberLayout.setError(EMPTY_STRING);
         }
 
         if (cvc.isEmpty()) {
