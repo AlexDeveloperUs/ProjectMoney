@@ -1,6 +1,7 @@
 package com.example.admin.cardpassword.ui.activity.list;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,12 +16,12 @@ import android.view.View;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.AppDataBase;
-import com.example.admin.cardpassword.data.DatabaseClient;
 import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.utils.SwipeController;
+import com.example.admin.cardpassword.utils.SwipeControllerActions;
 import com.example.admin.cardpassword.utils.ThreadExecutors;
 
 import java.util.ArrayList;
@@ -39,13 +39,10 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private static final int EDIT_CARD_REQUEST = 2;
     private CardListAdapter mAdapter;
     private List<Card> mCardList = new ArrayList<>();
-    private Card mCard;
-    private CardDao mDao;
-    private ListPresenter mPresenter;
-    private AppDataBase mDataBase;
     private ThreadExecutors mExecutors = new ThreadExecutors();
     private ListPresenter.RequestListener mRequestListener;
     private Disposable mDisposable;
+    private SwipeController mController = null;
 
     LinearLayoutManager mLinearLayoutManager;
 
@@ -54,6 +51,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_list);
         ButterKnife.bind(this);
@@ -85,7 +83,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mAdapter = new CardListAdapter(this, mCardList, this, this);
-        registerForContextMenu(mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
 
         touchHelper();
@@ -93,13 +90,42 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     public void touchHelper() {
 
-        SwipeController swipeController = new SwipeController();
+        mController = new SwipeController(new SwipeControllerActions() {
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
+            @Override
+            public void onRightClicked(int position) {
+
+                Intent intent = new Intent(ListActivity.this, CreateActivity.class);
+                existenceCardCheck();
+                startActivityForResult(intent, EDIT_CARD_REQUEST);
+                mAdapter.notifyDataSetChanged();
+                super.onRightClicked(position);
+            }
+
+            @Override
+            public void onLeftClicked(int position) {
+
+                mAdapter.deleteItem();
+                mAdapter.notifyItemRemoved(position);
+                mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
+            }
+        });
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(mController);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
+
+        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+
+            @Override
+            public void onDraw(@NonNull Canvas pC, @NonNull RecyclerView pParent, @NonNull RecyclerView.State pState) {
+
+                mController.onDraw(pC);
+            }
+        });
     }
 
+    private void existenceCardCheck() {
 
+    }
 
     @Override
     public void blur() {
@@ -129,31 +155,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public void deleteAll() {
 
         mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao().deleteAll());
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-
-            case R.id.menu_item_delete_card:
-                mAdapter.deleteItem();
-                return true;
-            case R.id.menu_item_edit_card:
-                Intent intent = new Intent(this, CreateActivity.class);
-                startActivityForResult(intent, EDIT_CARD_REQUEST);
-                return true;
-            default:
-                return super.onContextItemSelected(item);
-        }
     }
 
     @Override

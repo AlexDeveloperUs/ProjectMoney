@@ -22,6 +22,8 @@ import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 import com.example.admin.cardpassword.utils.ThreadExecutors;
 import com.github.pinball83.maskededittext.MaskedEditText;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -125,7 +127,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         final String cardHoldersSurname;
         final String pin = mCardPin.getText().toString();
         String mValidityContains = mCardValidity.getText().toString();
-        String mCardNumberCheck = mCardNumber.getText().toString();
+        String mCardNumberCheck = Objects.requireNonNull(mCardNumber.getText()).toString();
         String holdersName = mCardHoldersName.getText().toString();
         String holdersSurname = mCardHoldersSurname.getText().toString();
 
@@ -210,7 +212,8 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
             mPinLayout.setError(EMPTY_STRING);
         } else cardNumber = null;
 
-        Long mByteCardNumber = Long.parseLong(cardNumber);
+        assert cardNumber != null;
+        long mByteCardNumber = Long.parseLong(cardNumber);
         short mByteCvc = Short.parseShort(cvc);
         short mByteValidity = Short.parseShort(validity);
         short mBytePin = Short.valueOf(pin);

@@ -118,12 +118,12 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
             if (pCard.getCardType().toLowerCase().equals("visa")) {
 
-                mImageView.setBackgroundResource(R.drawable.visa);
+//                mImageView.setBackgroundResource(R.drawable.visa);
                 mImageView.getLayoutParams().height = 50;
                 mImageView.getLayoutParams().width = 50;
             } else if (pCard.getCardType().toLowerCase().equals("mastercard")) {
 
-                mImageView.setBackgroundResource(R.drawable.master_card);
+//                mImageView.setBackgroundResource(R.drawable.master_card);
                 mImageView.getLayoutParams().height = 50;
                 mImageView.getLayoutParams().width = 50;
             }
