@@ -30,6 +30,7 @@
             android:inputType="number"
             android:gravity="center"
             android:maxLength="20"
+            android:focusable="true"
             app:notMaskedSymbol="*"
             app:mask="****-****-****-****"
             app:replacementChar="X"

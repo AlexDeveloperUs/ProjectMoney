@@ -30,7 +30,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
 
     private static final String EMPTY_STRING = "";
     private CreatePresenter mPresenter;
-    private String mCardType = "";
+    private String mCardType = "visa";
     private ThreadExecutors mExecutors = new ThreadExecutors();
     private AppDataBase mAppDataBase;
 
@@ -115,47 +115,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
                 break;
         }
     }
-
-    private void saveCard(String pCardType) {
-
-//        class SaveCard extends AsyncTask<Void, Void, Void> {
-//
-//
-//
-//            @Override
-//            protected Void doInBackground(Void... pVoids) {
-//
-//                Card card = new Card();
-//                card.setCardNumber(mByteCardNumber);
-//                card.setCVC(mByteCvc);
-//                card.setValidity(mByteValidity);
-//                card.setCardHolderName(cardHoldersName);
-//                card.setCardHolderSurname(cardHoldersSurname);
-//                card.setCardType(pCardType);
-//                card.setPin(mBytePin);
-//
-//                DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().insert(card);
-//
-//                return null;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(Void pVoid) {
-//
-//                super.onPostExecute(pVoid);
-//                finish();
-//
-//                Intent intent = new Intent();
-//                setResult(RESULT_OK, intent);
-//                finish();
-//
-//                Toast.makeText(getApplicationContext(), mByteCardNumber + "\n" + mByteCvc + " " + mByteValidity + " " + mBytePin, Toast.LENGTH_LONG).show();
-//            }
-    }
-
-//        SaveCard saveCard = new SaveCard();
-//        saveCard.execute();
-//    }
 
     private void insert(String pCardType) {
 
@@ -256,7 +215,8 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         short mByteValidity = Short.parseShort(validity);
         short mBytePin = Short.valueOf(pin);
 
-        mExecutors.dbExecutor().execute(() -> DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().insert(new Card(mByteCardNumber, mByteCvc, mByteValidity, cardHoldersName, cardHoldersSurname, pCardType, mBytePin)));
+        mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao().insert(new Card(mByteCardNumber,
+                mByteCvc, mByteValidity, cardHoldersName, cardHoldersSurname, pCardType, mBytePin)));
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);

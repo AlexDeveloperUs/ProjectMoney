@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.cardpassword.R;
-import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 
@@ -25,8 +24,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     private final LayoutInflater mInflater;
     private ListActivity mListActivity;
     private OnClickListener mOnClickListener;
-    private Card mCard;
-    private CardDao mCardDao;
     private int mPosition;
 
     public CardListAdapter(Context pContext, List<Card> pCardList, OnClickListener pOnClickListener, ListActivity pListActivity) {
@@ -52,6 +49,11 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         mPosition = pViewHolder.getAdapterPosition();
     }
 
+    public Card getCardAtPos(int pPosition) {
+
+        return mCardList.get(pPosition);
+    }
+
     public void addItems(List<Card> pCards) {
 
         mCardList = pCards;
@@ -61,6 +63,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     public void clearItems() {
 
         mCardList.clear();
+        mListActivity.deleteAll();
         notifyDataSetChanged();
     }
 
@@ -68,12 +71,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
         mCardList.remove(mPosition);
         notifyItemRemoved(mPosition);
-    }
-
-    public void addItem() {
-
-        mCardList.add(mCardDao.getById(mPosition));
-        notifyDataSetChanged();
     }
 
     @Override
@@ -122,9 +119,13 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
             if (pCard.getCardType().toLowerCase().equals("visa")) {
 
                 mImageView.setBackgroundResource(R.drawable.visa);
+                mImageView.getLayoutParams().height = 50;
+                mImageView.getLayoutParams().width = 50;
             } else if (pCard.getCardType().toLowerCase().equals("mastercard")) {
 
                 mImageView.setBackgroundResource(R.drawable.master_card);
+                mImageView.getLayoutParams().height = 50;
+                mImageView.getLayoutParams().width = 50;
             }
         }
 

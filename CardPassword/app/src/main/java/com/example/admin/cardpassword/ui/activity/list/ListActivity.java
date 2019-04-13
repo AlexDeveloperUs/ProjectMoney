@@ -2,10 +2,12 @@ package com.example.admin.cardpassword.ui.activity.list;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +21,7 @@ import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
+import com.example.admin.cardpassword.utils.SwipeController;
 import com.example.admin.cardpassword.utils.ThreadExecutors;
 
 import java.util.ArrayList;
@@ -64,7 +67,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
             try {
 
-                mDisposable = DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().getAll()
+                mDisposable = AppDataBase.getDatabase(getApplicationContext()).mCardDao().getAll()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(pCards -> mAdapter.addItems(pCards));
             } catch (Exception pE) {
@@ -73,6 +76,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
             }
         });
     }
+
 
     public void initRecyclerView() {
 
@@ -83,7 +87,19 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         mAdapter = new CardListAdapter(this, mCardList, this, this);
         registerForContextMenu(mRecyclerView);
         mRecyclerView.setAdapter(mAdapter);
+
+        touchHelper();
     }
+
+    public void touchHelper() {
+
+        SwipeController swipeController = new SwipeController();
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeController);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }
+
+
 
     @Override
     public void blur() {
@@ -110,29 +126,9 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     }
 
-    private void deleteAll() {
+    public void deleteAll() {
 
-//        class DeleteCardsAsyncTask extends AsyncTask<Void, Void, Void> {
-//
-//            private CardDao mCardDao;
-//
-//            DeleteCardsAsyncTask(CardDao pCardDao) {
-//
-//                mCardDao = pCardDao;
-//            }
-//
-//            @Override
-//            protected Void doInBackground(Void... pVoids) {
-//
-//                mCardDao.deleteAll();
-//                return null;
-//            }
-//        }
-//
-//        DeleteCardsAsyncTask deleteCardsAsyncTask = new DeleteCardsAsyncTask(mDao);
-//        deleteCardsAsyncTask.execute();
-
-        mExecutors.dbExecutor().execute(() -> DatabaseClient.getmInstance(getApplicationContext()).getAppDataBase().mCardDao().deleteAll());
+        mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao().deleteAll());
     }
 
     @Override
@@ -174,35 +170,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         startActivityForResult(intent, CREATE_CARD_REQUEST);
     }
 
-    private void getCards() {
-
-//        class GetCards extends AsyncTask<Void, Void, List<Card>> {
-//
-//
-//            @Override
-//            protected List<Card> doInBackground(Void... pVoids) {
-//
-//                List<Card> cardList = DatabaseClient.getmInstance(getApplicationContext())
-//                        .getAppDataBase()
-//                        .mCardDao()
-//                        .getAll();
-//
-//                return cardList;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(List<Card> pCards) {
-//
-//                super.onPostExecute(pCards);
-//                CardListAdapter adapter = new CardListAdapter(ListActivity.this, pCards, ListActivity.this, ListActivity.this);
-//                mRecyclerView.setAdapter(adapter);
-//            }
-//        }
-//
-//        GetCards getCards = new GetCards();
-//        getCards.execute();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -215,6 +182,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public boolean onOptionsItemSelected(MenuItem item) {
 
         mAdapter.clearItems();
+        mAdapter.notifyDataSetChanged();
         return super.onOptionsItemSelected(item);
     }
 
@@ -222,6 +190,5 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         assert data != null;
-//        mAdapter.addItem();
     }
 }

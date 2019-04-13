@@ -1,30 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
 
     <View
+        android:id="@+id/c"
         android:layout_width="0dp"
-        android:layout_height="160dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/shadow_rectangle"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="H, 96:61"
+        app:layout_constraintLeft_toLeftOf="@id/card"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/card" />
+
+    <View
+        android:id="@+id/card"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/rectangle_rounded"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="H, 96:61"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="@dimen/margin_extra_large"
-        android:layout_marginRight="@dimen/margin_extra_large"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:id="@+id/card"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.Guideline
+        android:id="@+id/guideline_element_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/guideline_element_horizontal"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="@id/card"
-        app:layout_constraintGuide_percent="0.07"/>
+        app:layout_constraintGuide_percent="0.07"
+        app:layout_constraintTop_toTopOf="@id/card" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_element_vertical_left_side"
@@ -41,78 +61,77 @@
         app:layout_constraintGuide_percent="0.87" />
 
     <TextView
+        android:id="@+id/text_card_number_element"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_small"
         android:text="@string/text_view_card_number"
-        app:layout_constraintTop_toTopOf="@id/guideline_element_horizontal"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side"
         app:layout_constraintRight_toRightOf="@id/guideline_element_vertical_right_side"
-        android:layout_marginTop="@dimen/margin_small"
-        android:textStyle="bold"
-        android:textColor="#ffffff"
-        android:id="@+id/text_card_number_element"/>
+        app:layout_constraintTop_toTopOf="@id/guideline_element_horizontal" />
 
     <TextView
+        android:id="@+id/text_card_cvc_element"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_view_cvc"
-        app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side"
-        app:layout_constraintTop_toBottomOf="@id/text_card_number_element"
+        android:layout_marginStart="@dimen/margin_extra_large"
         android:layout_marginLeft="@dimen/margin_extra_large"
         android:layout_marginTop="@dimen/margin_medium"
-        android:layout_marginStart="@dimen/margin_extra_large"
+        android:text="@string/text_view_cvc"
         android:textColor="#ffffff"
         android:textStyle="bold"
-        android:id="@+id/text_card_cvc_element"/>
+        app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side"
+        app:layout_constraintTop_toBottomOf="@id/text_card_number_element" />
 
     <TextView
+        android:id="@+id/text_card_validity_element"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/text_view_validity"
-        android:id="@+id/text_card_validity_element"
-        app:layout_constraintRight_toRightOf="@id/guideline_element_vertical_right_side"
-        app:layout_constraintTop_toBottomOf="@id/text_card_number_element"
-        android:layout_marginRight="@dimen/margin_extra_large"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_extra_large"
+        android:layout_marginRight="@dimen/margin_extra_large"
+        android:text="@string/text_view_validity"
+        android:textColor="#ffffff"
         android:textStyle="bold"
-        android:textColor="#ffffff"/>
+        app:layout_constraintRight_toRightOf="@id/guideline_element_vertical_right_side"
+        app:layout_constraintTop_toBottomOf="@id/text_card_number_element" />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_view_card_holder_name"
-        app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side"
-        app:layout_constraintTop_toBottomOf="@id/text_card_cvc_element"
-        android:layout_marginLeft="@dimen/margin_extra_large"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:layout_marginStart="@dimen/margin_extra_large"
         android:id="@+id/text_card_holder_name_element"
-        android:textColor="#ffffff"
-        android:textStyle="bold"/>
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/text_card_holder_surname_element"
-        app:layout_constraintTop_toBottomOf="@id/text_card_cvc_element"
-        app:layout_constraintLeft_toLeftOf="@id/text_card_holder_name_element"
-        android:text="@string/text_view_card_holder_surname"
+        android:layout_marginStart="@dimen/margin_extra_large"
         android:layout_marginLeft="@dimen/margin_extra_large"
         android:layout_marginTop="@dimen/margin_medium"
-        android:layout_marginStart="@dimen/margin_extra_large"
+        android:text="@string/text_view_card_holder_name"
         android:textColor="#ffffff"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side"
+        app:layout_constraintTop_toBottomOf="@id/text_card_cvc_element" />
+
+    <TextView
+        android:id="@+id/text_card_holder_surname_element"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_extra_large"
+        android:layout_marginLeft="@dimen/margin_extra_large"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:text="@string/text_view_card_holder_surname"
+        android:textColor="#ffffff"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@id/text_card_holder_name_element"
+        app:layout_constraintTop_toBottomOf="@id/text_card_cvc_element" />
 
     <ImageView
+        android:id="@+id/image_element_visa"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/visa"
-        app:layout_constraintRight_toRightOf="@id/guideline_element_vertical_right_side"
-        app:layout_constraintTop_toTopOf="@id/text_card_validity_element"
         android:layout_marginTop="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_extra_large"
         android:layout_marginRight="@dimen/margin_extra_large"
-        android:id="@+id/image_element_visa"/>
+        app:layout_constraintRight_toRightOf="@id/guideline_element_vertical_right_side"
+        app:layout_constraintTop_toTopOf="@id/text_card_validity_element" />
 
 </android.support.constraint.ConstraintLayout>
