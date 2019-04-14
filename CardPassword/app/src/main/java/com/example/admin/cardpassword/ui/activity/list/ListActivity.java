@@ -1,10 +1,15 @@
 package com.example.admin.cardpassword.ui.activity.list;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +25,7 @@ import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
+import com.example.admin.cardpassword.utils.RecyclerViewSwipeHelper;
 import com.example.admin.cardpassword.utils.SwipeController;
 import com.example.admin.cardpassword.utils.SwipeControllerActions;
 import com.example.admin.cardpassword.utils.ThreadExecutors;
@@ -85,7 +91,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         mAdapter = new CardListAdapter(this, mCardList, this, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        touchHelper();
+        mm();
     }
 
     public void touchHelper() {
@@ -105,7 +111,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
             @Override
             public void onLeftClicked(int position) {
 
-                mAdapter.deleteItem();
+                mAdapter.deleteItem(position);
                 mAdapter.notifyItemRemoved(position);
                 mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
             }
@@ -117,7 +123,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
             @Override
             public void onDraw(@NonNull Canvas pC, @NonNull RecyclerView pParent, @NonNull RecyclerView.State pState) {
-
+//onDraw(pC, pParent, pState) -> mController.onDraw(pC)
                 mController.onDraw(pC);
             }
         });
@@ -191,5 +197,49 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         assert data != null;
+    }
+
+    public void deleteSingleItem() {
+
+//        mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao()
+//        .delete());
+    }
+
+    public void mm() {
+
+        RecyclerViewSwipeHelper swipeHelper = new RecyclerViewSwipeHelper(this, mRecyclerView) {
+            @Override
+            public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
+                underlayButtons.add(new RecyclerViewSwipeHelper.UnderlayButton("Delete",
+                        android.R.drawable.ic_menu_delete,
+                        Color.parseColor("#FF3C30"),
+                        new RecyclerViewSwipeHelper.UnderlayButtonClickListener() {
+                            @Override
+                            public void onClick(int pos) {
+                                // TODO: onDelete
+                                int a = 0;
+                                a=10;
+                            }
+                        }
+                ));
+
+                underlayButtons.add(new RecyclerViewSwipeHelper.UnderlayButton("Edit",
+                        android.R.drawable.ic_menu_edit,
+                        Color.parseColor("#FF9502"),
+                        new RecyclerViewSwipeHelper.UnderlayButtonClickListener() {
+                            @Override
+                            public void onClick(int pos) {
+                                // TODO: OnTransfer
+                                int a = 0;
+                                a=10;
+                            }
+                        }
+                ));
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeHelper);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+
     }
 }

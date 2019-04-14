@@ -8,7 +8,7 @@ import android.content.Context;
 import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.data.models.Card;
 
-@Database(entities = {Card.class}, version = 1)
+@Database(entities = {Card.class}, version = 2)
 public abstract class AppDataBase extends RoomDatabase {
 
     public abstract CardDao mCardDao();
@@ -25,6 +25,7 @@ public abstract class AppDataBase extends RoomDatabase {
 
                     INSTANCE = Room.databaseBuilder(pContext.getApplicationContext(),
                             AppDataBase.class, "cards")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }

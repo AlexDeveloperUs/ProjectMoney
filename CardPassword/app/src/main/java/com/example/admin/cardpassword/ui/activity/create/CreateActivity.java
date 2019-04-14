@@ -199,11 +199,11 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         } else cardHoldersSurname = "";
 
 
-        if (!mValidityContains.equals("") && mValidityContains.contains("/")) {
-
-            validity = mValidityContains.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
-        } else
-            validity = "0";
+//        if (!mValidityContains.equals("") && mValidityContains.contains("/")) {
+//
+//            validity = mValidityContains.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
+//        } else
+//            validity = "0";
 
         if (mCardNumberCheck.contains("-")) {
             mNumberLayout.setError(EMPTY_STRING);
@@ -215,11 +215,11 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         assert cardNumber != null;
         long mByteCardNumber = Long.parseLong(cardNumber);
         short mByteCvc = Short.parseShort(cvc);
-        short mByteValidity = Short.parseShort(validity);
+//        short mByteValidity = Short.parseShort(validity);
         short mBytePin = Short.valueOf(pin);
 
         mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao().insert(new Card(mByteCardNumber,
-                mByteCvc, mByteValidity, cardHoldersName, cardHoldersSurname, pCardType, mBytePin)));
+                mByteCvc, mValidityContains, cardHoldersName, cardHoldersSurname, pCardType, mBytePin)));
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);

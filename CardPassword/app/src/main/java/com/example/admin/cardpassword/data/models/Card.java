@@ -20,7 +20,7 @@ public class Card implements Serializable {
     public short mCVC;
 
     @ColumnInfo(name = "cardValidity")
-    public short mValidity;
+    public String mValidity;
 
     @ColumnInfo(name = "cardHoldersName")
     public String mCardHolderName;
@@ -37,7 +37,7 @@ public class Card implements Serializable {
     public Card() {
     }
 
-    public Card(long pCardNumber, short pCVC, short pValidity, String pCardHolderName, String pCardHolderSurname, String pCardType, short pPin) {
+    public Card(long pCardNumber, short pCVC, String pValidity, String pCardHolderName, String pCardHolderSurname, String pCardType, short pPin) {
 
         mCardNumber = pCardNumber;
         mCVC = pCVC;
@@ -88,12 +88,12 @@ public class Card implements Serializable {
         return mCVC;
     }
 
-    public short getValidity() {
+    public String getValidity() {
 
         return mValidity;
     }
 
-    public void setValidity(short pValidity) {
+    public void setValidity(String pValidity) {
 
         mValidity = pValidity;
     }

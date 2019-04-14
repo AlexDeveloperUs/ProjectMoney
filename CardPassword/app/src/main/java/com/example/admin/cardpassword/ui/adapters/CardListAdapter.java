@@ -67,10 +67,17 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public void deleteItem() {
+    public void deleteItem(int pPosition) {
 
+        mPosition = pPosition;
         mCardList.remove(mPosition);
         notifyItemRemoved(mPosition);
+    }
+
+    public void restoreItem(Card pCard, int pPosition) {
+
+        mCardList.add(pPosition, pCard);
+        notifyItemInserted(pPosition);
     }
 
     @Override
@@ -109,7 +116,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
             String num = Long.toString(pCard.getCardNumber());
             String cvC = Short.toString(pCard.getCVC());
-            String valitadion = Short.toString(pCard.getValidity());
+            String valitadion = pCard.getValidity();
             cardNumber.setText(num);
             cvc.setText(cvC);
             validity.setText(valitadion);
