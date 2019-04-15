@@ -1,15 +1,9 @@
 package com.example.admin.cardpassword.ui.activity.list;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,13 +15,10 @@ import android.view.View;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.AppDataBase;
-import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.utils.RecyclerViewSwipeHelper;
-import com.example.admin.cardpassword.utils.SwipeController;
-import com.example.admin.cardpassword.utils.SwipeControllerActions;
 import com.example.admin.cardpassword.utils.ThreadExecutors;
 
 import java.util.ArrayList;
@@ -48,7 +39,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private ThreadExecutors mExecutors = new ThreadExecutors();
     private ListPresenter.RequestListener mRequestListener;
     private Disposable mDisposable;
-    private SwipeController mController = null;
 
     LinearLayoutManager mLinearLayoutManager;
 
@@ -91,42 +81,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         mAdapter = new CardListAdapter(this, mCardList, this, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        mm();
-    }
-
-    public void touchHelper() {
-
-        mController = new SwipeController(new SwipeControllerActions() {
-
-            @Override
-            public void onRightClicked(int position) {
-
-                Intent intent = new Intent(ListActivity.this, CreateActivity.class);
-                existenceCardCheck();
-                startActivityForResult(intent, EDIT_CARD_REQUEST);
-                mAdapter.notifyDataSetChanged();
-                super.onRightClicked(position);
-            }
-
-            @Override
-            public void onLeftClicked(int position) {
-
-                mAdapter.deleteItem(position);
-                mAdapter.notifyItemRemoved(position);
-                mAdapter.notifyItemRangeChanged(position, mAdapter.getItemCount());
-            }
-        });
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(mController);
-        itemTouchHelper.attachToRecyclerView(mRecyclerView);
-
-        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-
-            @Override
-            public void onDraw(@NonNull Canvas pC, @NonNull RecyclerView pParent, @NonNull RecyclerView.State pState) {
-//onDraw(pC, pParent, pState) -> mController.onDraw(pC)
-                mController.onDraw(pC);
-            }
-        });
+        swipeHelper();
     }
 
     private void existenceCardCheck() {
@@ -199,40 +154,34 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         assert data != null;
     }
 
-    public void deleteSingleItem() {
+    private void deleteSingleItem(Card pCard) {
 
-//        mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao()
-//        .delete());
+        mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao()
+                .delete(pCard));
     }
 
-    public void mm() {
+    public void swipeHelper() {
 
         RecyclerViewSwipeHelper swipeHelper = new RecyclerViewSwipeHelper(this, mRecyclerView) {
             @Override
             public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
-                underlayButtons.add(new RecyclerViewSwipeHelper.UnderlayButton("Delete",
+                underlayButtons.add(new RecyclerViewSwipeHelper.UnderlayButton(
                         android.R.drawable.ic_menu_delete,
                         Color.parseColor("#FF3C30"),
-                        new RecyclerViewSwipeHelper.UnderlayButtonClickListener() {
-                            @Override
-                            public void onClick(int pos) {
-                                // TODO: onDelete
-                                int a = 0;
-                                a=10;
-                            }
+                        pos -> {
+
+                            deleteSingleItem(mAdapter.getCardAtPos(pos));
+                            mAdapter.notifyItemRemoved(pos);
                         }
                 ));
 
-                underlayButtons.add(new RecyclerViewSwipeHelper.UnderlayButton("Edit",
+                underlayButtons.add(new RecyclerViewSwipeHelper.UnderlayButton(
                         android.R.drawable.ic_menu_edit,
-                        Color.parseColor("#FF9502"),
-                        new RecyclerViewSwipeHelper.UnderlayButtonClickListener() {
-                            @Override
-                            public void onClick(int pos) {
-                                // TODO: OnTransfer
-                                int a = 0;
-                                a=10;
-                            }
+                        Color.parseColor("#649b11"),
+                        pos -> {
+
+                            editCard(mAdapter.getCardAtPos(pos));
+                            mAdapter.notifyItemChanged(pos);
                         }
                 ));
             }
@@ -240,6 +189,29 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeHelper);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }
 
+    private void editCard(Card pCard) {
+
+        String cardNumber = pCard.getCardNumber() + "";
+        String cardCvc = pCard.getCVC() + "";
+        String cardValidity = pCard.getValidity();
+        String cardHoldersName = pCard.getCardHolderName();
+        String cardHoldersSurname = pCard.getCardHolderSurname();
+        String cardType = pCard.getCardType();
+        String cardPin = pCard.getPin() + "";
+        String rec = "2";
+
+        Intent intent = new Intent(ListActivity.this, CreateActivity.class);
+        intent.putExtra("number", cardNumber);
+        intent.putExtra("cvc", cardCvc);
+        intent.putExtra("validity", cardValidity);
+        intent.putExtra("name", cardHoldersName);
+        intent.putExtra("surname", cardHoldersSurname);
+        intent.putExtra("type", cardType);
+        intent.putExtra("pin", cardPin);
+        intent.putExtra("REQUEST_CODE", rec);
+
+        startActivityForResult(intent, EDIT_CARD_REQUEST);
     }
 }

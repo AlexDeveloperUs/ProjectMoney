@@ -1,7 +1,6 @@
 package com.example.admin.cardpassword.ui.activity.create;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -9,16 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.AppDataBase;
-import com.example.admin.cardpassword.data.DatabaseClient;
 import com.example.admin.cardpassword.data.models.Card;
-import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 import com.example.admin.cardpassword.utils.ThreadExecutors;
 import com.github.pinball83.maskededittext.MaskedEditText;
 
@@ -35,6 +30,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     private String mCardType = "visa";
     private ThreadExecutors mExecutors = new ThreadExecutors();
     private AppDataBase mAppDataBase;
+    private final String REQUEST_CODE = "2";
 
     @BindView(R.id.edit_text_card_number)
     MaskedEditText mCardNumber;
@@ -62,7 +58,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         ButterKnife.bind(this);
 
         mPresenter = new CreatePresenter(this);
-        textChangeListener();
+        checkRequestCode();
     }
 
     @Override
@@ -224,5 +220,31 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    private void checkRequestCode() {
+
+         Intent intent = getIntent();
+
+         String code = intent.getStringExtra("REQUEST_CODE");
+
+         if (code != null && code.equals(REQUEST_CODE)) {
+
+             String number = intent.getStringExtra("number");
+             String cvc = intent.getStringExtra("cvc");
+             String validity = intent.getStringExtra("validity");
+             String name = intent.getStringExtra("name");
+             String surname = intent.getStringExtra("surname");
+             mCardType = intent.getStringExtra("type");
+             String pin = intent.getStringExtra("pin");
+
+             mCardNumber.setText(number);
+             mCardCvc.setText(cvc);
+             mCardValidity.setText(validity);
+             mCardHoldersName.setText(name);
+             mCardHoldersSurname.setText(surname);
+             mCardPin.setText(pin);
+         } else textChangeListener();
+
     }
 }

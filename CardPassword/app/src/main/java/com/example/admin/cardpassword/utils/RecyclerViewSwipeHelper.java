@@ -2,18 +2,24 @@ package com.example.admin.cardpassword.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.example.admin.cardpassword.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,11 +40,14 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
     private Map<Integer, List<UnderlayButton>> buttonsBuffer;
     private Queue<Integer> recoverQueue;
 
-    private GestureDetector.SimpleOnGestureListener gestureListener = new GestureDetector.SimpleOnGestureListener(){
+    private GestureDetector.SimpleOnGestureListener gestureListener = new GestureDetector.SimpleOnGestureListener() {
+
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-            for (UnderlayButton button : buttons){
-                if(button.onClick(e.getX(), e.getY()))
+
+            for (UnderlayButton button : buttons) {
+
+                if (button.onClick(e.getX(), e.getY()))
                     break;
             }
 
@@ -47,9 +56,11 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
     };
 
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+
         @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View view, MotionEvent e) {
+
             if (swipedPos < 0) return false;
             Point point = new Point((int) e.getRawX(), (int) e.getRawY());
 
@@ -59,10 +70,12 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
             Rect rect = new Rect();
             swipedItem.getGlobalVisibleRect(rect);
 
-            if (e.getAction() == MotionEvent.ACTION_DOWN || e.getAction() == MotionEvent.ACTION_UP ||e.getAction() == MotionEvent.ACTION_MOVE) {
+            if (e.getAction() == MotionEvent.ACTION_DOWN || e.getAction() == MotionEvent.ACTION_UP || e.getAction() == MotionEvent.ACTION_MOVE) {
+
                 if (rect.top < point.y && rect.bottom > point.y)
                     gestureDetector.onTouchEvent(e);
                 else {
+
                     recoverQueue.add(swipedPos);
                     swipedPos = -1;
                     recoverSwipedItem();
@@ -74,15 +87,18 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
 
     @SuppressLint({"ClickableViewAccessibility", "UseSparseArrays"})
     protected RecyclerViewSwipeHelper(Context context, RecyclerView recyclerView) {
+
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.recyclerView = recyclerView;
         this.buttons = new ArrayList<>();
         this.gestureDetector = new GestureDetector(context, gestureListener);
         this.recyclerView.setOnTouchListener(onTouchListener);
         buttonsBuffer = new HashMap<>();
-        recoverQueue = new LinkedList<Integer>(){
+        recoverQueue = new LinkedList<Integer>() {
+
             @Override
             public boolean add(Integer o) {
+
                 if (contains(o))
                     return false;
                 else
@@ -96,11 +112,13 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
 
     @Override
     public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+
         return false;
     }
 
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
         int pos = viewHolder.getAdapterPosition();
 
         if (swipedPos != pos)
@@ -120,39 +138,47 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
 
     @Override
     public float getSwipeThreshold(@NonNull RecyclerView.ViewHolder viewHolder) {
+
         return swipeThreshold;
     }
 
     @Override
     public float getSwipeEscapeVelocity(float defaultValue) {
+
         return 0.1f * defaultValue;
     }
 
     @Override
     public float getSwipeVelocityThreshold(float defaultValue) {
+
         return 5.0f * defaultValue;
     }
 
     @Override
     public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
         int pos = viewHolder.getAdapterPosition();
         float translationX = dX;
         View itemView = viewHolder.itemView;
 
-        if (pos < 0){
+        if (pos < 0) {
+
             swipedPos = pos;
             return;
         }
 
-        if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
-            if(dX < 0) {
+        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+
+            if (dX < 0) {
+
                 List<UnderlayButton> buffer = new ArrayList<>();
 
-                if (!buttonsBuffer.containsKey(pos)){
+                if (!buttonsBuffer.containsKey(pos)) {
+
                     instantiateUnderlayButton(viewHolder, buffer);
                     buttonsBuffer.put(pos, buffer);
-                }
-                else {
+                } else {
+
                     buffer = buttonsBuffer.get(pos);
                 }
 
@@ -165,8 +191,10 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
         super.onChildDraw(c, recyclerView, viewHolder, translationX, dY, actionState, isCurrentlyActive);
     }
 
-    private synchronized void recoverSwipedItem(){
-        while (!recoverQueue.isEmpty()){
+    private synchronized void recoverSwipedItem() {
+
+        while (!recoverQueue.isEmpty()) {
+
             int pos = recoverQueue.poll();
             if (pos > -1) {
                 Objects.requireNonNull(recyclerView.getAdapter()).notifyItemChanged(pos);
@@ -174,11 +202,13 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
         }
     }
 
-    private void drawButtons(Canvas c, View itemView, List<UnderlayButton> buffer, int pos, float dX){
+    private void drawButtons(Canvas c, View itemView, List<UnderlayButton> buffer, int pos, float dX) {
+
         float right = itemView.getRight();
         float dButtonWidth = (-1) * dX / buffer.size();
 
         for (UnderlayButton button : buffer) {
+
             float left = right - dButtonWidth;
             button.onDraw(
                     c,
@@ -195,7 +225,8 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
         }
     }
 
-    private void attachSwipe(){
+    private void attachSwipe() {
+
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(this);
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
@@ -203,6 +234,8 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
     public abstract void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons);
 
     public static class UnderlayButton {
+
+        Resources asd = Resources.getSystem();
         private String text;
         private int imageResId;
         private int color;
@@ -210,15 +243,17 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
         private RectF clickRegion;
         private UnderlayButtonClickListener clickListener;
 
-        public UnderlayButton(String text, int imageResId, int color, UnderlayButtonClickListener clickListener) {
-            this.text = text;
+        public UnderlayButton(int imageResId, int color, UnderlayButtonClickListener clickListener) {
+
             this.imageResId = imageResId;
             this.color = color;
             this.clickListener = clickListener;
         }
 
-        boolean onClick(float x, float y){
-            if (clickRegion != null && clickRegion.contains(x, y)){
+        boolean onClick(float x, float y) {
+
+            if (clickRegion != null && clickRegion.contains(x, y)) {
+
                 clickListener.onClick(pos);
                 return true;
             }
@@ -226,26 +261,22 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
             return false;
         }
 
-        void onDraw(Canvas c, RectF rect, int pos){
-            Paint p = new Paint();
+        void onDraw(Canvas c, RectF rect, int pos) {
 
-            // Draw background
+            Paint p = new Paint();
+            Bitmap bm = BitmapFactory.decodeResource(asd, imageResId);
+
             p.setColor(color);
             c.drawRect(rect, p);
 
-            // Draw Text
             p.setColor(Color.WHITE);
-            //p.setTextSize(LayoutHelper.getPx(MyApplication.getAppContext(), 12));
 
             Rect r = new Rect();
             float cHeight = rect.height();
             float cWidth = rect.width();
-            p.setTextAlign(Paint.Align.LEFT);
-            p.setTextSize(50f);
-            p.getTextBounds(text, 0, text.length(), r);
             float x = cWidth / 2f - r.width() / 2f - r.left;
             float y = cHeight / 2f + r.height() / 2f - r.bottom;
-            c.drawText(text, rect.left + x, rect.top + y, p);
+            c.drawBitmap(bm, rect.left + x, rect.top + y, p);
 
             clickRegion = rect;
             this.pos = pos;
@@ -253,6 +284,7 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
     }
 
     public interface UnderlayButtonClickListener {
+
         void onClick(int pos);
     }
 }
