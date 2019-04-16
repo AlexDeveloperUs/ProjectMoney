@@ -1,9 +1,12 @@
 package com.example.admin.cardpassword.ui.activity.list;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +21,7 @@ import com.example.admin.cardpassword.data.AppDataBase;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
+import com.example.admin.cardpassword.ui.fragments.fragment1.Fragment1;
 import com.example.admin.cardpassword.utils.RecyclerViewSwipeHelper;
 import com.example.admin.cardpassword.utils.ThreadExecutors;
 
@@ -39,6 +43,13 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private ThreadExecutors mExecutors = new ThreadExecutors();
     private ListPresenter.RequestListener mRequestListener;
     private Disposable mDisposable;
+    private String mNumber = "";
+    private String mCvc = "";
+    private String mValidity = "";
+    private String mName = "";
+    private String mSurname = "";
+    private String mType = "";
+    private String mPin = "";
 
     LinearLayoutManager mLinearLayoutManager;
 
@@ -84,10 +95,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         swipeHelper();
     }
 
-    private void existenceCardCheck() {
-
-    }
-
     @Override
     public void blur() {
 
@@ -106,6 +113,15 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @Override
     public void onItemClick(View pView, int pI) {
 
+        getData(mAdapter.getCardAtPos(pI));
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
+        if (fragment == null) {
+            fragment = Fragment1.newInstance(pI, mNumber, mCvc, mValidity, mName, mSurname, mType, mPin); //Fragment1.newInstance(pI);
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .commit();
+        }
     }
 
     @Override
@@ -160,9 +176,20 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
                 .delete(pCard));
     }
 
+    public void getData(Card pCard) {
+
+        mNumber = String.valueOf(pCard.getCardNumber());
+        mCvc = String.valueOf(pCard.getCVC());
+        mValidity = pCard.getValidity();
+        mName = pCard.getCardHolderName();
+        mSurname = pCard.getCardHolderSurname();
+        mType = pCard.getCardType();
+        mPin = String.valueOf(pCard.getPin());
+    }
+
     public void swipeHelper() {
 
-        RecyclerViewSwipeHelper swipeHelper = new RecyclerViewSwipeHelper(this, mRecyclerView) {
+        RecyclerViewSwipeHelper swipeHelper = new RecyclerViewSwipeHelper(ListActivity.this, mRecyclerView) {
             @Override
             public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
                 underlayButtons.add(new RecyclerViewSwipeHelper.UnderlayButton(
@@ -213,5 +240,10 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         intent.putExtra("REQUEST_CODE", rec);
 
         startActivityForResult(intent, EDIT_CARD_REQUEST);
+    }
+
+    public Context cont() {
+
+        return getApplicationContext();
     }
 }

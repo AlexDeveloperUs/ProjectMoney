@@ -123,16 +123,18 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
             cardHolderName.setText(pCard.getCardHolderName());
             cardHolderSurname.setText(pCard.getCardHolderSurname());
 
+            float density = mListActivity.cont().getResources().getDisplayMetrics().density;
+
             if (pCard.getCardType().toLowerCase().equals("visa")) {
 
-//                mImageView.setBackgroundResource(R.drawable.visa);
-                mImageView.getLayoutParams().height = 50;
-                mImageView.getLayoutParams().width = 50;
+                mImageView.setBackgroundResource(R.drawable.visa);
+                mImageView.getLayoutParams().height = (int) (density * 50);
+                mImageView.getLayoutParams().width = (int) (density * 70);
             } else if (pCard.getCardType().toLowerCase().equals("mastercard")) {
 
-//                mImageView.setBackgroundResource(R.drawable.master_card);
-                mImageView.getLayoutParams().height = 50;
-                mImageView.getLayoutParams().width = 50;
+                mImageView.setBackgroundResource(R.drawable.master_card);
+                mImageView.getLayoutParams().height = (int) (density * 50);
+                mImageView.getLayoutParams().width = (int) (density * 70);
             }
         }
 

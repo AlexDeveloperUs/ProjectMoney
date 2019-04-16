@@ -27,18 +27,22 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.btn_skip)
     Button mButtonSkip;
 
-    private static final String SP_NAME = "3";
-    private static final String SP_KEY_FIRST_LAUNCH = "3";
+    private static final String SP_NAME = "0";
+    private static final String SP_KEY_FIRST_LAUNCH = "0";
+    private static final String SP_SKIP = "0";
+    private static final String SP_SKIP_CHECK = "0";
 
-    boolean firstLaunch;
+    private boolean firstLaunch;
+    private boolean skipCheck;
 
     Intent intent;
 
     SharedPreferences mPreferences;
     SharedPreferences mSharedPreferences;
+    SharedPreferences mSkipCheck;
     String confirmedPassword = "";
 
-    final String SHORT_PASSWORD = "3";
+    final String SHORT_PASSWORD = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +58,18 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     private void firstLaunchCheck() {
 
         mSharedPreferences = getSharedPreferences(SP_NAME, MODE_PRIVATE);
+        mSkipCheck = getSharedPreferences(SP_SKIP, MODE_PRIVATE);
+        skipCheck = mSkipCheck.getBoolean(SP_SKIP_CHECK, true);
         firstLaunch = mSharedPreferences.getBoolean(SP_KEY_FIRST_LAUNCH, true);
         if (firstLaunch) {
 
             mSharedPreferences.edit().putBoolean(SP_KEY_FIRST_LAUNCH, false).apply();
         } else mButtonSkip.setVisibility(View.INVISIBLE);
 
-        shortPass();
+        if (skipCheck) {
+
+            shortPass();
+        } else startListActivity();
     }
 
     private void shortPass() {
@@ -115,7 +124,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                     if (s.length() == 4 && password.equals(mPreferences.getString(SHORT_PASSWORD, ""))) {
 
                         startListActivity();
-                    } else if (s.length() == 4 && !password.equals(mPreferences.getString(SHORT_PASSWORD, ""))){
+                    } else if (s.length() == 4 && !password.equals(mPreferences.getString(SHORT_PASSWORD, ""))) {
 
                         Toast.makeText(AuthActivity.this, "Wrong password", Toast.LENGTH_LONG).show();
                     }
@@ -177,6 +186,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btn_skip:
+                mSkipCheck.edit().putBoolean(SP_SKIP_CHECK, false).apply();
                 startListActivity();
                 break;
             case R.id.btn_cancel:

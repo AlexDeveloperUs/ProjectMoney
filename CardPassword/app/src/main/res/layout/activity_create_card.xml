@@ -17,11 +17,11 @@
         android:layout_marginTop="@dimen/margin_extra_large"
         android:layout_marginEnd="@dimen/margin_large"
         android:layout_marginRight="@dimen/margin_large"
+        android:hint="@string/hint_card_number"
         app:errorEnabled="true"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:hint="@string/hint_card_number">
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.github.pinball83.maskededittext.MaskedEditText
             android:id="@+id/edit_text_card_number"
@@ -33,6 +33,7 @@
             android:inputType="number"
             android:maxLength="20"
             android:selectAllOnFocus="true"
+            android:textAllCaps="true"
             android:textIsSelectable="true"
             app:deleteChar="X"
             app:mask="****-****-****-****"
@@ -56,12 +57,12 @@
         android:layout_marginTop="@dimen/margin_large"
         android:layout_marginEnd="@dimen/margin_medium"
         android:layout_marginRight="@dimen/margin_medium"
+        android:hint="@string/hint_card_cvc_cvv"
         app:counterEnabled="true"
         app:counterMaxLength="3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guideline_create_card"
-        app:layout_constraintTop_toBottomOf="@+id/card_number_layout"
-        android:hint="@string/hint_card_cvc_cvv">
+        app:layout_constraintTop_toBottomOf="@+id/card_number_layout">
 
         <EditText
             android:id="@+id/edit_text_card_cvc_cvv"
@@ -82,10 +83,10 @@
         android:layout_marginTop="@dimen/margin_large"
         android:layout_marginEnd="@dimen/margin_large"
         android:layout_marginRight="@dimen/margin_large"
+        android:hint="@string/hint_card_validity"
         app:layout_constraintLeft_toRightOf="@id/guideline_create_card"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_number_layout"
-        android:hint="@string/hint_card_validity">
+        app:layout_constraintTop_toBottomOf="@id/card_number_layout">
 
         <EditText
             android:id="@+id/edit_text_card_validity"
@@ -106,6 +107,7 @@
         android:layout_marginTop="13dp"
         android:layout_marginEnd="@dimen/margin_medium"
         android:layout_marginRight="@dimen/margin_medium"
+        android:hint="@string/hint_card_holders_name"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guideline_create_card"
         app:layout_constraintTop_toBottomOf="@+id/card_cvc_layout">
@@ -115,7 +117,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="@string/hint_card_holders_name"
             android:importantForAutofill="noExcludeDescendants"
             android:inputType="textPersonName" />
     </android.support.design.widget.TextInputLayout>
@@ -129,6 +130,7 @@
         android:layout_marginTop="@dimen/margin_large"
         android:layout_marginEnd="@dimen/margin_large"
         android:layout_marginRight="@dimen/margin_large"
+        android:hint="@string/hint_card_holders_surname"
         app:layout_constraintLeft_toRightOf="@id/guideline_create_card"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/card_validity_layout">
@@ -138,7 +140,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:hint="@string/hint_card_holders_surname"
             android:importantForAutofill="noExcludeDescendants"
             android:inputType="textPersonName" />
     </android.support.design.widget.TextInputLayout>
@@ -150,6 +151,7 @@
         android:layout_marginLeft="@dimen/margin_extra_large"
         android:layout_marginTop="@dimen/margin_large"
         android:layout_marginRight="@dimen/margin_extra_large"
+        android:hint="@string/hint_card_pin"
         app:counterEnabled="true"
         app:counterMaxLength="4"
         app:layout_constraintLeft_toLeftOf="@id/guideline_create_card"
@@ -162,7 +164,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="@string/hint_card_pin"
             android:importantForAutofill="noExcludeDescendants"
             android:inputType="numberPassword"
             android:maxLength="4" />

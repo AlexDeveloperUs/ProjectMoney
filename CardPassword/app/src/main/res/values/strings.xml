@@ -40,6 +40,8 @@
 
     <string name="switch_left_side"><b>&lt;-</b></string>
     <string name="switch_right_side"><b>-&gt;</b></string>
+
+    <string name="text_valid_thru">VALID THRU</string>
     
     <string-array name="card_type_array">
 

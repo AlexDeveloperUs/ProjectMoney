@@ -88,7 +88,7 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
     @SuppressLint({"ClickableViewAccessibility", "UseSparseArrays"})
     protected RecyclerViewSwipeHelper(Context context, RecyclerView recyclerView) {
 
-        super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
+        super(0, ItemTouchHelper.LEFT);
         this.recyclerView = recyclerView;
         this.buttons = new ArrayList<>();
         this.gestureDetector = new GestureDetector(context, gestureListener);
