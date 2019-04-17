@@ -42,6 +42,7 @@
     <string name="switch_right_side"><b>-&gt;</b></string>
 
     <string name="text_valid_thru">VALID THRU</string>
+    <string name="text_about_pin">Пароль от Вашей карты:</string>
     
     <string-array name="card_type_array">
 

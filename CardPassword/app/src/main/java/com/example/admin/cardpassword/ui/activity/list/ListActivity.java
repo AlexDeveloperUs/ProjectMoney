@@ -168,6 +168,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         assert data != null;
+        mAdapter.notifyDataSetChanged();
     }
 
     private void deleteSingleItem(Card pCard) {
