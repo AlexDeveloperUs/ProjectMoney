@@ -265,19 +265,19 @@ public abstract class RecyclerViewSwipeHelper extends ItemTouchHelper.SimpleCall
 
             Paint p = new Paint();
             Bitmap bm = BitmapFactory.decodeResource(asd, imageResId);
+            float corners = 125;
 
             p.setColor(color);
             c.drawRect(rect, p);
 
             p.setColor(Color.WHITE);
 
-            Rect r = new Rect();
+            RectF r = new RectF();
             float cHeight = rect.height();
             float cWidth = rect.width();
             float x = cWidth / 2f - r.width() / 2f - r.left;
             float y = cHeight / 2f + r.height() / 2f - r.bottom;
             c.drawBitmap(bm, rect.left + x, rect.top + y, p);
-
             clickRegion = rect;
             this.pos = pos;
         }

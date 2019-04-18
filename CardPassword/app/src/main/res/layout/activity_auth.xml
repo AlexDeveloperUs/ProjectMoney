@@ -33,26 +33,27 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_medium"
         android:background="@null"
+        android:clickable="true"
         android:text="Cancel"
         android:visibility="invisible"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:clickable="true"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/btn_one"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginRight="30dp"
         android:background="@drawable/one_button_selector"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/btn_two"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_pass" />
+        app:layout_constraintTop_toBottomOf="@id/edit_text_pass"
+        android:layout_marginEnd="30dp" />
 
     <ImageButton
         android:id="@+id/btn_two"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_margin="@dimen/margin_medium"
         android:layout_marginTop="8dp"
         android:background="@drawable/two_button_selector"
@@ -62,28 +63,30 @@
 
     <ImageButton
         android:id="@+id/btn_three"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="@dimen/margin_medium"
         android:background="@drawable/three_button_selector"
         app:layout_constraintLeft_toRightOf="@id/btn_two"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_pass" />
+        app:layout_constraintTop_toBottomOf="@id/edit_text_pass"
+        android:layout_marginStart="30dp" />
 
     <ImageButton
         android:id="@+id/btn_four"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginEnd="30dp"
+        android:layout_marginRight="30dp"
         android:background="@drawable/four_button_selector"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_five"
-        app:layout_constraintTop_toBottomOf="@id/btn_one" />
+        app:layout_constraintEnd_toStartOf="@+id/btn_five"
+        app:layout_constraintTop_toBottomOf="@+id/btn_one" />
 
     <ImageButton
         android:id="@+id/btn_five"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_margin="@dimen/margin_medium"
         android:background="@drawable/five_button_selector"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -92,28 +95,30 @@
 
     <ImageButton
         android:id="@+id/btn_six"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
         android:background="@drawable/six_button_selector"
-        app:layout_constraintLeft_toRightOf="@id/btn_five"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_three" />
+        app:layout_constraintStart_toEndOf="@+id/btn_five"
+        app:layout_constraintTop_toBottomOf="@+id/btn_three"
+        android:layout_marginStart="30dp" />
 
     <ImageButton
         android:id="@+id/btn_seven"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginRight="30dp"
         android:background="@drawable/seven_button_selector"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/btn_eight"
-        app:layout_constraintTop_toBottomOf="@id/btn_four" />
+        app:layout_constraintTop_toBottomOf="@id/btn_four"
+        android:layout_marginEnd="30dp" />
 
     <ImageButton
         android:id="@+id/btn_eight"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_margin="@dimen/margin_medium"
         android:background="@drawable/eight_button_selector"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -122,18 +127,19 @@
 
     <ImageButton
         android:id="@+id/btn_nine"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginLeft="30dp"
         android:background="@drawable/nine_button_selector"
         app:layout_constraintLeft_toRightOf="@id/btn_eight"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_six" />
+        app:layout_constraintTop_toBottomOf="@id/btn_six"
+        android:layout_marginStart="30dp" />
 
     <ImageButton
         android:id="@+id/btn_zero"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_margin="@dimen/margin_medium"
         android:background="@drawable/zero_button_selector"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -142,11 +148,12 @@
 
     <ImageButton
         android:id="@+id/btn_backspace"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginLeft="30dp"
         android:background="@drawable/backspace_button_selector"
         app:layout_constraintLeft_toRightOf="@id/btn_zero"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_nine" />
+        app:layout_constraintTop_toBottomOf="@id/btn_nine"
+        android:layout_marginStart="30dp" />
 </android.support.constraint.ConstraintLayout>

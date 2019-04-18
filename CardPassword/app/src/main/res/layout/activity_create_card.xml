@@ -29,7 +29,6 @@
             android:layout_height="wrap_content"
             android:focusable="true"
             android:gravity="center"
-            android:importantForAutofill="noExcludeDescendants"
             android:inputType="number"
             android:maxLength="20"
             android:selectAllOnFocus="true"

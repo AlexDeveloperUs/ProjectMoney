@@ -1,6 +1,5 @@
 package com.example.admin.cardpassword.ui.fragments.fragment1;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.cardpassword.R;
-import com.example.admin.cardpassword.ui.activity.list.ListActivity;
-import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 
 import java.util.Objects;
 
@@ -45,6 +42,7 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
     private String mGetSurname = "";
     private String mGetType = "";
     private String mGetPin = "";
+
     public static Fragment1 newInstance(int pPos, String pNumber, String pCvc, String pValidity, String pName, String pSurname, String pType, String pPin) {
 
         Fragment1 fragment = new Fragment1();

@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15"
+        app:layout_constraintGuide_percent="0.08"
         app:layout_constraintTop_toTopOf="@id/card" />
 
     <android.support.constraint.Guideline
@@ -88,7 +88,8 @@
         android:textStyle="bold"
         app:layout_constraintRight_toRightOf="@id/guideline_element_vertical_right_side"
         app:layout_constraintTop_toBottomOf="@id/text_card_number_element"
-        android:layout_marginRight="@dimen/margin_medium"/>
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -128,7 +129,7 @@
         android:id="@+id/image_element_visa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="@dimen/margin_large"
         android:layout_marginRight="@dimen/margin_extra_large"
         app:layout_constraintRight_toRightOf="@id/card"

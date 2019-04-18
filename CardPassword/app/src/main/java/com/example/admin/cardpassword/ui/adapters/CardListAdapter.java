@@ -116,19 +116,18 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
             String num = Long.toString(pCard.getCardNumber());
             String cvC = Short.toString(pCard.getCVC());
-            String valitadion = pCard.getValidity();
+            String validation = pCard.getValidity();
             cardNumber.setText(num);
             cvc.setText(cvC);
-            validity.setText(valitadion);
+            validity.setText(validation);
             cardHolderName.setText(pCard.getCardHolderName());
             cardHolderSurname.setText(pCard.getCardHolderSurname());
 
             float density = mListActivity.cont().getResources().getDisplayMetrics().density;
-
             if (pCard.getCardType().toLowerCase().equals("visa")) {
 
                 mImageView.setBackgroundResource(R.drawable.visa);
-                mImageView.getLayoutParams().height = (int) (density * 50);
+                mImageView.getLayoutParams().height = (int) (density * 40);
                 mImageView.getLayoutParams().width = (int) (density * 70);
             } else if (pCard.getCardType().toLowerCase().equals("mastercard")) {
 
@@ -149,6 +148,13 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
             mOnClickListener.onLongClickListener(v, getAdapterPosition());
             return false;
+        }
+
+        private void setIconParams() {
+
+            float density = mListActivity.cont().getResources().getDisplayMetrics().density;
+            mImageView.getLayoutParams().height = (int) (density * 40);
+            mImageView.getLayoutParams().width = (int) (density * 70);
         }
     }
 

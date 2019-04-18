@@ -191,8 +191,10 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public void swipeHelper() {
 
         RecyclerViewSwipeHelper swipeHelper = new RecyclerViewSwipeHelper(ListActivity.this, mRecyclerView) {
+
             @Override
             public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
+
                 underlayButtons.add(new RecyclerViewSwipeHelper.UnderlayButton(
                         android.R.drawable.ic_menu_delete,
                         Color.parseColor("#FF3C30"),

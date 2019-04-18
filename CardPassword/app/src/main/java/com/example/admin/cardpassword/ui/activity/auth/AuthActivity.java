@@ -27,10 +27,10 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.btn_skip)
     Button mButtonSkip;
 
-    private static final String SP_NAME = "00";
-    private static final String SP_KEY_FIRST_LAUNCH = "00";
-    private static final String SP_SKIP = "00";
-    private static final String SP_SKIP_CHECK = "00";
+    private static final String SP_NAME = "21";
+    private static final String SP_KEY_FIRST_LAUNCH = "21";
+    private static final String SP_SKIP = "21";
+    private static final String SP_SKIP_CHECK = "21";
 
     private boolean firstLaunch;
     private boolean skipCheck;
@@ -42,10 +42,11 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     SharedPreferences mSkipCheck;
     String confirmedPassword = "";
 
-    final String SHORT_PASSWORD = "00";
+    final String SHORT_PASSWORD = "21";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
         ButterKnife.bind(this);
