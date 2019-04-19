@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Card Password</string>
-    
+
     <string name="hint_login">Введите логин..</string>
     <string name="hint_password">Введите пароль..</string>
     <string name="btn_log_in">Войти</string>
-    
+
     <string name="text_card_number">Номер карты</string>
     <string name="text_cvs">CVS/CVV</string>
     <string name="text_card_holder">Владелец</string>
@@ -43,7 +43,7 @@
 
     <string name="text_valid_thru">VALID THRU</string>
     <string name="text_about_pin">Пароль от Вашей карты:</string>
-    
+
     <string-array name="card_type_array">
 
         <item>Visa</item>

@@ -117,7 +117,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
         if (fragment == null) {
-            fragment = Fragment1.newInstance(pI, mNumber, mCvc, mValidity, mName, mSurname, mType, mPin); //Fragment1.newInstance(pI);
+            fragment = Fragment1.newInstance(pI, mNumber, mCvc, mValidity, mName, mSurname, mType, mPin);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
@@ -141,7 +141,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         show();
     }
 
-    @OnClick(R.id.btn_floating_action_add)
+    @OnClick(R.id.fab)
     public void onClick(View v) {
 
         Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
@@ -152,7 +152,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
+        inflater.inflate(R.menu.menu_bottom_app_bar, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

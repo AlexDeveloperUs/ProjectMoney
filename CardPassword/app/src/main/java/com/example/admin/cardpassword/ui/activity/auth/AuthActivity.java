@@ -27,13 +27,13 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.btn_skip)
     Button mButtonSkip;
 
-    private static final String SP_NAME = "21";
-    private static final String SP_KEY_FIRST_LAUNCH = "21";
-    private static final String SP_SKIP = "21";
-    private static final String SP_SKIP_CHECK = "21";
+    private static final String SP_NAME = "21212";
+    private static final String SP_KEY_FIRST_LAUNCH = "21212";
+    private static final String SP_SKIP = "21212";
+    private static final String SP_SKIP_CHECK = "21212";
 
     private boolean firstLaunch;
-    private boolean skipCheck;
+    private boolean skipCheck = true;
 
     Intent intent;
 
@@ -42,7 +42,7 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     SharedPreferences mSkipCheck;
     String confirmedPassword = "";
 
-    final String SHORT_PASSWORD = "21";
+    final String SHORT_PASSWORD = "21212";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
