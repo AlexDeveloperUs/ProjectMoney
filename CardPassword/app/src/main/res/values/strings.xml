@@ -44,6 +44,10 @@
     <string name="text_valid_thru">VALID THRU</string>
     <string name="text_about_pin">Пароль от Вашей карты:</string>
 
+    <string name="text_short_password_usage">Использовать пароль</string>
+    <string name="text_create_short_password">Создать пароль</string>
+    <string name="text_change_short_password">Изменить пароль</string>
+
     <string-array name="card_type_array">
 
         <item>Visa</item>

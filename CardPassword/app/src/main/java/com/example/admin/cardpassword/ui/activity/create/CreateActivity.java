@@ -4,10 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.bottomappbar.BottomAppBar;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -16,6 +21,8 @@ import android.widget.Toast;
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.AppDataBase;
 import com.example.admin.cardpassword.data.models.Card;
+import com.example.admin.cardpassword.ui.activity.list.ListActivity;
+import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
 import com.example.admin.cardpassword.utils.ThreadExecutors;
 import com.github.pinball83.maskededittext.MaskedEditText;
 
@@ -53,6 +60,10 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     TextInputLayout mCvcLayout;
     @BindView(R.id.card_pin_layout)
     TextInputLayout mPinLayout;
+    @BindView(R.id.bottom_app_bar_create_card)
+    BottomAppBar mBottomAppBar;
+    @BindView(R.id.fab_create)
+    FloatingActionButton mButtonBack;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +77,12 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         mCardNumber.clearFocus();
         InputMethodManager imgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imgr.showSoftInput(mCardNumber, 0);
+
+        setBottomAppBar();
+    }
+
+    private void setBottomAppBar() {
+
     }
 
     @Override
@@ -104,9 +121,10 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         });
     }
 
-    @OnClick({R.id.btn_visa, R.id.btn_master_card, R.id.btn_save_card})
+    @OnClick({R.id.btn_visa, R.id.btn_master_card, R.id.btn_save_card, R.id.fab_create, R.id.image_view_settings_create})
     public void onClick(View v) {
 
+        Intent intent;
         switch (v.getId()) {
 
             case R.id.btn_visa:
@@ -119,6 +137,17 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
                 break;
             case R.id.btn_save_card:
                 insert(mCardType);
+                break;
+            case R.id.fab_create:
+                intent = new Intent(CreateActivity.this, ListActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.image_view_settings_create:
+                intent = new Intent(CreateActivity.this, SettingsActivity.class);
+                intent.putExtra("key", 2);
+                startActivity(intent);
+                finish();
                 break;
         }
     }
