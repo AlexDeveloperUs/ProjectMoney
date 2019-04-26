@@ -6,8 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.models.Card;
@@ -17,6 +20,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.thanel.swipeactionview.SwipeActionView;
+import me.thanel.swipeactionview.SwipeGestureListener;
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
 
@@ -24,7 +29,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     private final LayoutInflater mInflater;
     private ListActivity mListActivity;
     private OnClickListener mOnClickListener;
-    private int mPosition;
 
     public CardListAdapter(Context pContext, List<Card> pCardList, OnClickListener pOnClickListener, ListActivity pListActivity) {
 
@@ -45,8 +49,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder pViewHolder, int pI) {
 
-        pViewHolder.bind(mCardList.get(pI));
-        mPosition = pViewHolder.getAdapterPosition();
+        pViewHolder.bind(mCardList.get(pI), pI);
     }
 
     public Card getCardAtPos(int pPosition) {
@@ -60,26 +63,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         notifyDataSetChanged();
     }
 
-    public void clearItems() {
-
-        mCardList.clear();
-        mListActivity.deleteAll();
-        notifyDataSetChanged();
-    }
-
-    public void deleteItem(int pPosition) {
-
-        mPosition = pPosition;
-        mCardList.remove(mPosition);
-        notifyItemRemoved(mPosition);
-    }
-
-    public void restoreItem(Card pCard, int pPosition) {
-
-        mCardList.add(pPosition, pCard);
-        notifyItemInserted(pPosition);
-    }
-
     @Override
     public int getItemCount() {
 
@@ -89,7 +72,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         } else return 0;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.text_card_number_element)
         TextView cardNumber;
@@ -103,16 +86,37 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         TextView cardHolderSurname;
         @BindView(R.id.image_element_visa)
         ImageView mImageView;
+        @BindView(R.id.swipe_view)
+        SwipeActionView getmSwipeAction;
 
         ViewHolder(@NonNull View itemView) {
 
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
         }
 
-        void bind(Card pCard) {
+        void bind(Card pCard, int pos) {
+
+            SwipeGestureListener swipeGestureListener = new SwipeGestureListener() {
+                @Override
+                public boolean onSwipedLeft(@NonNull SwipeActionView swipeActionView) {
+
+                    mListActivity.editCard(getCardAtPos(pos));
+                    notifyItemChanged(pos);
+                    return true;
+                }
+
+                @Override
+                public boolean onSwipedRight(@NonNull SwipeActionView swipeActionView) {
+
+                    mListActivity.deleteSingleItem(getCardAtPos(pos));
+                    notifyItemRemoved(pos);
+                    return true;
+                }
+            };
+
+            getmSwipeAction.setSwipeGestureListener(swipeGestureListener);
 
             String num = Long.toString(pCard.getCardNumber());
             String cvC = Short.toString(pCard.getCVC());
@@ -142,26 +146,10 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
             mOnClickListener.onItemClick(v, getAdapterPosition());
         }
-
-        @Override
-        public boolean onLongClick(View v) {
-
-            mOnClickListener.onLongClickListener(v, getAdapterPosition());
-            return false;
-        }
-
-        private void setIconParams() {
-
-            float density = mListActivity.cont().getResources().getDisplayMetrics().density;
-            mImageView.getLayoutParams().height = (int) (density * 40);
-            mImageView.getLayoutParams().width = (int) (density * 70);
-        }
     }
 
     public interface OnClickListener {
 
         void onItemClick(View pView, int pI);
-
-        void onLongClickListener(View pView, int pI);
     }
 }

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<me.thanel.swipeactionview.SwipeActionView android:id="@+id/swipe_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/SwipeItem"
+    app:sav_swipeLeftRippleColor="@color/colorPrimary"
+    app:sav_swipeRightRippleColor="@color/colorAccent"
+    app:sav_tools_previewRipple="swipeRight"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        style="@style/IconDelete" />
+
+    <ImageView
+
+        style="@style/IconEdit"
+        android:layout_gravity="end|center_vertical"/>
+<android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/margin_medium">
@@ -136,3 +152,4 @@
         app:layout_constraintTop_toBottomOf="@id/text_card_validity_element" />
 
 </android.support.constraint.ConstraintLayout>
+</me.thanel.swipeactionview.SwipeActionView>

@@ -2,7 +2,6 @@ package com.example.admin.cardpassword.ui.activity.list;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
@@ -11,7 +10,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
 import com.example.admin.cardpassword.R;
@@ -21,7 +19,6 @@ import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.ui.fragments.fragment1.Fragment1;
-import com.example.admin.cardpassword.utils.RecyclerViewSwipeHelper;
 import com.example.admin.cardpassword.utils.ThreadExecutors;
 
 import java.util.ArrayList;
@@ -93,7 +90,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         mAdapter = new CardListAdapter(this, mCardList, this, this);
         mRecyclerView.setAdapter(mAdapter);
 
-        swipeHelper();
     }
 
     @Override
@@ -118,21 +114,12 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
         if (fragment == null) {
+
             fragment = Fragment1.newInstance(pI, mNumber, mCvc, mValidity, mName, mSurname, mType, mPin);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
         }
-    }
-
-    @Override
-    public void onLongClickListener(View pView, int pI) {
-
-    }
-
-    public void deleteAll() {
-
-        mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao().deleteAll());
     }
 
     @Override
@@ -171,7 +158,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         mAdapter.notifyDataSetChanged();
     }
 
-    private void deleteSingleItem(Card pCard) {
+    public void deleteSingleItem(Card pCard) {
 
         mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao()
                 .delete(pCard));
@@ -188,40 +175,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         mPin = String.valueOf(pCard.getPin());
     }
 
-    public void swipeHelper() {
-
-        RecyclerViewSwipeHelper swipeHelper = new RecyclerViewSwipeHelper(ListActivity.this, mRecyclerView) {
-
-            @Override
-            public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
-
-                underlayButtons.add(new RecyclerViewSwipeHelper.UnderlayButton(
-                        android.R.drawable.ic_menu_delete,
-                        Color.parseColor("#FF3C30"),
-                        pos -> {
-
-                            deleteSingleItem(mAdapter.getCardAtPos(pos));
-                            mAdapter.notifyItemRemoved(pos);
-                        }
-                ));
-
-                underlayButtons.add(new RecyclerViewSwipeHelper.UnderlayButton(
-                        android.R.drawable.ic_menu_edit,
-                        Color.parseColor("#649b11"),
-                        pos -> {
-
-                            editCard(mAdapter.getCardAtPos(pos));
-                            mAdapter.notifyItemChanged(pos);
-                        }
-                ));
-            }
-        };
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(swipeHelper);
-        itemTouchHelper.attachToRecyclerView(mRecyclerView);
-    }
-
-    private void editCard(Card pCard) {
+    public void editCard(Card pCard) {
 
         String cardNumber = pCard.getCardNumber() + "";
         String cardCvc = pCard.getCVC() + "";
