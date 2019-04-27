@@ -7,6 +7,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.admin.cardpassword.R;
+import com.example.admin.cardpassword.ui.activity.list.ListActivity;
+import com.example.admin.cardpassword.utils.SharedPrefs;
 
 public class AuthMainActivity extends AppCompatActivity {
 
@@ -16,20 +18,31 @@ public class AuthMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_auth);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("PAS", 0);
-        String mPassword = sharedPreferences.getString("pas", "");
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_NAME, 0);
+        String mPassword = sharedPreferences.getString(SharedPrefs.SHARED_PREFERENCES_KEY, "");
 
         assert mPassword != null;
+        Intent intent;
+
         if (mPassword.equals("")) {
 
-            Intent intent = new Intent(getApplicationContext(), AuthActivity.class);
+            intent = new Intent(getApplicationContext(), AuthCreatePasswordActivity.class);
             startActivity(intent);
             finish();
-        } else {
+        } else if (mPassword.matches("[\\d]+")) {
 
-            Intent intent = new Intent(getApplicationContext(), AuthCheckPass.class);
+            intent = new Intent(getApplicationContext(), AuthCheckPasswordActivity.class);
             startActivity(intent);
             finish();
+        } else if (mPassword.contains("skipped")) {
+
+            intent = new Intent(getApplicationContext(), ListActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (mPassword.contains("disabled")) {
+
+            intent = new Intent(getApplicationContext(), ListActivity.class);
+            startActivity(intent);
         }
     }
 }

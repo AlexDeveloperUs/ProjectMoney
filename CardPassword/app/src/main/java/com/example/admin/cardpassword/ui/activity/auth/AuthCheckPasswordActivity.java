@@ -12,13 +12,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.admin.cardpassword.R;
+import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
+import com.example.admin.cardpassword.utils.SharedPrefs;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AuthCheckPass extends AppCompatActivity implements View.OnClickListener {
+public class AuthCheckPasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.first_void_circle_create)
     ImageView mFirstCircle;
@@ -38,11 +40,13 @@ public class AuthCheckPass extends AppCompatActivity implements View.OnClickList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check_pass);
+        setContentView(R.layout.activity_auth_check_password);
         ButterKnife.bind(this);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("PAS", 0);
-        mPassword = sharedPreferences.getString("pas", "");
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_NAME, 0);
+        mPassword = sharedPreferences.getString(SharedPrefs.SHARED_PREFERENCES_KEY, "");
+
+        checkIntent();
     }
 
     @OnClick({R.id.btn_one_check_pass, R.id.btn_two_check_pass, R.id.btn_three_check_pass, R.id.btn_four_check_pass,
@@ -130,17 +134,37 @@ public class AuthCheckPass extends AppCompatActivity implements View.OnClickList
                 break;
             case 4:
                 mForthCircle.setBackgroundResource(R.drawable.fill_circle);
-                startListActivity();
+                checkIntent();
                 break;
         }
     }
 
-    private void startListActivity() {
+    private void checkIntent() {
 
-        if (mCheck.equals(mPassword)) {
+        Intent intent = getIntent();
+        String currentPassword = intent.getStringExtra("currentPass");
+        String pas = currentPassword == null ? "" : currentPassword;
 
-            Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-            startActivity(intent);
-        } else shakeWrongPass();
+        if (pas.equals("")) {
+
+            if (mCheck.equals(mPassword)) {
+
+                intent = new Intent(getApplicationContext(), ListActivity.class);
+                startActivity(intent);
+                finish();
+            } else shakeWrongPass();
+        } else {
+
+            if (currentPassword.equals(mCheck)) {
+
+                SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_NAME, 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "first");
+                editor.apply();
+
+                intent = new Intent(getApplicationContext(), AuthCreatePasswordActivity.class);
+                startActivity(intent);
+            }
+        }
     }
 }

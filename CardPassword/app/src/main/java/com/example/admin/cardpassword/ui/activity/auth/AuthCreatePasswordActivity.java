@@ -16,12 +16,13 @@ import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
+import com.example.admin.cardpassword.utils.SharedPrefs;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AuthActivity extends AppCompatActivity implements View.OnClickListener {
+public class AuthCreatePasswordActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.first_void_circle_create)
     ImageView mFirstCircle;
@@ -38,49 +39,35 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.btn_skip)
     Button mButtonSkip;
 
-    SharedPreferences sharedPreferences;
-     String mPassword = "";
+    private String mPassword = "";
+    private String confirmedPassword = "";
 
-    private static final String SP_NAME = "111111";
-    private static final String SP_KEY_FIRST_LAUNCH = "111111";
-    private static final String SP_SKIP = "111111";
-    private static final String SP_SKIP_CHECK = "111111";
+    private String firstLaunch;
 
-    private boolean firstLaunch;
-//    private boolean skipCheck = true;
-
-    private Intent intent;
-
-    private SharedPreferences mPreferences;
-    //    private SharedPreferences mSkipCheck;
-    String confirmedPassword = "";
-    SharedPreferences.Editor editor;
-
-    final String SHORT_PASSWORD = "111111";
+    private static final String SP_NAME = "12212112151111";
+    private static final String SP_KEY_FIRST_LAUNCH = "12212112151111";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth);
+        setContentView(R.layout.activity_auth_create_password);
         ButterKnife.bind(this);
 
         firstLaunchCheck();
-
-        mPreferences = getPreferences(MODE_PRIVATE);
-
     }
 
     private void firstLaunchCheck() {
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SP_NAME, MODE_PRIVATE);
-//        mSkipCheck = getSharedPreferences(SP_SKIP, MODE_PRIVATE);
-//        skipCheck = mSkipCheck.getBoolean(SP_SKIP_CHECK, true);
-//        firstLaunch = sharedPreferences.getBoolean(SP_KEY_FIRST_LAUNCH, true);
-//        if (firstLaunch) {
-//
-//            sharedPreferences.edit().putBoolean(SP_KEY_FIRST_LAUNCH, false).apply();
-//        } else mButtonSkip.setVisibility(View.INVISIBLE);
+        SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_NAME, MODE_PRIVATE);
+        firstLaunch = sharedPreferences.getString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "first");
+        assert firstLaunch != null;
+        if (firstLaunch.equals("first")) {
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "notFirst");
+            editor.apply();
+        }
     }
 
     private void drawCircle(String pString) {
@@ -116,8 +103,6 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
         mThirdCircle.setBackgroundResource(R.drawable.void_circle);
         mFourthCircle.setBackgroundResource(R.drawable.void_circle);
         mPassword = "";
-
-
     }
 
     private void shakeWrongPass() {
@@ -128,102 +113,46 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
 
     private void createShortPassword(String pPassword) {
 
-        if (pPassword.length() == 4 && mButtonCancel.getVisibility() == View.INVISIBLE) {
+        if (firstLaunch.equals("first")) {
 
-            confirmedPassword = pPassword;
-            Toast.makeText(AuthActivity.this, "" + pPassword, Toast.LENGTH_SHORT).show();
+            if (pPassword.length() == 4 && mButtonCancel.getVisibility() == View.INVISIBLE) {
 
-            mButtonSkip.setVisibility(View.INVISIBLE);
-            mButtonCancel.setVisibility(View.VISIBLE);
-            clearPassView();
-        } else if (pPassword.length() == 4 && mButtonCancel.getVisibility() == View.VISIBLE) {
+                confirmedPassword = pPassword;
+                Toast.makeText(AuthCreatePasswordActivity.this, "" + pPassword, Toast.LENGTH_SHORT).show();
 
-            if (confirmedPassword.equals(pPassword)) {
+                mButtonSkip.setVisibility(View.INVISIBLE);
+                mButtonCancel.setVisibility(View.VISIBLE);
+                clearPassView();
+            } else if (pPassword.length() == 4 && mButtonCancel.getVisibility() == View.VISIBLE) {
 
-                sharedPreferences = getSharedPreferences("PAS", 0);
-                editor = sharedPreferences.edit();
-                editor.putString("pas", confirmedPassword);
-                editor.apply();
+                if (confirmedPassword.equals(pPassword)) {
 
-                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-                startActivity(intent);
-                startListActivity();
+                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_NAME, 0);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(SharedPrefs.SHARED_PREFERENCES_KEY, confirmedPassword);
+                    editor.apply();
 
-                Toast.makeText(AuthActivity.this, "Confirmed Password", Toast.LENGTH_SHORT).show();
-            } else {
+                    SharedPreferences.Editor editable = sharedPreferences.edit();
+                    editable.putString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "notFirst");
+                    editable.apply();
 
-                shakeWrongPass();
-                Toast.makeText(AuthActivity.this, "The password are not", Toast.LENGTH_SHORT).show();
+                    startListActivity();
+
+                    Toast.makeText(AuthCreatePasswordActivity.this, "Confirmed Password", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    shakeWrongPass();
+                    Toast.makeText(AuthCreatePasswordActivity.this, "The password are not", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
 
-//    private void shortPass() {
-//
-//        mTextPass.addTextChangedListener(new TextWatcher() {
-//
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                String password = s.toString();
-//
-//                if (firstLaunch) {
-//
-//                    if (s.length() == 4 && mButtonCancel.getVisibility() == View.INVISIBLE) {
-//
-//                        confirmedPassword = password;
-//                        Toast.makeText(AuthActivity.this, "" + password, Toast.LENGTH_SHORT).show();
-//
-//                        mTextPass.setText("");
-//                        mButtonSkip.setVisibility(View.INVISIBLE);
-//                        mButtonCancel.setVisibility(View.VISIBLE);
-//                        s.clear();
-//                    } else if (s.length() == 4 && mButtonCancel.getVisibility() == View.VISIBLE) {
-//
-//                        String str = s.toString();
-//
-//                        if (confirmedPassword.equals(str)) {
-//
-//                            SharedPreferences.Editor editor = mPreferences.edit();
-//                            editor.putString(SHORT_PASSWORD, mTextPass.getText().toString());
-//                            editor.apply();
-//
-//                            mSkipCheck.edit().putBoolean(SP_SKIP_CHECK, true).apply();
-//                            startListActivity();
-//
-//                            Toast.makeText(AuthActivity.this, "Confirmed Password", Toast.LENGTH_SHORT).show();
-//                        } else
-//                            Toast.makeText(AuthActivity.this, "The password are not", Toast.LENGTH_SHORT).show();
-//                    }
-//                } else {
-//                    mButtonSkip.setVisibility(View.INVISIBLE);
-//
-//                    if (s.length() == 4 && password.equals(mPreferences.getString(SHORT_PASSWORD, ""))) {
-//
-//                        startListActivity();
-//                    } else if (s.length() == 4 && !password.equals(mPreferences.getString(SHORT_PASSWORD, ""))) {
-//
-//                        Toast.makeText(AuthActivity.this, "Wrong password", Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//            }
-//        });
-//    }
-
     private void startListActivity() {
 
-        intent = new Intent(AuthActivity.this, ListActivity.class);
+        Intent intent = new Intent(AuthCreatePasswordActivity.this, ListActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @OnClick({R.id.btn_one_check_pass, R.id.btn_two_check_pass, R.id.btn_three_check_pass, R.id.btn_four_check_pass, R.id.btn_five_check_pass, R.id.btn_six_check_pass,
@@ -281,6 +210,10 @@ public class AuthActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btn_skip:
+                SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_NAME, 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(SharedPrefs.SHARED_PREFERENCES_KEY, "skipped");
+                editor.apply();
                 startListActivity();
                 break;
             case R.id.btn_cancel:

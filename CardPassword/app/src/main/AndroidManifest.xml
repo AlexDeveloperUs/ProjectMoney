@@ -23,8 +23,7 @@
             android:parentActivityName=".ui.activity.list.ListActivity" />
         <activity android:name=".ui.activity.list.ListActivity" />
         <activity android:name=".ui.activity.settings.SettingsActivity" />
-        <activity android:name=".ui.activity.auth.AuthCheckPass" />
-        <activity android:name=".ui.activity.auth.AuthActivity" />
+        <activity android:name=".ui.activity.auth.AuthCheckPasswordActivity" />
+        <activity android:name=".ui.activity.auth.AuthCreatePasswordActivity" />
     </application>
-
 </manifest>
