@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.admin.cardpassword.R;
-import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 import com.example.admin.cardpassword.utils.SharedPrefs;
 

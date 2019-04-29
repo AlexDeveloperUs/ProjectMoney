@@ -118,16 +118,13 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         String mPassword = mSharedPreferences.getString(SharedPrefs.SHARED_PREFERENCES_KEY, "");
 
         assert mPassword != null;
-        Intent intent;
 
         if (mPassword.equals("")) {
-
 
         } else if (mPassword.matches("[\\d]+")) {
 
             mSwitchUsage.setChecked(true);
         } else if (mPassword.contains("skipped")) {
-
 
         }
     }

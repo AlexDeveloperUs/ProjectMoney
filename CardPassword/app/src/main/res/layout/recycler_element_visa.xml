@@ -10,7 +10,8 @@
     app:sav_swipeRightRippleColor="@color/colorAccent"
     app:sav_tools_previewRipple="swipeRight">
 
-    <ImageView style="@style/IconDelete" />
+    <ImageView style="@style/IconDelete" >
+    </ImageView>
 
     <ImageView
 
