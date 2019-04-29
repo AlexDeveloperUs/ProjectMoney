@@ -177,23 +177,10 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     public void editCard(Card pCard) {
 
-        String cardNumber = pCard.getCardNumber() + "";
-        String cardCvc = pCard.getCVC() + "";
-        String cardValidity = pCard.getValidity();
-        String cardHoldersName = pCard.getCardHolderName();
-        String cardHoldersSurname = pCard.getCardHolderSurname();
-        String cardType = pCard.getCardType();
-        String cardPin = pCard.getPin() + "";
         String rec = "2";
 
         Intent intent = new Intent(ListActivity.this, CreateActivity.class);
-        intent.putExtra("number", cardNumber);
-        intent.putExtra("cvc", cardCvc);
-        intent.putExtra("validity", cardValidity);
-        intent.putExtra("name", cardHoldersName);
-        intent.putExtra("surname", cardHoldersSurname);
-        intent.putExtra("type", cardType);
-        intent.putExtra("pin", cardPin);
+        intent.putExtra("card", pCard);
         intent.putExtra("REQUEST_CODE", rec);
 
         startActivityForResult(intent, EDIT_CARD_REQUEST);

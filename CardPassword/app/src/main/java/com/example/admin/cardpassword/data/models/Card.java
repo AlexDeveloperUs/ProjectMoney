@@ -3,21 +3,23 @@ package com.example.admin.cardpassword.data.models;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.Serializable;
 
 @Entity(tableName = "cards")
-public class Card implements Serializable {
+public class Card implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "cardId")
-    public long mId;
+    public int mId;
 
     @ColumnInfo(name = "cardNumber")
     public long mCardNumber;
 
     @ColumnInfo(name = "cardCVC")
-    public short mCVC;
+    public int mCVC;
 
     @ColumnInfo(name = "cardValidity")
     public String mValidity;
@@ -32,12 +34,12 @@ public class Card implements Serializable {
     public String mCardType;
 
     @ColumnInfo(name = "cardPIN")
-    public short mPin;
+    public int mPin;
 
     public Card() {
     }
 
-    public Card(long pCardNumber, short pCVC, String pValidity, String pCardHolderName, String pCardHolderSurname, String pCardType, short pPin) {
+    public Card(long pCardNumber, int pCVC, String pValidity, String pCardHolderName, String pCardHolderSurname, String pCardType, int pPin) {
 
         mCardNumber = pCardNumber;
         mCVC = pCVC;
@@ -46,6 +48,30 @@ public class Card implements Serializable {
         mCardHolderSurname = pCardHolderSurname;
         mCardType = pCardType;
         mPin = pPin;
+    }
+
+    public Card(Parcel in) {
+
+        mCardNumber = in.readLong();
+        mCVC = in.readInt();
+        mValidity = in.readString();
+        mCardHolderName = in.readString();
+        mCardHolderSurname = in.readString();
+        mCardType = in.readString();
+        mPin = in.readInt();
+        mId = in.readInt();
+    }
+
+    public Card(long pMByteCardNumber, int pMByteCvc, String pMValidityContains, String pCardHoldersName, String pCardHoldersSurname, String pCardType, int pMBytePin, int pId) {
+
+    mCardNumber = pMByteCardNumber;
+    mCVC = pMByteCvc;
+    mValidity = pMValidityContains;
+    mCardHolderName = pCardHoldersName;
+    mCardHolderSurname = pCardHoldersSurname;
+    mCardType = pCardType;
+    mPin = pMBytePin;
+    mId = pId;
     }
 
     public String getCardType() {
@@ -58,12 +84,12 @@ public class Card implements Serializable {
         mCardType = pCardType;
     }
 
-    public void setId(long pId) {
+    public void setId(int pId) {
 
         mId = pId;
     }
 
-    public long getId() {
+    public int getId() {
 
         return mId;
     }
@@ -78,12 +104,12 @@ public class Card implements Serializable {
         return mCardNumber;
     }
 
-    public void setCVC(short pCVC) {
+    public void setCVC(int pCVC) {
 
         mCVC = pCVC;
     }
 
-    public short getCVC() {
+    public int getCVC() {
 
         return mCVC;
     }
@@ -118,14 +144,47 @@ public class Card implements Serializable {
         mCardHolderSurname = pCardHolderSurname;
     }
 
-    public short getPin() {
+    public int getPin() {
 
         return mPin;
     }
 
-    public void setPin(short pPin) {
+    public void setPin(int pPin) {
 
         mPin = pPin;
     }
 
+    @Override
+    public int describeContents() {
+
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeLong(mCardNumber);
+        dest.writeInt(mCVC);
+        dest.writeString(mValidity);
+        dest.writeString(mCardHolderName);
+        dest.writeString(mCardHolderSurname);
+        dest.writeString(mCardType);
+        dest.writeInt(mPin);
+        dest.writeInt(mId);
+    }
+
+    public static final Creator<Card> CREATOR = new Creator<Card>() {
+
+        @Override
+        public Card createFromParcel(Parcel in) {
+
+            return new Card(in);
+        }
+
+        @Override
+        public Card[] newArray(int size) {
+
+            return new Card[size];
+        }
+    };
 }

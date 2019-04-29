@@ -116,7 +116,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
             getmSwipeAction.setSwipeGestureListener(swipeGestureListener);
 
             String num = Long.toString(pCard.getCardNumber());
-            String cvC = Short.toString(pCard.getCVC());
+            String cvC = String.valueOf(pCard.getCVC());
             String validation = pCard.getValidity();
             cardNumber.setText(num);
             cvc.setText(cvC);

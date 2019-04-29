@@ -38,6 +38,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     private AppDataBase mAppDataBase;
     private final String REQUEST_CODE = "2";
     private boolean mCheckRequestCodeForSave = true;
+    private int mId = 0;
 
     @BindView(R.id.edit_text_card_number)
     MaskedEditText mCardNumber;
@@ -238,8 +239,8 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
 
         assert cardNumber != null;
         long mByteCardNumber = Long.parseLong(cardNumber);
-        short mByteCvc = Short.parseShort(cvc);
-        short mBytePin = Short.valueOf(pin);
+        int mByteCvc = Short.parseShort(cvc);
+        int mBytePin = Short.valueOf(pin);
 
         if (mCheckRequestCodeForSave) {
 
@@ -247,8 +248,9 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
                     mByteCvc, mValidityContains, cardHoldersName, cardHoldersSurname, pCardType, mBytePin)));
         } else {
 
-            mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao().update(new Card(mByteCardNumber,
-                    mByteCvc, mValidityContains, cardHoldersName, cardHoldersSurname, pCardType, mBytePin)));
+            Card card = new Card(mByteCardNumber,
+                    mByteCvc, mValidityContains, cardHoldersName, cardHoldersSurname, pCardType, mBytePin, mId);
+            mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao().update(card));
         }
 
         Intent intent = new Intent();
@@ -259,25 +261,23 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     private void checkRequestCode() {
 
         Intent intent = getIntent();
-
+        Card card = getIntent().getParcelableExtra("card");
         String code = intent.getStringExtra("REQUEST_CODE");
 
         if (code != null && code.equals(REQUEST_CODE)) {
 
+            String cvc = String.valueOf(card.getCVC());
+            String pin = String.valueOf(card.getPin());
+
             mCheckRequestCodeForSave = false;
-            String number = intent.getStringExtra("number");
-            String cvc = intent.getStringExtra("cvc");
-            String validity = intent.getStringExtra("validity");
-            String name = intent.getStringExtra("name");
-            String surname = intent.getStringExtra("surname");
-            mCardType = intent.getStringExtra("type");
-            String pin = intent.getStringExtra("pin");
-            mCardNumber.setMaskedText(number);
+            mCardNumber.setMaskedText(String.valueOf(card.getCardNumber()));
             mCardCvc.setText(cvc);
-            mCardValidity.setText(validity);
-            mCardHoldersName.setText(name);
-            mCardHoldersSurname.setText(surname);
+            mCardValidity.setText(card.getValidity());
+            mCardHoldersName.setText(card.getCardHolderName());
+            mCardHoldersSurname.setText(card.getCardHolderSurname());
+            mCardType = card.getCardType();
             mCardPin.setText(pin);
+            mId = card.getId();
         } else textChangeListener();
     }
 }
