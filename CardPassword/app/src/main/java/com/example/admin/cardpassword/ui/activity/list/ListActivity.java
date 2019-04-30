@@ -177,11 +177,11 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     public void editCard(Card pCard) {
 
-        String rec = "2";
+        String request = "2";
 
         Intent intent = new Intent(ListActivity.this, CreateActivity.class);
         intent.putExtra("card", pCard);
-        intent.putExtra("REQUEST_CODE", rec);
+        intent.putExtra("REQUEST_CODE", request);
 
         startActivityForResult(intent, EDIT_CARD_REQUEST);
     }

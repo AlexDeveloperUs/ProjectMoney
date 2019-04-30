@@ -73,14 +73,8 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         mPresenter = new CreatePresenter(this);
         checkRequestCode();
         mCardNumber.clearFocus();
-        InputMethodManager imgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imgr.showSoftInput(mCardNumber, 0);
-
-        setBottomAppBar();
-    }
-
-    private void setBottomAppBar() {
-
+        InputMethodManager img = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        img.showSoftInput(mCardNumber, 0);
     }
 
     @Override
@@ -152,12 +146,11 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
 
     private void insert(String pCardType) {
 
-        final String cvc = mCardCvc.getText().toString();
-        final String cardNumber;
-        final String validity;
-        final String cardHoldersName;
-        final String cardHoldersSurname;
-        final String pin = mCardPin.getText().toString();
+        String cvc = mCardCvc.getText().toString();
+        String cardNumber;
+        String cardHoldersName;
+        String cardHoldersSurname;
+        String pin = mCardPin.getText().toString();
         String mValidityContains = mCardValidity.getText().toString();
         String mCardNumberCheck = Objects.requireNonNull(mCardNumber.getText()).toString();
         String holdersName = mCardHoldersName.getText().toString();

@@ -42,7 +42,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     private String mPassIsCreated;
     SharedPreferences mSharedPreferences;
-    SharedPreferences mSavedPass;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

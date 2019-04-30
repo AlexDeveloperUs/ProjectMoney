@@ -1,5 +1,6 @@
 package com.example.admin.cardpassword.ui.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -84,7 +85,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         @BindView(R.id.image_element_visa)
         ImageView mImageView;
         @BindView(R.id.swipe_view)
-        SwipeActionView getmSwipeAction;
+        SwipeActionView mSwipeActionView;
 
         ViewHolder(@NonNull View itemView) {
 
@@ -93,6 +94,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
             itemView.setOnClickListener(this);
         }
 
+        @SuppressLint("SetTextI18n")
         void bind(Card pCard, int pos) {
 
             SwipeGestureListener swipeGestureListener = new SwipeGestureListener() {
@@ -113,14 +115,11 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
                 }
             };
 
-            getmSwipeAction.setSwipeGestureListener(swipeGestureListener);
+            mSwipeActionView.setSwipeGestureListener(swipeGestureListener);
 
-            String num = Long.toString(pCard.getCardNumber());
-            String cvC = String.valueOf(pCard.getCVC());
-            String validation = pCard.getValidity();
-            cardNumber.setText(num);
-            cvc.setText(cvC);
-            validity.setText(validation);
+            cardNumber.setText(Long.toString(pCard.getCardNumber()));
+            cvc.setText(String.valueOf(pCard.getCVC()));
+            validity.setText(pCard.getValidity());
             cardHolderName.setText(pCard.getCardHolderName());
             cardHolderSurname.setText(pCard.getCardHolderSurname());
 
