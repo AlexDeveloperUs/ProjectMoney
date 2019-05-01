@@ -16,11 +16,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
-import com.example.admin.cardpassword.data.AppDataBase;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
-import com.example.admin.cardpassword.utils.ThreadExecutors;
 import com.github.pinball83.maskededittext.MaskedEditText;
 
 import java.util.Objects;
@@ -34,9 +32,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     private static final String EMPTY_STRING = "";
     private CreatePresenter mPresenter;
     private String mCardType = "visa";
-    private ThreadExecutors mExecutors = new ThreadExecutors();
-    private AppDataBase mAppDataBase;
-    private final String REQUEST_CODE = "2";
     private boolean mCheckRequestCodeForSave = true;
     private int mId = 0;
 
@@ -72,7 +67,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
 
         mPresenter = new CreatePresenter(this);
         checkRequestCode();
-        mCardNumber.clearFocus();
         InputMethodManager img = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         img.showSoftInput(mCardNumber, 0);
     }
@@ -146,105 +140,14 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
 
     private void insert(String pCardType) {
 
-        String cvc = mCardCvc.getText().toString();
-        String cardNumber;
-        String cardHoldersName;
-        String cardHoldersSurname;
-        String pin = mCardPin.getText().toString();
-        String mValidityContains = mCardValidity.getText().toString();
-        String mCardNumberCheck = Objects.requireNonNull(mCardNumber.getText()).toString();
-        String holdersName = mCardHoldersName.getText().toString();
-        String holdersSurname = mCardHoldersSurname.getText().toString();
+        String cardNumber = Objects.requireNonNull(mCardNumber.getText()).toString();
+        String cardCvc = mCardCvc.getText().toString();
+        String cardValidity = mCardValidity.getText().toString();
+        String cardHolderName = mCardHoldersName.getText().toString();
+        String cardHolderSurname = mCardHoldersSurname.getText().toString();
+        String cardPin = mCardPin.getText().toString();
 
-
-        if (mCardNumberCheck.toLowerCase().contains("x")) {
-
-            mNumberLayout.setError("Введите корректный номер карты");
-            mCardNumber.requestFocus();
-            return;
-        } else {
-
-            long count = 0;
-            long character;
-
-            long number = Long.parseLong(mCardNumberCheck.replaceAll("[^0-9]", ""));
-            for (int i = 16; i > 0; i--) {
-
-                character = number % 10;
-                number /= 10;
-
-                if (i % 2 == 1) {
-
-                    int check = (int) (character * 2);
-
-                    if (check > 9) {
-
-                        count += check - 9;
-                    } else {
-
-                        count += check;
-                    }
-                } else {
-
-                    count += character;
-                }
-            }
-
-            if (!(count % 10 == 0)) {
-
-                mNumberLayout.setError("Карты с таким номером не существует!");
-                mCardNumber.requestFocus();
-                return;
-            } else mNumberLayout.setError(EMPTY_STRING);
-        }
-
-        if (cvc.isEmpty()) {
-
-            mCvcLayout.setError("Заполните cvc");
-            mCardCvc.requestFocus();
-            return;
-        }
-
-        if (pin.isEmpty()) {
-
-            mCvcLayout.setError(EMPTY_STRING);
-            mPinLayout.setError("Введите пин-код");
-            mCardPin.requestFocus();
-            return;
-        }
-
-        if (!holdersName.isEmpty()) {
-
-            cardHoldersName = holdersName;
-        } else cardHoldersName = "";
-
-        if (!holdersSurname.isEmpty()) {
-
-            cardHoldersSurname = holdersSurname;
-        } else cardHoldersSurname = "";
-
-        if (mCardNumberCheck.contains("-")) {
-            mNumberLayout.setError(EMPTY_STRING);
-
-            cardNumber = mCardNumberCheck.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
-            mPinLayout.setError(EMPTY_STRING);
-        } else cardNumber = null;
-
-        assert cardNumber != null;
-        long mByteCardNumber = Long.parseLong(cardNumber);
-        int mByteCvc = Short.parseShort(cvc);
-        int mBytePin = Short.valueOf(pin);
-
-        if (mCheckRequestCodeForSave) {
-
-            mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao().insert(new Card(mByteCardNumber,
-                    mByteCvc, mValidityContains, cardHoldersName, cardHoldersSurname, pCardType, mBytePin)));
-        } else {
-
-            Card card = new Card(mByteCardNumber,
-                    mByteCvc, mValidityContains, cardHoldersName, cardHoldersSurname, pCardType, mBytePin, mId);
-            mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao().update(card));
-        }
+        mPresenter.checkDataValidation(cardNumber, cardCvc, cardValidity, cardHolderName, cardHolderSurname,  pCardType, cardPin, mCheckRequestCodeForSave, mId);
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
@@ -257,6 +160,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         Card card = getIntent().getParcelableExtra("card");
         String code = intent.getStringExtra("REQUEST_CODE");
 
+        String REQUEST_CODE = "2";
         if (code != null && code.equals(REQUEST_CODE)) {
 
             String cvc = String.valueOf(card.getCVC());
@@ -272,5 +176,57 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
             mCardPin.setText(pin);
             mId = card.getId();
         } else textChangeListener();
+    }
+
+    @Override
+    public void showExistenceError() {
+
+        mNumberLayout.setError("Карты с таким номером не существует!");
+        mCardNumber.requestFocus();
+    }
+
+    @Override
+    public void removeExistenceError() {
+
+        mNumberLayout.setError(EMPTY_STRING);
+    }
+
+    @Override
+    public void showNumberError() {
+
+        mNumberLayout.setError("Error");
+        mCardNumber.requestFocus();
+    }
+
+    @Override
+    public void showCvcError() {
+
+        mCvcLayout.setError("Заполните cvc");
+        mCardCvc.requestFocus();
+    }
+
+    @Override
+    public void showPinError() {
+
+        mPinLayout.setError("Введите пин-код");
+        mCardPin.requestFocus();
+    }
+
+    @Override
+    public void removeNumberError() {
+
+        mNumberLayout.setError(EMPTY_STRING);
+    }
+
+    @Override
+    public void removeCvcError() {
+
+        mCvcLayout.setError(EMPTY_STRING);
+    }
+
+    @Override
+    public void removePinError() {
+
+        mPinLayout.setError(EMPTY_STRING);
     }
 }

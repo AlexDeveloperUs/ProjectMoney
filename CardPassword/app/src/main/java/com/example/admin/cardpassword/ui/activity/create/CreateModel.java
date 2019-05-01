@@ -4,26 +4,30 @@ import com.example.admin.cardpassword.App;
 import com.example.admin.cardpassword.data.AppDataBase;
 import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.data.models.Card;
+import com.example.admin.cardpassword.utils.ThreadExecutors;
 
 public class CreateModel implements CreateContract.Model {
 
     private CardDao mCardDao;
     private AppDataBase mDataBase;
+    private ThreadExecutors mExecutors;
 
     CreateModel() {
 
+        mExecutors = new ThreadExecutors();
         mDataBase = App.getmInstance().getDataBase();
         mCardDao = mDataBase.mCardDao();
     }
 
     @Override
-    public void addCard(Card pCard) {
+    public void createCard(Card pCard) {
 
-        mCardDao.insert(new Card(pCard.mCardNumber, pCard.mCVC, pCard.mValidity, pCard.mCardHolderName, pCard.mCardType, pCard.mCardHolderSurname, pCard.mPin));
+        mExecutors.dbExecutor().execute(() -> mCardDao.insert(pCard));
     }
 
     @Override
-    public void editCardData(Card pCard) {
+    public void editCard(Card pCard) {
 
+        mExecutors.dbExecutor().execute(() -> mCardDao.update(pCard));
     }
 }

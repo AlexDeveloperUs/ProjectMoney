@@ -40,7 +40,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup pViewGroup, int pI) {
 
-        View view = mInflater.inflate(R.layout.recycler_element_visa, pViewGroup, false);
+        View view = mInflater.inflate(R.layout.recycler_element, pViewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -109,7 +109,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
                 @Override
                 public boolean onSwipedRight(@NonNull SwipeActionView swipeActionView) {
 
-                    mListActivity.deleteSingleItem(getCardAtPos(pos));
+                    mListActivity.deleteCard(getCardAtPos(pos));
                     notifyItemRemoved(pos);
                     return true;
                 }

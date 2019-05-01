@@ -2,45 +2,33 @@ package com.example.admin.cardpassword.ui.activity.list;
 
 import com.example.admin.cardpassword.data.models.Card;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface ListContract {
 
     interface View {
 
-        void blur();
-
-        void showCardList();
-
-        void checkIdExistence(int pI);
+        void initData(ArrayList<Card> pCards);
     }
 
     interface Model {
 
         void getCards();
 
-        void deleteCardData(Card pCard);
-
-        void setEditedCardData(Card pCard);
+        void deleteCard(Card pCard);
     }
 
     interface Presenter {
 
-        void deleteData();
-
-        void showPass();
-
-        void editCard();
-
-        void getData();
-
-        void cardExistence(int pI);
-
         interface RequestListener {
 
-            void onSuccess(List<Card> pCards);
+            void onSuccess(ArrayList<Card> pCards);
 
             void onFailed(Exception pE);
         }
+
+        void loadCards();
+
+        void deleteCard(Card pCard);
     }
 }

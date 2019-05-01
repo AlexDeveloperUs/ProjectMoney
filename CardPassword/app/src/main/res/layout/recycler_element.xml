@@ -10,13 +10,39 @@
     app:sav_swipeRightRippleColor="@color/colorAccent"
     app:sav_tools_previewRipple="swipeRight">
 
-    <ImageView style="@style/IconDelete" >
-    </ImageView>
+    <android.support.v7.widget.CardView
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="80dp">
 
-    <ImageView
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_delete" />
 
-        style="@style/IconEdit"
-        android:layout_gravity="end|center_vertical" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="80dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_edit" />
+
+    </android.support.v7.widget.CardView>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

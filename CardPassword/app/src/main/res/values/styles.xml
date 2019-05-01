@@ -16,7 +16,6 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minHeight">?listPreferredItemHeight</item>
-        <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <style name="Container" parent="TextAppearance.AppCompat.Body1">

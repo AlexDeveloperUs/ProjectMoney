@@ -2,37 +2,50 @@ package com.example.admin.cardpassword.ui.activity.list;
 
 import com.example.admin.cardpassword.App;
 import com.example.admin.cardpassword.data.AppDataBase;
-import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.data.dao.CardDao;
+import com.example.admin.cardpassword.data.models.Card;
+import com.example.admin.cardpassword.utils.ThreadExecutors;
+
+import java.util.ArrayList;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class ListModel implements ListContract.Model {
 
     private CardDao mCardDao;
-    private AppDataBase mDataBase;
+    private ThreadExecutors mExecutors;
     private ListContract.Presenter.RequestListener mListener;
+    private Disposable mDisposable;
 
     ListModel() {
 
-        mDataBase = App.getmInstance().getDataBase();
-        mCardDao = mDataBase.mCardDao();
+        mExecutors = new ThreadExecutors();
+        AppDataBase dataBase = App.getmInstance().getDataBase();
+        mCardDao = dataBase.mCardDao();
     }
 
     @Override
     public void getCards() {
 
-        mCardDao.getAll();
+        mExecutors.dbExecutor().execute(() -> {
+
+            try {
+
+                mDisposable = mCardDao.getAll()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(pCards -> mListener.onSuccess((ArrayList<Card>) pCards));
+            } catch (Exception pE) {
+
+                mListener.onFailed(pE);
+            }
+        });
     }
 
     @Override
-    public void deleteCardData(Card pCard) {
+    public void deleteCard(Card pCard) {
 
-        mCardDao.delete(pCard);
-    }
-
-    @Override
-    public void setEditedCardData(Card pCard) {
-
-        mCardDao.update(pCard);
+        mExecutors.dbExecutor().execute(() -> mCardDao.delete(pCard));
     }
 
     void addRequestListener(ListContract.Presenter.RequestListener pListener) {

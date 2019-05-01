@@ -1,16 +1,13 @@
 package com.example.admin.cardpassword.ui.activity.list;
 
-import com.example.admin.cardpassword.data.dao.CardDao;
 import com.example.admin.cardpassword.data.models.Card;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ListPresenter implements ListContract.Presenter, ListContract.Presenter.RequestListener {
 
-    private Card mCard;
     private ListContract.View mCreateActivity;
     private ListContract.Model mModel;
-    private CardDao mCardDao;
 
     ListPresenter(ListActivity pListActivity) {
 
@@ -20,37 +17,25 @@ public class ListPresenter implements ListContract.Presenter, ListContract.Prese
     }
 
     @Override
-    public void deleteData() {
+    public void onSuccess(ArrayList<Card> pCards) {
 
-    }
-
-    @Override
-    public void showPass() {
-
-    }
-
-    @Override
-    public void editCard() {
-
-    }
-
-    @Override
-    public void getData() {
-
-    }
-
-    @Override
-    public void cardExistence(int pI) {
-
-    }
-
-    @Override
-    public void onSuccess(List<Card> pCards) {
-
+        mCreateActivity.initData(pCards);
     }
 
     @Override
     public void onFailed(Exception pE) {
 
+    }
+
+    @Override
+    public void loadCards() {
+
+        mModel.getCards();
+    }
+
+    @Override
+    public void deleteCard(Card pCard) {
+
+        mModel.deleteCard(pCard);
     }
 }

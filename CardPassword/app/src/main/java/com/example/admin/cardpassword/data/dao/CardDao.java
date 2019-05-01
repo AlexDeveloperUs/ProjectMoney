@@ -20,9 +20,6 @@ public interface CardDao {
     @Query("Select * from cards")
     Flowable<List<Card>> getAll();
 
-    @Query("Select * from cards where cardId = :id")
-    Card getById(long id);
-
     @Insert(onConflict = REPLACE)
     void insert(Card pCard);
 

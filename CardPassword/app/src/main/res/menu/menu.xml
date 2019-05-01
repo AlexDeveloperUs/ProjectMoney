@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:id="@+id/menu_item_delete_card"
-        android:title="@string/menu_delete_card"/>
-    <item android:id="@+id/menu_item_edit_card"
-        android:title="@string/menu_edit_card"/>
-</menu>

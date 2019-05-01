@@ -13,13 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.admin.cardpassword.R;
-import com.example.admin.cardpassword.data.AppDataBase;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.ui.fragments.fragment1.Fragment1;
-import com.example.admin.cardpassword.utils.ThreadExecutors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Optional;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 
 public class ListActivity extends AppCompatActivity implements ListContract.View, CardListAdapter.OnClickListener, View.OnClickListener {
 
@@ -37,9 +33,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private static final int EDIT_CARD_REQUEST = 2;
     private CardListAdapter mAdapter;
     private List<Card> mCardList = new ArrayList<>();
-    private ThreadExecutors mExecutors = new ThreadExecutors();
-    private ListPresenter.RequestListener mRequestListener;
-    private Disposable mDisposable;
+    private ListContract.Presenter mPresenter = new ListPresenter(this);
     private String mNumber = "";
     private String mCvc = "";
     private String mValidity = "";
@@ -47,8 +41,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private String mSurname = "";
     private String mType = "";
     private String mPin = "";
-
-    LinearLayoutManager mLinearLayoutManager;
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -62,49 +54,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         setContentView(R.layout.activity_card_list);
         ButterKnife.bind(this);
 
-        initRecyclerView();
-    }
-
-    private void show() {
-
-        mExecutors.dbExecutor().execute(() -> {
-
-            try {
-
-                mDisposable = AppDataBase.getDatabase(getApplicationContext()).mCardDao().getAll()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(pCards -> mAdapter.addItems(pCards));
-            } catch (Exception pE) {
-
-                mRequestListener.onFailed(pE);
-            }
-        });
-    }
-
-    public void initRecyclerView() {
-
-        mLinearLayoutManager = new LinearLayoutManager(this);
-        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-        mAdapter = new CardListAdapter(this, mCardList, this, this);
-        mRecyclerView.setAdapter(mAdapter);
-
-    }
-
-    @Override
-    public void blur() {
-
-    }
-
-    @Override
-    public void showCardList() {
-
-    }
-
-    @Override
-    public void checkIdExistence(int pI) {
-
+        initViews();
+        loadCards();
     }
 
     @Override
@@ -126,7 +77,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     protected void onResume() {
 
         super.onResume();
-        show();
+        loadCards();
     }
 
     @Optional
@@ -137,7 +88,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         switch (v.getId()) {
 
             case R.id.fab:
-                intent = new Intent(getApplicationContext(), CreateActivity.class);
+                intent = new Intent(ListActivity.this, CreateActivity.class);
                 startActivityForResult(intent, CREATE_CARD_REQUEST);
                 break;
             case R.id.image_view_cards:
@@ -156,12 +107,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         assert data != null;
         mAdapter.notifyDataSetChanged();
-    }
-
-    public void deleteSingleItem(Card pCard) {
-
-        mExecutors.dbExecutor().execute(() -> AppDataBase.getDatabase(getApplicationContext()).mCardDao()
-                .delete(pCard));
     }
 
     public void getData(Card pCard) {
@@ -189,5 +134,35 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public Context cont() {
 
         return getApplicationContext();
+    }
+
+    public void deleteCard(Card pCard) {
+
+        mPresenter.deleteCard(pCard);
+    }
+
+    private void loadCards() {
+
+        mPresenter.loadCards();
+    }
+
+    private void setData(List<Card> pCardList) {
+
+        mAdapter.addItems(pCardList);
+    }
+
+    @Override
+    public void initData(ArrayList<Card> pCards) {
+
+        this.setData(pCards);
+    }
+
+    public void initViews() {
+
+        mAdapter = new CardListAdapter(this, mCardList, this, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
     }
 }
