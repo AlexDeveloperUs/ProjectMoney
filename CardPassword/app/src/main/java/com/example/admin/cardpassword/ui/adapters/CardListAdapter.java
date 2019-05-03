@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.models.Card;
@@ -124,18 +123,32 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
             cardHolderName.setText(pCard.getCardHolderName());
             cardHolderSurname.setText(pCard.getCardHolderSurname());
 
-            float density = mListActivity.cont().getResources().getDisplayMetrics().density;
+
             if (pCard.getCardType().toLowerCase().equals("visa")) {
 
                 mImageView.setBackgroundResource(R.drawable.visa_rounded);
-                mImageView.getLayoutParams().height = (int) (density * 50);
-                mImageView.getLayoutParams().width = (int) (density * 50);
+                setParams();
             } else if (pCard.getCardType().toLowerCase().equals("mastercard")) {
 
                 mImageView.setBackgroundResource(R.drawable.ms_with_border);
-                mImageView.getLayoutParams().height = (int) (density * 50);
-                mImageView.getLayoutParams().width = (int) (density * 50);
+                setParams();
+            } else if (pCard.getCardType().toLowerCase().equals("belcard")) {
+
+                mImageView.setBackgroundResource(R.drawable.belcard);
+                setParams();
+            } else if (pCard.getCardType().toLowerCase().equals("maestro")) {
+
+                mImageView.setBackgroundResource(R.drawable.maestro);
+                setParams();
             }
+        }
+
+        private void setParams() {
+
+            float density = mListActivity.cont().getResources().getDisplayMetrics().density;
+
+            mImageView.getLayoutParams().height = (int) (density * 50);
+            mImageView.getLayoutParams().width = (int) (density * 50);
         }
 
         @Override
@@ -157,6 +170,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         String thirdSubString = pS.substring(8, 12);
         String fourthSubString = pS.substring(12, 16);
 
-        return firstSubString+"-"+secondSubString+"-"+thirdSubString+"-"+fourthSubString;
+        return firstSubString + "-" + secondSubString + "-" + thirdSubString + "-" + fourthSubString;
     }
 }

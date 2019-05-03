@@ -91,18 +91,40 @@ public class CreatePresenter implements CreateContract.Presenter {
             pNumber = pNumber.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
         }
 
-//        mCreateActivity.showToastVisa(pNumber);
-
         long cardNumber = Long.parseLong(pNumber);
         int cvc = Integer.valueOf(pCVC);
         int pin = Integer.valueOf(pPin);
 
         if (pRequestCode) {
 
-            createCard(new Card(cardNumber, cvc, pValidity, pName, pSurname, mCreateActivity.showToastVisa(pNumber), pin));
+            createCard(new Card(cardNumber, cvc, pValidity, pName, pSurname, checkCardType(pNumber), pin));
         } else {
 
-            updateCard(new Card(cardNumber, cvc, pValidity, pName, pSurname, mCreateActivity.showToastVisa(pNumber), pin, pI));
+            updateCard(new Card(cardNumber, cvc, pValidity, pName, pSurname, checkCardType(pNumber), pin, pI));
         }
+    }
+
+    @Override
+    public String checkCardType(String pS) {
+
+        String mCardType = "";
+
+        if (pS.charAt(0) == '4') {
+
+            mCardType = "visa";
+        } else if (pS.charAt(0) == '5' && (pS.charAt(1) == '1' || pS.charAt(1) == '2' || pS.charAt(1) == '3' || pS.charAt(1) == '4'
+                || pS.charAt(1) == '5')) {
+
+            mCardType = "mastercard";
+        } else if (pS.substring(0, 4).equals("9112")) {
+
+            mCardType = "belcard";
+        } else if ((pS.charAt(0) == '5' && (pS.charAt(1) == '0' || pS.charAt(1) == '6' || pS.charAt(1) == '7' || pS.charAt(1) == '8'))
+                || (pS.charAt(0) == '6' && (pS.charAt(1) == '3' || pS.charAt(1) == '7'))) {
+
+            mCardType = "maestro";
+        }
+
+        return mCardType;
     }
 }

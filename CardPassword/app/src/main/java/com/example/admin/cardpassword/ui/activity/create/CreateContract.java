@@ -21,8 +21,6 @@ public interface CreateContract {
         void removeCvcError();
 
         void removePinError();
-
-        String showToastVisa(String pS);
     }
 
     interface Presenter {
@@ -30,6 +28,8 @@ public interface CreateContract {
         void createCard(Card pCard);
 
         void updateCard(Card pCard);
+
+        String checkCardType(String pS);
     }
 
     interface Model {

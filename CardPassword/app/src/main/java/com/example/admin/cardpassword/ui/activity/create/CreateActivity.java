@@ -31,7 +31,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
 
     private static final String EMPTY_STRING = "";
     private CreatePresenter mPresenter;
-    private String mCardType = "visa";
     private boolean mCheckRequestCodeForSave = true;
     private int mId = 0;
 
@@ -78,7 +77,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         Toast.makeText(this, "Внимание! Для корректной работы приложения, заполните все поля", Toast.LENGTH_LONG).show();
     }
 
-    private void textChangeListenerValidity() {
+    private void changeTextValidity() {
 
         mCardValidity.addTextChangedListener(new TextWatcher() {
 
@@ -105,23 +104,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
                 }
             }
         });
-    }
-
-    @Override
-    public String showToastVisa(String pS) {
-
-        if (pS.charAt(0) == '4') {
-
-            Toast.makeText(getApplicationContext(), "VISA", Toast.LENGTH_LONG).show();
-            mCardType = "visa";
-        } else if (pS.charAt(0) == '5' && (pS.charAt(1) == '1' || pS.charAt(1) == '2' || pS.charAt(1) == '3' || pS.charAt(1) == '4'
-        || pS.charAt(1) == '5')) {
-
-            Toast.makeText(this, "MasterCard", Toast.LENGTH_SHORT).show();
-            mCardType = "mastercard";
-        }
-
-        return mCardType;
     }
 
     @OnClick({R.id.btn_save_card, R.id.fab_create, R.id.image_view_settings_create})
@@ -183,7 +165,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
             mCardHoldersSurname.setText(card.getCardHolderSurname());
             mCardPin.setText(pin);
             mId = card.getId();
-        } else textChangeListenerValidity();
+        } else changeTextValidity();
     }
 
     @Override
