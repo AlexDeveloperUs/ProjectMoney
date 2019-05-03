@@ -1,18 +1,27 @@
 package com.example.admin.cardpassword.ui.activity.create;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
@@ -56,6 +65,8 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     BottomAppBar mBottomAppBar;
     @BindView(R.id.fab_create)
     FloatingActionButton mButtonBack;
+    @BindView(R.id.btn_save_card)
+    CardView mCardView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,8 +77,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
 
         mPresenter = new CreatePresenter(this);
         checkRequestCode();
-        InputMethodManager img = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        img.showSoftInput(mCardNumber, 0);
     }
 
     @Override
@@ -106,6 +115,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         });
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @OnClick({R.id.btn_save_card, R.id.fab_create, R.id.image_view_settings_create})
     public void onClick(View v) {
 
@@ -113,6 +123,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         switch (v.getId()) {
 
             case R.id.btn_save_card:
+                mCardView.setBackgroundColor(Color.parseColor("#D81B60"));
                 insert();
                 break;
             case R.id.fab_create:
@@ -127,6 +138,22 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(@NonNull MotionEvent event) {
+
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+
+                v.clearFocus();
+                InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 
     private void insert() {

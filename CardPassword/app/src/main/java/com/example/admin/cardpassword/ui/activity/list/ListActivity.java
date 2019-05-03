@@ -66,7 +66,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
         if (fragment == null) {
 
-            fragment = Fragment1.newInstance(pI, mNumber, mCvc, mValidity, mName, mSurname, mType, mPin);
+            fragment = Fragment1.newInstance(mNumber, mCvc, mValidity, mName, mSurname, mType, mPin);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, fragment)
                     .commit();
@@ -81,7 +81,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     }
 
     @Optional
-    @OnClick({R.id.fab, R.id.image_view_settings})
+    @OnClick({R.id.fab, R.id.image_view_settings, R.id.image_view_cards})
     public void onClick(View v) {
 
         Intent intent;
@@ -96,6 +96,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
                 intent.putExtra("key", 1);
                 startActivity(intent);
                 finish();
+                break;
+            case R.id.image_view_cards:
                 break;
         }
     }

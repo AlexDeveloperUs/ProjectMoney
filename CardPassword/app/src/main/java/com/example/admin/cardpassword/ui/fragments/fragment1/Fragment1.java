@@ -34,7 +34,6 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
     @BindView(R.id.text_pin_fragment)
     TextView mPin;
 
-    private int mGetPos;
     private String mGetNum = "";
     private String mGetCvc = "";
     private String mGetValidity = "";
@@ -43,11 +42,10 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
     private String mGetType = "";
     private String mGetPin = "";
 
-    public static Fragment1 newInstance(int pPos, String pNumber, String pCvc, String pValidity, String pName, String pSurname, String pType, String pPin) {
+    public static Fragment1 newInstance(String pNumber, String pCvc, String pValidity, String pName, String pSurname, String pType, String pPin) {
 
         Fragment1 fragment = new Fragment1();
         Bundle args = new Bundle();
-        args.putInt("pos", pPos);
         args.putString("num", pNumber);
         args.putString("cvc", pCvc);
         args.putString("val", pValidity);
@@ -64,7 +62,6 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
 
         if (getArguments() != null) {
 
-            mGetPos = getArguments().getInt("pos", 0);
             mGetNum = getArguments().getString("num", "");
             mGetCvc = getArguments().getString("cvc", "");
             mGetValidity = getArguments().getString("val", "");
@@ -89,26 +86,48 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
 
     private void setData() {
 
-        float density = Objects.requireNonNull(getActivity()).getResources().getDisplayMetrics().density;
-
         if (mGetType.toLowerCase().equals("visa")) {
 
             mImage.setBackgroundResource(R.drawable.visa_rounded);
-            mImage.getLayoutParams().height = (int) (density * 50);
-            mImage.getLayoutParams().width = (int) (density * 50);
+            setParams();
         } else if (mGetType.toLowerCase().equals("mastercard")) {
 
             mImage.setBackgroundResource(R.drawable.ms_without_border);
-            mImage.getLayoutParams().height = (int) (density * 50);
-            mImage.getLayoutParams().width = (int) (density * 50);
+            setParams();
+        } else if (mGetType.toLowerCase().equals("belcard")) {
+
+            mImage.setBackgroundResource(R.drawable.belcard);
+            setParams();
+        } else if (mGetType.toLowerCase().equals("maestro")) {
+
+            mImage.setBackgroundResource(R.drawable.maestro);
+            setParams();
         }
 
-        mNumber.setText(mGetNum);
+        mNumber.setText(appendMinus(mGetNum));
         mCvc.setText(mGetCvc);
         mValidity.setText(mGetValidity);
         mName.setText(mGetName);
         mSurname.setText(mGetSurname);
         mPin.setText(mGetPin);
+    }
+
+    private void setParams() {
+
+        float density = Objects.requireNonNull(getActivity()).getResources().getDisplayMetrics().density;
+
+        mImage.getLayoutParams().height = (int) (density * 50);
+        mImage.getLayoutParams().width = (int) (density * 50);
+    }
+
+    private String appendMinus(String pS) {
+
+        String firstSubString = pS.substring(0, 4);
+        String secondSubString = pS.substring(4, 8);
+        String thirdSubString = pS.substring(8, 12);
+        String fourthSubString = pS.substring(12, 16);
+
+        return firstSubString + "-" + secondSubString + "-" + thirdSubString + "-" + fourthSubString;
     }
 
     @Override

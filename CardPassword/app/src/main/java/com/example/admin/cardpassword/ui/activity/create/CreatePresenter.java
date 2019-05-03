@@ -64,7 +64,6 @@ public class CreatePresenter implements CreateContract.Presenter {
         if (pNumber.toLowerCase().contains("x")) {
 
             mCreateActivity.showNumberError();
-            return;
         } else if (pNumber.matches("[\\d]+")) {
 
             checkCardExistence(Long.parseLong(pNumber.replaceAll("[^0-9]", "")));
@@ -73,13 +72,11 @@ public class CreatePresenter implements CreateContract.Presenter {
         if (pCVC.isEmpty()) {
 
             mCreateActivity.showCvcError();
-            return;
         } else mCreateActivity.removeCvcError();
 
         if (pPin.isEmpty()) {
 
             mCreateActivity.showPinError();
-            return;
         } else mCreateActivity.removePinError();
 
         if (pName.isEmpty()) pName = "";

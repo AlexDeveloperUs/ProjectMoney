@@ -11,36 +11,37 @@
     app:sav_tools_previewRipple="swipeRight">
 
     <android.support.v7.widget.CardView
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
-        android:layout_margin="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        app:cardBackgroundColor="#cc524d"
         app:cardCornerRadius="20dp">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#cc524d"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|center_horizontal"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_delete" />
-<!--5151fd-->
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        android:layout_width="96dp"
-        android:layout_height="96dp"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
         android:layout_gravity="end|center_vertical"
-        android:layout_margin="5dp"
-        app:cardCornerRadius="80dp">
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        app:cardBackgroundColor="#4EB160"
+        app:cardCornerRadius="20dp">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#4EB160"
-            android:padding="5dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal|center_vertical"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_edit" />
-<!--327ded-->
     </android.support.v7.widget.CardView>
 
     <android.support.constraint.ConstraintLayout
@@ -161,9 +162,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="35dp"
             android:text="@string/text_view_card_holder_surname"
-            android:textStyle="bold"
             android:textColor="#ffffff"
             android:textSize="17sp"
+            android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@id/text_card_holder_name_element"
             app:layout_constraintTop_toBottomOf="@id/text_card_cvc_element" />
 
