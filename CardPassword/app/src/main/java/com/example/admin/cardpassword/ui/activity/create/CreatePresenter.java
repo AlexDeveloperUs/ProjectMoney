@@ -59,7 +59,7 @@ public class CreatePresenter implements CreateContract.Presenter {
     }
 
     void checkDataValidation(String pNumber, String pCVC, String pValidity, String pName, String pSurname,
-                             String pCardType, String pPin, Boolean pRequestCode, int pI) {
+                             String pPin, Boolean pRequestCode, int pI) {
 
         if (pNumber.toLowerCase().contains("x")) {
 
@@ -91,16 +91,18 @@ public class CreatePresenter implements CreateContract.Presenter {
             pNumber = pNumber.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
         }
 
+//        mCreateActivity.showToastVisa(pNumber);
+
         long cardNumber = Long.parseLong(pNumber);
         int cvc = Integer.valueOf(pCVC);
         int pin = Integer.valueOf(pPin);
 
         if (pRequestCode) {
 
-            createCard(new Card(cardNumber, cvc, pValidity, pName, pSurname, pCardType, pin));
+            createCard(new Card(cardNumber, cvc, pValidity, pName, pSurname, mCreateActivity.showToastVisa(pNumber), pin));
         } else {
 
-            updateCard(new Card(cardNumber, cvc, pValidity, pName, pSurname, pCardType, pin, pI));
+            updateCard(new Card(cardNumber, cvc, pValidity, pName, pSurname, mCreateActivity.showToastVisa(pNumber), pin, pI));
         }
     }
 }

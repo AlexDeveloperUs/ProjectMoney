@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.models.Card;
@@ -117,7 +118,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
             mSwipeActionView.setSwipeGestureListener(swipeGestureListener);
 
-            cardNumber.setText(Long.toString(pCard.getCardNumber()));
+            cardNumber.setText(appendMinus(Long.toString(pCard.getCardNumber())));
             cvc.setText(String.valueOf(pCard.getCVC()));
             validity.setText(pCard.getValidity());
             cardHolderName.setText(pCard.getCardHolderName());
@@ -126,14 +127,14 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
             float density = mListActivity.cont().getResources().getDisplayMetrics().density;
             if (pCard.getCardType().toLowerCase().equals("visa")) {
 
-                mImageView.setBackgroundResource(R.drawable.visa);
-                mImageView.getLayoutParams().height = (int) (density * 40);
-                mImageView.getLayoutParams().width = (int) (density * 70);
+                mImageView.setBackgroundResource(R.drawable.visa_rounded);
+                mImageView.getLayoutParams().height = (int) (density * 50);
+                mImageView.getLayoutParams().width = (int) (density * 50);
             } else if (pCard.getCardType().toLowerCase().equals("mastercard")) {
 
-                mImageView.setBackgroundResource(R.drawable.master_card);
+                mImageView.setBackgroundResource(R.drawable.ms_with_border);
                 mImageView.getLayoutParams().height = (int) (density * 50);
-                mImageView.getLayoutParams().width = (int) (density * 70);
+                mImageView.getLayoutParams().width = (int) (density * 50);
             }
         }
 
@@ -147,5 +148,15 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     public interface OnClickListener {
 
         void onItemClick(View pView, int pI);
+    }
+
+    private String appendMinus(String pS) {
+
+        String firstSubString = pS.substring(0, 4);
+        String secondSubString = pS.substring(4, 8);
+        String thirdSubString = pS.substring(8, 12);
+        String fourthSubString = pS.substring(12, 16);
+
+        return firstSubString+"-"+secondSubString+"-"+thirdSubString+"-"+fourthSubString;
     }
 }

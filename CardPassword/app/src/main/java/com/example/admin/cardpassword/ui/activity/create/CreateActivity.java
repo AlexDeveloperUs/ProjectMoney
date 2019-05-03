@@ -78,7 +78,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         Toast.makeText(this, "Внимание! Для корректной работы приложения, заполните все поля", Toast.LENGTH_LONG).show();
     }
 
-    private void textChangeListener() {
+    private void textChangeListenerValidity() {
 
         mCardValidity.addTextChangedListener(new TextWatcher() {
 
@@ -107,22 +107,31 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         });
     }
 
-    @OnClick({R.id.btn_visa, R.id.btn_master_card, R.id.btn_save_card, R.id.fab_create, R.id.image_view_settings_create})
+    @Override
+    public String showToastVisa(String pS) {
+
+        if (pS.charAt(0) == '4') {
+
+            Toast.makeText(getApplicationContext(), "VISA", Toast.LENGTH_LONG).show();
+            mCardType = "visa";
+        } else if (pS.charAt(0) == '5' && (pS.charAt(1) == '1' || pS.charAt(1) == '2' || pS.charAt(1) == '3' || pS.charAt(1) == '4'
+        || pS.charAt(1) == '5')) {
+
+            Toast.makeText(this, "MasterCard", Toast.LENGTH_SHORT).show();
+            mCardType = "mastercard";
+        }
+
+        return mCardType;
+    }
+
+    @OnClick({R.id.btn_save_card, R.id.fab_create, R.id.image_view_settings_create})
     public void onClick(View v) {
 
         Intent intent;
         switch (v.getId()) {
 
-            case R.id.btn_visa:
-                mCardType = "visa";
-                Toast.makeText(this, "Visa", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.btn_master_card:
-                mCardType = "mastercard";
-                Toast.makeText(this, "MasterCard", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.btn_save_card:
-                insert(mCardType);
+                insert();
                 break;
             case R.id.fab_create:
                 intent = new Intent(CreateActivity.this, ListActivity.class);
@@ -138,7 +147,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         }
     }
 
-    private void insert(String pCardType) {
+    private void insert() {
 
         String cardNumber = Objects.requireNonNull(mCardNumber.getText()).toString();
         String cardCvc = mCardCvc.getText().toString();
@@ -147,7 +156,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         String cardHolderSurname = mCardHoldersSurname.getText().toString();
         String cardPin = mCardPin.getText().toString();
 
-        mPresenter.checkDataValidation(cardNumber, cardCvc, cardValidity, cardHolderName, cardHolderSurname,  pCardType, cardPin, mCheckRequestCodeForSave, mId);
+        mPresenter.checkDataValidation(cardNumber, cardCvc, cardValidity, cardHolderName, cardHolderSurname, cardPin, mCheckRequestCodeForSave, mId);
 
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
@@ -172,10 +181,9 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
             mCardValidity.setText(card.getValidity());
             mCardHoldersName.setText(card.getCardHolderName());
             mCardHoldersSurname.setText(card.getCardHolderSurname());
-            mCardType = card.getCardType();
             mCardPin.setText(pin);
             mId = card.getId();
-        } else textChangeListener();
+        } else textChangeListenerValidity();
     }
 
     @Override

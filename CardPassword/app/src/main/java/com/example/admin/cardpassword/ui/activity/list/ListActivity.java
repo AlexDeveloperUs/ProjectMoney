@@ -81,7 +81,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     }
 
     @Optional
-    @OnClick({R.id.fab, R.id.image_view_cards, R.id.image_view_settings})
+    @OnClick({R.id.fab, R.id.image_view_settings})
     public void onClick(View v) {
 
         Intent intent;
@@ -90,8 +90,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
             case R.id.fab:
                 intent = new Intent(ListActivity.this, CreateActivity.class);
                 startActivityForResult(intent, CREATE_CARD_REQUEST);
-                break;
-            case R.id.image_view_cards:
                 break;
             case R.id.image_view_settings:
                 intent = new Intent(ListActivity.this, SettingsActivity.class);

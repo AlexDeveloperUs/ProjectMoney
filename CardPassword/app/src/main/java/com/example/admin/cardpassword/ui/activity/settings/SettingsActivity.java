@@ -87,6 +87,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 intent = new Intent(mContext, ListActivity.class);
                 startActivity(intent);
                 finish();
+                break;
             case R.id.switch_create_pass:
                 intent = new Intent(getApplicationContext(), AuthCreatePasswordActivity.class);
                 SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_NAME, 0);

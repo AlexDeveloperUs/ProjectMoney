@@ -93,14 +93,14 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
 
         if (mGetType.toLowerCase().equals("visa")) {
 
-            mImage.setBackgroundResource(R.drawable.visa);
+            mImage.setBackgroundResource(R.drawable.visa_rounded);
             mImage.getLayoutParams().height = (int) (density * 50);
-            mImage.getLayoutParams().width = (int) (density * 70);
+            mImage.getLayoutParams().width = (int) (density * 50);
         } else if (mGetType.toLowerCase().equals("mastercard")) {
 
-            mImage.setBackgroundResource(R.drawable.master_card);
+            mImage.setBackgroundResource(R.drawable.ms_without_border);
             mImage.getLayoutParams().height = (int) (density * 50);
-            mImage.getLayoutParams().width = (int) (density * 70);
+            mImage.getLayoutParams().width = (int) (density * 50);
         }
 
         mNumber.setText(mGetNum);

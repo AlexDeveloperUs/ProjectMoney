@@ -21,6 +21,8 @@ public interface CreateContract {
         void removeCvcError();
 
         void removePinError();
+
+        String showToastVisa(String pS);
     }
 
     interface Presenter {

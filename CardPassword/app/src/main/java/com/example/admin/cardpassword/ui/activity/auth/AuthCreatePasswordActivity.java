@@ -42,9 +42,6 @@ public class AuthCreatePasswordActivity extends AppCompatActivity implements Vie
 
     private String firstLaunch;
 
-    private static final String SP_NAME = "12212112151111";
-    private static final String SP_KEY_FIRST_LAUNCH = "12212112151111";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
