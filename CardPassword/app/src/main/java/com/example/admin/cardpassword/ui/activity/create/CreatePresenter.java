@@ -54,16 +54,25 @@ public class CreatePresenter implements CreateContract.Presenter {
 
         if (count % 10 == 0) {
 
-            mCreateActivity.removeExistenceError();
-        } else mCreateActivity.showExistenceError();
+            mCreateActivity.removeNumberError();
+        } else {
+
+            mCreateActivity.showExistenceError();
+        }
     }
 
     void checkDataValidation(String pNumber, String pCVC, String pValidity, String pName, String pSurname,
                              String pPin, Boolean pRequestCode, int pI) {
 
+        if (pNumber.contains("-")) {
+
+            pNumber = pNumber.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
+        }
+
         if (pNumber.toLowerCase().contains("x")) {
 
             mCreateActivity.showNumberError();
+            return;
         } else if (pNumber.matches("[\\d]+")) {
 
             checkCardExistence(Long.parseLong(pNumber.replaceAll("[^0-9]", "")));
@@ -72,21 +81,19 @@ public class CreatePresenter implements CreateContract.Presenter {
         if (pCVC.isEmpty()) {
 
             mCreateActivity.showCvcError();
+            return;
         } else mCreateActivity.removeCvcError();
 
         if (pPin.isEmpty()) {
 
             mCreateActivity.showPinError();
+            return;
         } else mCreateActivity.removePinError();
 
         if (pName.isEmpty()) pName = "";
 
         if (pSurname.isEmpty()) pSurname = "";
 
-        if (pNumber.contains("-")) {
-
-            pNumber = pNumber.replaceAll("[^A-Za-zА-Яа-я0-9]", "");
-        }
 
         long cardNumber = Long.parseLong(pNumber);
         int cvc = Integer.valueOf(pCVC);
@@ -99,6 +106,8 @@ public class CreatePresenter implements CreateContract.Presenter {
 
             updateCard(new Card(cardNumber, cvc, pValidity, pName, pSurname, checkCardType(pNumber), pin, pI));
         }
+
+        mCreateActivity.createAndUpdateCard();
     }
 
     @Override

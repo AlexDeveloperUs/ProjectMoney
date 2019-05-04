@@ -120,9 +120,16 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
             cardNumber.setText(appendMinus(Long.toString(pCard.getCardNumber())));
             cvc.setText(String.valueOf(pCard.getCVC()));
             validity.setText(pCard.getValidity());
-            cardHolderName.setText(pCard.getCardHolderName());
-            cardHolderSurname.setText(pCard.getCardHolderSurname());
 
+            if (pCard.getCardHolderName().equals("") && pCard.getCardHolderSurname().equals("")) {
+
+                cardHolderName.setText("Card");
+                cardHolderSurname.setText("Holder");
+            } else {
+
+                cardHolderName.setText(pCard.getCardHolderName());
+                cardHolderSurname.setText(pCard.getCardHolderSurname());
+            }
 
             if (pCard.getCardType().toLowerCase().equals("visa")) {
 

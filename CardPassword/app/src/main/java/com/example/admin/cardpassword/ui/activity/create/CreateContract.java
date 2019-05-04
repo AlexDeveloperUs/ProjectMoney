@@ -8,8 +8,6 @@ public interface CreateContract {
 
         void showExistenceError();
 
-        void removeExistenceError();
-
         void showNumberError();
 
         void showCvcError();
@@ -21,6 +19,8 @@ public interface CreateContract {
         void removeCvcError();
 
         void removePinError();
+
+        void createAndUpdateCard();
     }
 
     interface Presenter {

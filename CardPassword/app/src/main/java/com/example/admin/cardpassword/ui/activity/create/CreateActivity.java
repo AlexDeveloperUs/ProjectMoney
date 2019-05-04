@@ -1,6 +1,5 @@
 package com.example.admin.cardpassword.ui.activity.create;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,14 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
@@ -115,7 +110,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         });
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @OnClick({R.id.btn_save_card, R.id.fab_create, R.id.image_view_settings_create})
     public void onClick(View v) {
 
@@ -166,10 +160,6 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         String cardPin = mCardPin.getText().toString();
 
         mPresenter.checkDataValidation(cardNumber, cardCvc, cardValidity, cardHolderName, cardHolderSurname, cardPin, mCheckRequestCodeForSave, mId);
-
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
     }
 
     private void checkRequestCode() {
@@ -203,15 +193,9 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     }
 
     @Override
-    public void removeExistenceError() {
-
-        mNumberLayout.setError(EMPTY_STRING);
-    }
-
-    @Override
     public void showNumberError() {
 
-        mNumberLayout.setError("Error");
+        mNumberLayout.setError("Введите номер карты");
         mCardNumber.requestFocus();
     }
 
@@ -245,5 +229,13 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     public void removePinError() {
 
         mPinLayout.setError(EMPTY_STRING);
+    }
+
+    @Override
+    public void createAndUpdateCard() {
+
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
