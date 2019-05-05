@@ -119,13 +119,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         assert mPassword != null;
 
-        if (mPassword.equals("")) {
-
-        } else if (mPassword.matches("[\\d]+")) {
+        if (mPassword.matches("[\\d]+")) {
 
             mSwitchUsage.setChecked(true);
-        } else if (mPassword.contains("skipped")) {
-
         }
     }
 }

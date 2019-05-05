@@ -106,8 +106,8 @@ public class Fragment1 extends Fragment implements View.OnClickListener {
 
         if (mGetName.equals("") && mGetSurname.equals("")) {
 
-            mName.setText("Card");
-            mSurname.setText("Holder");
+            mName.setText(R.string.text_void_et_name);
+            mSurname.setText(R.string.text_void_et_surname);
         } else {
 
             mName.setText(mGetName);

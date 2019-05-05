@@ -9,14 +9,13 @@ import com.example.admin.cardpassword.utils.ThreadExecutors;
 public class CreateModel implements CreateContract.Model {
 
     private CardDao mCardDao;
-    private AppDataBase mDataBase;
     private ThreadExecutors mExecutors;
 
     CreateModel() {
 
         mExecutors = new ThreadExecutors();
-        mDataBase = App.getmInstance().getDataBase();
-        mCardDao = mDataBase.mCardDao();
+        AppDataBase dataBase = App.getmInstance().getDataBase();
+        mCardDao = dataBase.mCardDao();
     }
 
     @Override

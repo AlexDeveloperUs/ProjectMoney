@@ -48,6 +48,10 @@
     <string name="text_create_short_password">Создать пароль</string>
     <string name="text_change_short_password">Изменить пароль</string>
 
+    <string name="text_void_et_name">Card</string>
+
+    <string name="text_void_et_surname">Holder</string>
+
     <string-array name="card_type_array">
 
         <item>Visa</item>
