@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="bottom"
-            app:backgroundTint="#646b63"
+            app:backgroundTint="@color/colorPrimary"
             app:fabAlignmentMode="center" />
 
         <android.support.design.widget.FloatingActionButton
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/round_plus_selector"
             app:layout_anchor="@id/bottom_app_bar"
-            app:backgroundTint="#db7093"/>
+            app:backgroundTint="@color/colorAccent"/>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.constraint.Guideline
