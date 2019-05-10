@@ -3,6 +3,7 @@ package com.example.admin.cardpassword.ui.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,15 +14,16 @@ import android.widget.TextView;
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
+import com.example.admin.cardpassword.utils.VerticalSampleItemLayout;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.thanel.swipeactionview.SwipeActionView;
-import me.thanel.swipeactionview.SwipeGestureListener;
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
+
+    private int[] colors = {0xff03a9f4, 0xff259b24, 0xffffeb3b, 0xffff5722, 0xffe51c23, 0xff673ab7};
 
     private List<Card> mCardList;
     private final LayoutInflater mInflater;
@@ -48,6 +50,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder pViewHolder, int pI) {
 
         pViewHolder.bind(mCardList.get(pI), pI);
+        pViewHolder.mView.setStrokeColor(colors[pI % colors.length]);
     }
 
     public Card getCardAtPos(int pPosition) {
@@ -74,7 +77,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
         @BindView(R.id.text_card_number_element)
         TextView cardNumber;
-        @BindView(R.id.text_card_cvc_element)
+        @BindView(R.id.text_card_cvc_card_element)
         TextView cvc;
         @BindView(R.id.text_card_validity_element)
         TextView validity;
@@ -82,10 +85,15 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         TextView cardHolderName;
         @BindView(R.id.text_card_holder_surname_element)
         TextView cardHolderSurname;
-        @BindView(R.id.image_element_visa)
+        @BindView(R.id.image_card_element)
         ImageView mImageView;
-        @BindView(R.id.swipe_view)
-        SwipeActionView mSwipeActionView;
+        @BindView(R.id.content)
+        ConstraintLayout mSwipeActionView;
+//        @BindView(R.id.card_element)
+//        View mCard;
+
+        @BindView(R.id.container)
+        VerticalSampleItemLayout mView;
 
         ViewHolder(@NonNull View itemView) {
 
@@ -96,26 +104,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
         @SuppressLint("SetTextI18n")
         void bind(Card pCard, int pos) {
-
-            SwipeGestureListener swipeGestureListener = new SwipeGestureListener() {
-                @Override
-                public boolean onSwipedLeft(@NonNull SwipeActionView swipeActionView) {
-
-                    mListActivity.editCard(getCardAtPos(pos));
-                    notifyItemChanged(pos);
-                    return true;
-                }
-
-                @Override
-                public boolean onSwipedRight(@NonNull SwipeActionView swipeActionView) {
-
-                    mListActivity.deleteCard(getCardAtPos(pos));
-                    notifyItemRemoved(pos);
-                    return true;
-                }
-            };
-
-            mSwipeActionView.setSwipeGestureListener(swipeGestureListener);
 
             cardNumber.setText(appendMinus(Long.toString(pCard.getCardNumber())));
             cvc.setText(String.valueOf(pCard.getCVC()));

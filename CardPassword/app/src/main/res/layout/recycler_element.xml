@@ -1,55 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<me.thanel.swipeactionview.SwipeActionView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.admin.cardpassword.utils.VerticalSampleItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipe_view"
-    style="@style/SwipeItem"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
-    app:sav_swipeLeftRippleColor="@color/colorPrimary"
-    app:sav_swipeRightRippleColor="@color/colorAccent"
-    app:sav_tools_previewRipple="swipeRight">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        app:cardBackgroundColor="#cc524d"
-        app:cardCornerRadius="20dp">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_delete" />
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        app:cardBackgroundColor="#4EB160"
-        app:cardCornerRadius="20dp">
-
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_edit" />
-    </android.support.v7.widget.CardView>
+    android:layout_margin="20dp">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <View
-            android:id="@+id/card"
+            android:id="@+id/card_element"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/rectangle_rounded"
@@ -63,12 +26,12 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <android.support.constraint.Guideline
-            android:id="@+id/guideline_element_horizontal"
+            android:id="@+id/guideline_card_fragment_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.08"
-            app:layout_constraintTop_toTopOf="@id/card" />
+            app:layout_constraintTop_toTopOf="@id/card_element" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline_element_vertical_left_side"
@@ -78,7 +41,7 @@
             app:layout_constraintGuide_percent="0.08" />
 
         <android.support.constraint.Guideline
-            android:id="@+id/guideline_element_vertical_right_side"
+            android:id="@+id/guideline_card_fragment_vertical_right_side"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -94,20 +57,20 @@
             android:textColor="#ffffff"
             android:textSize="@dimen/text_size_medium"
             android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="@id/card"
-            app:layout_constraintRight_toRightOf="@id/card"
-            app:layout_constraintTop_toTopOf="@id/guideline_element_horizontal" />
+            app:layout_constraintLeft_toLeftOf="@id/card_element"
+            app:layout_constraintRight_toRightOf="@id/card_element"
+            app:layout_constraintTop_toTopOf="@id/guideline_card_fragment_horizontal" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_view_cvc"
             android:textSize="@dimen/text_size_medium"
-            app:layout_constraintBottom_toTopOf="@id/text_card_cvc_element"
+            app:layout_constraintBottom_toTopOf="@id/text_card_cvc_card_element"
             app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side" />
 
         <TextView
-            android:id="@+id/text_card_cvc_element"
+            android:id="@+id/text_card_cvc_card_element"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small"
@@ -131,7 +94,7 @@
             android:textColor="#ffffff"
             android:textSize="@dimen/text_size_medium"
             android:textStyle="bold"
-            app:layout_constraintRight_toRightOf="@id/guideline_element_vertical_right_side"
+            app:layout_constraintRight_toRightOf="@id/guideline_card_fragment_vertical_right_side"
             app:layout_constraintTop_toBottomOf="@id/text_card_number_element" />
 
         <TextView
@@ -140,7 +103,7 @@
             android:text="@string/text_valid_thru"
             android:textSize="@dimen/text_size_medium"
             app:layout_constraintBottom_toTopOf="@+id/text_card_validity_element"
-            app:layout_constraintRight_toRightOf="@id/guideline_element_vertical_right_side" />
+            app:layout_constraintRight_toRightOf="@id/guideline_card_fragment_vertical_right_side" />
 
         <TextView
             android:id="@+id/text_card_holder_name_element"
@@ -152,7 +115,7 @@
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side"
-            app:layout_constraintTop_toBottomOf="@id/text_card_cvc_element" />
+            app:layout_constraintTop_toBottomOf="@id/text_card_cvc_card_element" />
 
         <TextView
             android:id="@+id/text_card_holder_surname_element"
@@ -166,17 +129,17 @@
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@id/text_card_holder_name_element"
-            app:layout_constraintTop_toBottomOf="@id/text_card_cvc_element" />
+            app:layout_constraintTop_toBottomOf="@id/text_card_cvc_card_element" />
 
         <ImageView
-            android:id="@+id/image_element_visa"
+            android:id="@+id/image_card_element"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="@dimen/margin_large"
             android:layout_marginRight="@dimen/margin_extra_large"
-            app:layout_constraintRight_toRightOf="@id/card"
+            app:layout_constraintRight_toRightOf="@id/card_element"
             app:layout_constraintTop_toBottomOf="@id/text_card_validity_element" />
 
     </android.support.constraint.ConstraintLayout>
-</me.thanel.swipeactionview.SwipeActionView>
+</com.example.admin.cardpassword.utils.VerticalSampleItemLayout>

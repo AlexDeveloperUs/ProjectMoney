@@ -7,7 +7,7 @@
     android:background="#55000000">
 
     <View
-        android:id="@+id/card"
+        android:id="@+id/card_fragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.15"
-        app:layout_constraintTop_toTopOf="@id/card" />
+        app:layout_constraintTop_toTopOf="@id/card_fragment" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_element_vertical_left_side_fragment"
@@ -54,8 +54,8 @@
         android:textColor="#ffffff"
         android:textSize="@dimen/text_size_medium"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="@id/card"
-        app:layout_constraintRight_toRightOf="@id/card"
+        app:layout_constraintLeft_toLeftOf="@id/card_fragment"
+        app:layout_constraintRight_toRightOf="@id/card_fragment"
         app:layout_constraintTop_toTopOf="@id/guideline_element_horizontal_fragment" />
 
     <TextView
@@ -119,7 +119,7 @@
         android:layout_marginTop="25dp"
         android:layout_marginEnd="@dimen/margin_large"
         android:layout_marginRight="@dimen/margin_extra_large"
-        app:layout_constraintRight_toRightOf="@id/card"
+        app:layout_constraintRight_toRightOf="@id/card_fragment"
         app:layout_constraintTop_toBottomOf="@id/text_card_validity_element_fragment" />
 
     <TextView
@@ -148,7 +148,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:background="@drawable/pin"
-        app:layout_constraintTop_toBottomOf="@id/card"
+        app:layout_constraintTop_toBottomOf="@id/card_fragment"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/image_pin_fragment"
