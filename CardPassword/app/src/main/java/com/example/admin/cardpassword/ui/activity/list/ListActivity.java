@@ -59,7 +59,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @BindView(R.id.fragment_card)
     FrameLayout mCardLayout;
 
-    public static boolean check;
     int tmp = 0;
     int tp = 0;
     int tt = 0;
@@ -87,19 +86,17 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         constraintSet = new ConstraintSet();
         fragmentManager = getSupportFragmentManager();
 
-        check = true;
 
         fromFragment = "";
 
 
         mCardLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
 
-            public void onSwipeTop() {
+            public void onSwipeLeft() {
 
                 show();
                 Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
 
-                check = true;
                 fromFragment = "";
 
                 constraintSet.clone(mLayout);
@@ -111,11 +108,9 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 //                initViews();
             }
 
-            public void onSwipeBottom() {
+            public void onSwipeRight() {
 
                 Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
-
-                check = true;
 
                 constraintSet.clone(mLayout);
                 constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
@@ -141,7 +136,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         }
         fragment = fragmentManager.findFragmentById(R.id.fragment_card);
 
-
             fragment = Frag.newInstance(mNumber, mCvc, mValidity, mName, mSurname, mType, mPin);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_card, fragment)
@@ -151,7 +145,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, R.id.loh, ConstraintSet.TOP, 0);
         constraintSet.applyTo(mLayout);
 
-        check = false;
         fromFragment = "y";
         tmp = 1;
         initViews();
@@ -166,48 +159,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         loadCards();
     }
 
-//    @Optional
     @OnClick({})
     public void onClick(View v) {
-
-        if (tmp == 1) {
-
-            Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
-
-            check = true;
-
-            constraintSet.clone(mLayout);
-            constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
-            constraintSet.applyTo(mLayout);
-
-            tmp = 0;
-
-//            initViews();
-        } else if (tmp == 0) {
-
-            if (tt == 1) {
-
-                Objects.requireNonNull(fragment.getView()).setVisibility(View.VISIBLE);
-            }
-
-            fragment = fragmentManager.findFragmentById(R.id.fragment_card);
-            if (fragment == null) {
-
-                fragment = new Frag();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.fragment_card, fragment)
-                        .commit();
-            }
-                constraintSet.clone(mLayout);
-                constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, R.id.loh, ConstraintSet.TOP, 0);
-                constraintSet.applyTo(mLayout);
-
-                check = false;
-                tmp = 1;
-//                initViews();
-
-            tt = 1;
-        }
 
 //
 //        Intent intent;
@@ -283,6 +236,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         this.setData(pCards);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void initViews() {
 
         if (fromFragment.equals("")) {
@@ -292,7 +246,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
             mRecyclerView.setAdapter(mAdapter);
             mRecyclerView.setLayoutManager(linearLayoutManager);
-            mAdapter.notifyDataSetChanged();
         } else if (fromFragment.equals("y")) {
 
             LadderLayoutManager llm = new LadderLayoutManager(0.7f).setChildDecorateHelper(new VerticalSampleChildDecorateHelper(getResources().getDimension(R.dimen.item_max_elevation)));
@@ -303,15 +256,30 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
                 new LadderSimpleSnapHelper().attachToRecyclerView(mRecyclerView);
             }
             mRecyclerView.setAdapter(mAdapter);
-            mAdapter.notifyDataSetChanged();
             tp = 1;
 
             mRecyclerView.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
 
                 @Override
-                public void onSwipeTop() {
+                public void onSwipeLeft() {
 
-                    super.onSwipeTop();
+                    super.onSwipeLeft();
+                    Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
+                    constraintSet.clone(mLayout);
+                    constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
+                    constraintSet.applyTo(mLayout);
+
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+
+                    mRecyclerView.setAdapter(mAdapter);
+                    mRecyclerView.setLayoutManager(linearLayoutManager);
+                    mAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onSwipeRight() {
+
+                    super.onSwipeRight();
                     Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
                     constraintSet.clone(mLayout);
                     constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);

@@ -89,20 +89,20 @@ public class Frag extends Fragment implements View.OnClickListener{
         view.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
 
             @Override
-            public void onSwipeBottom() {
+            public void onSwipeRight() {
 
                 Toast.makeText(getActivity(), "lol", Toast.LENGTH_LONG).show();
                 ListActivity.check = true;
 
                 toActivity("");
-                super.onSwipeBottom();
+                super.onSwipeRight();
             }
 
             @Override
-            public void onSwipeTop() {
+            public void onSwipeLeft() {
 
                 toActivity("");
-                super.onSwipeTop();
+                super.onSwipeLeft();
             }
         });
 

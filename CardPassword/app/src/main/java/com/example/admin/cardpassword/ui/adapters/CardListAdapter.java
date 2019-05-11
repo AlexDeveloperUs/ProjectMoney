@@ -2,6 +2,7 @@ package com.example.admin.cardpassword.ui.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
 
-    private int[] colors = {0xff03a9f4, 0xff259b24, 0xffffeb3b, 0xffff5722, 0xffe51c23, 0xff673ab7};
+    private int[] colors = {0xff03a9f4, 0xff259b24, 0xffff5722, 0xffe51c23, 0xff673ab7};
 
     private List<Card> mCardList;
     private final LayoutInflater mInflater;
@@ -50,7 +51,9 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder pViewHolder, int pI) {
 
         pViewHolder.bind(mCardList.get(pI), pI);
-        pViewHolder.mView.setStrokeColor(colors[pI % colors.length]);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            pViewHolder.mView.setStrokeColor(colors[pI % colors.length]);
+        }
     }
 
     public Card getCardAtPos(int pPosition) {
@@ -89,8 +92,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         ImageView mImageView;
         @BindView(R.id.content)
         ConstraintLayout mSwipeActionView;
-//        @BindView(R.id.card_element)
-//        View mCard;
 
         @BindView(R.id.container)
         VerticalSampleItemLayout mView;
