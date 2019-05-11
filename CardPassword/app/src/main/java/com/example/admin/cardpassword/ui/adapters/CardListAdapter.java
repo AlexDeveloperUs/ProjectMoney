@@ -1,9 +1,18 @@
 package com.example.admin.cardpassword.ui.adapters;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.models.Card;
@@ -92,7 +102,8 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         ImageView mImageView;
         @BindView(R.id.content)
         ConstraintLayout mSwipeActionView;
-
+        @BindView(R.id.card_element)
+        View mCard;
         @BindView(R.id.container)
         VerticalSampleItemLayout mView;
 

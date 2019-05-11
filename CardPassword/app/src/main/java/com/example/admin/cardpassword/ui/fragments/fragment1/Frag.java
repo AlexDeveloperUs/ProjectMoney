@@ -1,16 +1,19 @@
 package com.example.admin.cardpassword.ui.fragments.fragment1;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
@@ -20,6 +23,7 @@ import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class Frag extends Fragment implements View.OnClickListener{
 
@@ -37,8 +41,12 @@ public class Frag extends Fragment implements View.OnClickListener{
     ImageView mImage;
     @BindView(R.id.text_pin_card_fragment)
     TextView mPin;
-
-    ListActivity mListActivity;
+    @BindView(R.id.card_fragment)
+    View mCard;
+    @BindView(R.id.action_button_delete)
+    FloatingActionButton mDelete;
+    @BindView(R.id.action_button_edit)
+    FloatingActionButton mEdit;
 
     private String mGetNum = "";
     private String mGetCvc = "";
@@ -47,6 +55,9 @@ public class Frag extends Fragment implements View.OnClickListener{
     private String mGetSurname = "";
     private String mGetType = "";
     private String mGetPin = "";
+    private ListActivity mActivity;
+
+    private int[] colors = {0xff03a9f4, 0xff259b24, 0xffff5722, 0xffe51c23, 0xff673ab7};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,9 +102,6 @@ public class Frag extends Fragment implements View.OnClickListener{
             @Override
             public void onSwipeRight() {
 
-                Toast.makeText(getActivity(), "lol", Toast.LENGTH_LONG).show();
-                ListActivity.check = true;
-
                 toActivity("");
                 super.onSwipeRight();
             }
@@ -105,6 +113,8 @@ public class Frag extends Fragment implements View.OnClickListener{
                 super.onSwipeLeft();
             }
         });
+
+        mActivity = ((ListActivity) Objects.requireNonNull(getActivity()));
 
         view.setOnClickListener(this);
         return view;
@@ -157,6 +167,7 @@ public class Frag extends Fragment implements View.OnClickListener{
         mCvc.setText(mGetCvc);
         mValidity.setText(mGetValidity);
         mPin.setText(mGetPin);
+        setColors();
     }
 
     private void setParams() {
@@ -184,9 +195,37 @@ public class Frag extends Fragment implements View.OnClickListener{
         super.onViewCreated(view, savedInstanceState);
     }
 
+    @OnClick({R.id.action_button_delete, R.id.action_button_edit})
     @Override
     public void onClick(View v) {
 
+        switch (v.getId()) {
 
+            case R.id.action_button_delete:
+                mActivity.deleteCard(mActivity.returnCard());
+                break;
+            case R.id.action_button_edit:
+                mActivity.editCard(mActivity.returnCard());
+                break;
+        }
+    }
+
+    private void setColors() {
+
+        int pos;
+
+        if (mActivity.getPos() > colors.length) {
+
+            pos = (mActivity.getPos() % colors.length);
+        } else {
+
+            pos = mActivity.getPos();
+        }
+
+        Drawable back = mCard.getBackground();
+        back.setColorFilter(colors[pos], PorterDuff.Mode.OVERLAY);
+
+        mDelete.setBackgroundTintList(ColorStateList.valueOf(colors[pos]));
+        mEdit.setBackgroundTintList(ColorStateList.valueOf(colors[pos]));
     }
 }

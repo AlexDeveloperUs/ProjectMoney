@@ -30,16 +30,10 @@ import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 
 import static android.graphics.Color.*;
 
-/**
- * Created by thunderpunch on 2017/4/4
- * Description:
- */
-
 public class VerticalSampleItemLayout extends FrameLayout {
+
     private View addV;
     private ConstraintLayout contentV;
-    private ListActivity mListActivity;
-    Drawable mShapeDrawable;
 
     public VerticalSampleItemLayout(@NonNull Context context) {
 
@@ -47,26 +41,30 @@ public class VerticalSampleItemLayout extends FrameLayout {
     }
 
     public VerticalSampleItemLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+
         super(context, attrs);
     }
 
     public VerticalSampleItemLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+
         super(context, attrs, defStyleAttr);
     }
 
     @SuppressLint("ResourceType")
     @Override
     protected void onFinishInflate() {
+
         super.onFinishInflate();
         contentV = findViewById(R.id.content);
         addV = findViewById(R.id.card_element);
-        mShapeDrawable = getResources().getDrawable(R.drawable.rectangle_rounded);
         if (contentV == null || addV == null) {
+
             throw new IllegalArgumentException("Not find view with resourceId R.id.content||R.id.add by VerticalSampleItemLayout");
         }
     }
 
     public void setElevation(float elevation) {
+
         ViewCompat.setElevation(contentV, elevation);
         ViewCompat.setElevation(addV, elevation);
     }

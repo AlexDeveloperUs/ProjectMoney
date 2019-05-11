@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
-import android.support.design.bottomappbar.BottomAppBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -21,10 +20,8 @@ import android.widget.Toast;
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
-import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.ui.fragments.fragment1.Frag;
-import com.example.admin.cardpassword.ui.fragments.fragment1.Fragment1;
 import com.example.admin.cardpassword.utils.LadderLayoutManager;
 import com.example.admin.cardpassword.utils.LadderSimpleSnapHelper;
 import com.example.admin.cardpassword.utils.OnSwipeTouchListener;
@@ -37,7 +34,6 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Optional;
 
 public class ListActivity extends AppCompatActivity implements ListContract.View, CardListAdapter.OnClickListener, View.OnClickListener {
 
@@ -59,7 +55,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @BindView(R.id.fragment_card)
     FrameLayout mCardLayout;
 
-    int tmp = 0;
+    int pos;
     int tp = 0;
     int tt = 0;
     String fromFragment;
@@ -72,6 +68,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 //    BottomAppBar mBottomAppBar;
     Fragment fragment;
     FragmentManager fragmentManager;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,39 +83,26 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         constraintSet = new ConstraintSet();
         fragmentManager = getSupportFragmentManager();
 
-
         fromFragment = "";
-
 
         mCardLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
 
             public void onSwipeLeft() {
 
-                show();
                 Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
 
                 fromFragment = "";
 
-                constraintSet.clone(mLayout);
-                constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
-                constraintSet.applyTo(mLayout);
-
-                tmp = 0;
-
-//                initViews();
+                setRecyclerViewToTop();
             }
 
             public void onSwipeRight() {
 
+                fromFragment = "";
+
                 Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
 
-                constraintSet.clone(mLayout);
-                constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
-                constraintSet.applyTo(mLayout);
-
-                tmp = 0;
-
-//                initViews();
+                setRecyclerViewToTop();
             }
         });
 
@@ -129,6 +113,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public void onItemClick(View pView, int pI) {
 
         getData(mAdapter.getCardAtPos(pI));
+
+        pos = pI;
 
         if (tt == 1) {
 
@@ -146,7 +132,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         constraintSet.applyTo(mLayout);
 
         fromFragment = "y";
-        tmp = 1;
         initViews();
 
         tt = 1;
@@ -218,6 +203,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public void deleteCard(Card pCard) {
 
         mPresenter.deleteCard(pCard);
+        setDefaultRecyclerView();
     }
 
     private void loadCards() {
@@ -249,8 +235,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         } else if (fromFragment.equals("y")) {
 
             LadderLayoutManager llm = new LadderLayoutManager(0.7f).setChildDecorateHelper(new VerticalSampleChildDecorateHelper(getResources().getDimension(R.dimen.item_max_elevation)));
-            llm.setMaxItemLayoutCount(10);
-            llm.setChildPeekSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90, getResources().getDisplayMetrics()));
+            llm.setMaxItemLayoutCount(5);
+            llm.setChildPeekSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
             mRecyclerView.setLayoutManager(llm);
             if (tp == 0) {
                 new LadderSimpleSnapHelper().attachToRecyclerView(mRecyclerView);
@@ -264,40 +250,17 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
                 public void onSwipeLeft() {
 
                     super.onSwipeLeft();
-                    Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
-                    constraintSet.clone(mLayout);
-                    constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
-                    constraintSet.applyTo(mLayout);
-
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-
-                    mRecyclerView.setAdapter(mAdapter);
-                    mRecyclerView.setLayoutManager(linearLayoutManager);
-                    mAdapter.notifyDataSetChanged();
+                    setDefaultRecyclerView();
                 }
 
                 @Override
                 public void onSwipeRight() {
 
                     super.onSwipeRight();
-                    Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
-                    constraintSet.clone(mLayout);
-                    constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
-                    constraintSet.applyTo(mLayout);
-
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-
-                    mRecyclerView.setAdapter(mAdapter);
-                    mRecyclerView.setLayoutManager(linearLayoutManager);
-                    mAdapter.notifyDataSetChanged();
+                    setDefaultRecyclerView();
                 }
             });
         }
-    }
-
-    public void show() {
-
-        Toast.makeText(getApplicationContext(), "Lol", Toast.LENGTH_LONG).show();
     }
 
     public void fromFragmentData(String data) {
@@ -306,6 +269,33 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         initViews();
 
         Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
+        setRecyclerViewToTop();
+    }
+
+    public int getPos() {
+
+        return pos;
+    }
+
+    public Card returnCard() {
+
+         return mAdapter.getCardAtPos(pos);
+    }
+
+    private void setDefaultRecyclerView() {
+
+        Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
+        setRecyclerViewToTop();
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void setRecyclerViewToTop() {
+
         constraintSet.clone(mLayout);
         constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
         constraintSet.applyTo(mLayout);
