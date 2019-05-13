@@ -1,5 +1,6 @@
 package com.example.admin.cardpassword.ui.activity.create;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,7 +22,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
-import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
 import com.github.pinball83.maskededittext.MaskedEditText;
@@ -30,6 +31,8 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cards.pay.paycardsrecognizer.sdk.Card;
+import cards.pay.paycardsrecognizer.sdk.ScanCardIntent;
 
 public class CreateActivity extends AppCompatActivity implements CreateContract.View, View.OnClickListener {
 
@@ -37,6 +40,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     private CreatePresenter mPresenter;
     private boolean mCheckRequestCodeForSave = true;
     private int mId = 0;
+    static final int REQUEST_CODE_SCAN_CARD = 1;
 
     @BindView(R.id.edit_text_card_number)
     MaskedEditText mCardNumber;
@@ -110,7 +114,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         });
     }
 
-    @OnClick({R.id.btn_save_card, R.id.fab_create, R.id.image_view_settings_create})
+    @OnClick({R.id.btn_save_card, R.id.fab_create, R.id.image_view_settings_create, R.id.btn_action_card_photo})
     public void onClick(View v) {
 
         Intent intent;
@@ -131,6 +135,30 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
                 startActivity(intent);
                 finish();
                 break;
+            case R.id.btn_action_card_photo:
+                scanCard();
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SCAN_CARD) {
+            if (resultCode == Activity.RESULT_OK) {
+                assert data != null;
+                Card card = data.getParcelableExtra(ScanCardIntent.RESULT_PAYCARDS_CARD);
+
+                mCardNumber.setMaskedText(String.valueOf(card.getCardNumber()));
+                mCardValidity.setText(card.getExpirationDate());
+                mCardHoldersName.setText(card.getCardHolderName());
+                String cardData = "Card number: " + card.getCardNumberRedacted() + "\n"
+                        + "Card holder: " + card.getCardHolderName() + "\n"
+                        + "Card expiration date: " + card.getExpirationDate();
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+            } else {
+            }
         }
     }
 
@@ -165,7 +193,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
     private void checkRequestCode() {
 
         Intent intent = getIntent();
-        Card card = getIntent().getParcelableExtra("card");
+        com.example.admin.cardpassword.data.models.Card card = getIntent().getParcelableExtra("card");
         String code = intent.getStringExtra("REQUEST_CODE");
 
         String REQUEST_CODE = "2";
@@ -237,5 +265,10 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    private void scanCard() {
+        Intent intent = new ScanCardIntent.Builder(this).build();
+        startActivityForResult(intent, REQUEST_CODE_SCAN_CARD);
     }
 }

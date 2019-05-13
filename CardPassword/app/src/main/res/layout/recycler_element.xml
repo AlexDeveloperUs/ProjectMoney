@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.08"
+            app:layout_constraintGuide_percent="0.05"
             app:layout_constraintTop_toTopOf="@id/card_element" />
 
         <android.support.constraint.Guideline
@@ -115,7 +115,8 @@
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side"
-            app:layout_constraintTop_toBottomOf="@id/text_card_cvc_card_element" />
+            app:layout_constraintTop_toBottomOf="@id/text_card_cvc_card_element"
+            app:layout_constraintBottom_toBottomOf="@id/card_element"/>
 
         <TextView
             android:id="@+id/text_card_holder_surname_element"
@@ -129,7 +130,8 @@
             android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@id/text_card_holder_name_element"
-            app:layout_constraintTop_toBottomOf="@id/text_card_cvc_card_element" />
+            app:layout_constraintTop_toBottomOf="@id/text_card_cvc_card_element"
+            app:layout_constraintBottom_toBottomOf="@id/card_element"/>
 
         <ImageView
             android:id="@+id/image_card_element"
@@ -139,7 +141,8 @@
             android:layout_marginEnd="@dimen/margin_large"
             android:layout_marginRight="@dimen/margin_extra_large"
             app:layout_constraintRight_toRightOf="@id/card_element"
-            app:layout_constraintTop_toBottomOf="@id/text_card_validity_element" />
+            app:layout_constraintTop_toBottomOf="@id/text_card_validity_element"
+            app:layout_constraintBottom_toBottomOf="@id/card_element"/>
 
     </android.support.constraint.ConstraintLayout>
 </com.example.admin.cardpassword.utils.VerticalSampleItemLayout>

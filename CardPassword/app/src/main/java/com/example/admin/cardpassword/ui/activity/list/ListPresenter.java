@@ -38,4 +38,10 @@ public class ListPresenter implements ListContract.Presenter, ListContract.Prese
 
         mModel.deleteCard(pCard);
     }
+
+    @Override
+    public void deleteAll() {
+
+        mModel.deleteAll();
+    }
 }

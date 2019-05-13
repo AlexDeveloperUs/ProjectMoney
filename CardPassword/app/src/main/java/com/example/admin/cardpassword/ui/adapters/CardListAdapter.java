@@ -117,7 +117,8 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         @SuppressLint("SetTextI18n")
         void bind(Card pCard, int pos) {
 
-            cardNumber.setText(appendMinus(Long.toString(pCard.getCardNumber())));
+//            cardNumber.setText(appendMinus(Long.toString(pCard.getCardNumber())));
+            cardNumber.setText(Long.toString(pCard.getCardNumber()));
             cvc.setText(String.valueOf(pCard.getCVC()));
             validity.setText(pCard.getValidity());
 

@@ -48,6 +48,12 @@ public class ListModel implements ListContract.Model {
         mExecutors.dbExecutor().execute(() -> mCardDao.delete(pCard));
     }
 
+    @Override
+    public void deleteAll() {
+
+        mExecutors.dbExecutor().execute(() -> mCardDao.deleteAll());
+    }
+
     void addRequestListener(ListContract.Presenter.RequestListener pListener) {
 
         mListener = pListener;

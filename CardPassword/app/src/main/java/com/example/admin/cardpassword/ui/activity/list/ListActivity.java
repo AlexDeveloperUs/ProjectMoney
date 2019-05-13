@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
+import android.support.design.bottomappbar.BottomAppBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +16,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
+import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.ui.fragments.fragment1.Frag;
 import com.example.admin.cardpassword.utils.LadderLayoutManager;
@@ -64,8 +65,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     RecyclerView mRecyclerView;
     @BindView(R.id.container)
     ConstraintLayout mLayout;
-    //    @BindView(R.id.bottom_app_bar)
-//    BottomAppBar mBottomAppBar;
+        @BindView(R.id.bottom_app_bar)
+        BottomAppBar mBottomAppBar;
     Fragment fragment;
     FragmentManager fragmentManager;
 
@@ -107,6 +108,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         });
 
         initViews();
+
+//        deleteAll();
     }
 
     @Override
@@ -128,7 +131,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
                     .commit();
 
         constraintSet.clone(mLayout);
-        constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, R.id.loh, ConstraintSet.TOP, 0);
+        constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, R.id.horizontal_guideline_list_cards, ConstraintSet.TOP, 0);
         constraintSet.applyTo(mLayout);
 
         fromFragment = "y";
@@ -144,26 +147,25 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         loadCards();
     }
 
-    @OnClick({})
+    @OnClick({R.id.fab, R.id.image_view_settings, R.id.image_view_cards})
     public void onClick(View v) {
 
-//
-//        Intent intent;
-//        switch (v.getId()) {
-//
-//            case R.id.fab:
-//                intent = new Intent(ListActivity.this, CreateActivity.class);
-//                startActivityForResult(intent, CREATE_CARD_REQUEST);
-//                break;
-//            case R.id.image_view_settings:
-//                intent = new Intent(ListActivity.this, SettingsActivity.class);
-//                intent.putExtra("key", 1);
-//                startActivity(intent);
-//                finish();
-//                break;
-//            case R.id.image_view_cards:
-//                break;
-//        }
+        Intent intent;
+        switch (v.getId()) {
+
+            case R.id.fab:
+                intent = new Intent(ListActivity.this, CreateActivity.class);
+                startActivityForResult(intent, CREATE_CARD_REQUEST);
+                break;
+            case R.id.image_view_settings:
+                intent = new Intent(ListActivity.this, SettingsActivity.class);
+                intent.putExtra("key", 1);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.image_view_cards:
+                break;
+        }
     }
 
     @Override
@@ -220,6 +222,12 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public void initData(ArrayList<Card> pCards) {
 
         this.setData(pCards);
+    }
+
+    @Override
+    public void deleteAll() {
+
+        mPresenter.deleteAll();
     }
 
     @SuppressLint("ClickableViewAccessibility")
