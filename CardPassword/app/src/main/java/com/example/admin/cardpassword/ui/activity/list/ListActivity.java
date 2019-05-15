@@ -110,6 +110,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         initViews();
 
 //        deleteAll();
+
+        initialData();
     }
 
     @Override
@@ -131,7 +133,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
                     .commit();
 
         constraintSet.clone(mLayout);
-        constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, R.id.horizontal_guideline_list_cards, ConstraintSet.TOP, 0);
+        constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
+        constraintSet.connect(R.id.recycler_view, ConstraintSet.BOTTOM, R.id.horizontal_guideline_list_cards, ConstraintSet.BOTTOM, 0);
         constraintSet.applyTo(mLayout);
 
         fromFragment = "y";
@@ -215,7 +218,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     private void setData(List<Card> pCardList) {
 
-        mAdapter.addItems(pCardList);
+//        mAdapter.addItems(pCardList);
     }
 
     @Override
@@ -307,5 +310,14 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         constraintSet.clone(mLayout);
         constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
         constraintSet.applyTo(mLayout);
+    }
+
+    private void initialData() {
+
+        mCardList.add(new Card(4255200306231895L, 123, "1234", "asdasd", "asdasd", "visa", 1234));
+        mCardList.add(new Card(4255200306231895L, 123, "1234", "asdasd", "asdasd", "visa", 1234));
+        mCardList.add(new Card(4255200306231895L, 123, "1234", "asdasd", "asdasd", "visa", 1234));
+        mCardList.add(new Card(4255200306231895L, 123, "1234", "asdasd", "asdasd", "visa", 1234));
+        mCardList.add(new Card(4255200306231895L, 123, "1234", "asdasd", "asdasd", "visa", 1234));
     }
 }
