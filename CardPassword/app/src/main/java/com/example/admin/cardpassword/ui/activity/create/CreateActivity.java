@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +23,7 @@ import android.widget.Toast;
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
 import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
+import com.example.admin.cardpassword.utils.ActivitySubmitCreditCard;
 import com.github.pinball83.maskededittext.MaskedEditText;
 
 import java.util.Objects;
@@ -114,7 +114,7 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
         });
     }
 
-    @OnClick({R.id.btn_save_card, R.id.fab_create, R.id.image_view_settings_create, R.id.btn_action_card_photo})
+    @OnClick({R.id.btn_save_card, R.id.fab_create, R.id.image_view_settings_create, R.id.btn_action_card_photo, R.id.btn_action_animated_creating_card})
     public void onClick(View v) {
 
         Intent intent;
@@ -138,6 +138,10 @@ public class CreateActivity extends AppCompatActivity implements CreateContract.
             case R.id.btn_action_card_photo:
                 scanCard();
                 break;
+            case R.id.btn_action_animated_creating_card:
+                intent = new Intent(CreateActivity.this, ActivitySubmitCreditCard.class);
+                startActivity(intent);
+                finish();
         }
     }
 

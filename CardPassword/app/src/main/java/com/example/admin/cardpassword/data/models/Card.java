@@ -62,16 +62,26 @@ public class Card implements Parcelable {
         mId = in.readInt();
     }
 
+    public Card(long pCardNumber, int pCVC, String pValidity, String pCardHolder, String pCardType, int pPin) {
+
+        mCardNumber = pCardNumber;
+        mCVC = pCVC;
+        mValidity = pValidity;
+        mCardHolderName = pCardHolder;
+        mCardType = pCardType;
+        mPin = pPin;
+    }
+
     public Card(long pMByteCardNumber, int pMByteCvc, String pMValidityContains, String pCardHoldersName, String pCardHoldersSurname, String pCardType, int pMBytePin, int pId) {
 
-    mCardNumber = pMByteCardNumber;
-    mCVC = pMByteCvc;
-    mValidity = pMValidityContains;
-    mCardHolderName = pCardHoldersName;
-    mCardHolderSurname = pCardHoldersSurname;
-    mCardType = pCardType;
-    mPin = pMBytePin;
-    mId = pId;
+        mCardNumber = pMByteCardNumber;
+        mCVC = pMByteCvc;
+        mValidity = pMValidityContains;
+        mCardHolderName = pCardHoldersName;
+        mCardHolderSurname = pCardHoldersSurname;
+        mCardType = pCardType;
+        mPin = pMBytePin;
+        mId = pId;
     }
 
     public String getCardType() {

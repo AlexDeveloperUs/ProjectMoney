@@ -8,9 +8,13 @@ buildscript {
         maven {
             url "https://maven.google.com"
         }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-rc2'
 
 
@@ -27,6 +31,10 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven{ url 'https://maven.google.com/' }
         maven { url "http://pay.cards/maven" }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }
 

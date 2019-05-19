@@ -26,7 +26,7 @@
     <string name="menu_edit_card">Изменить карту</string>
     <string name="menu_delete_all_cards">Удалить все карты</string>
 
-    <string name="hint_card_number">Номер карты</string>
+    <string name="hint_card_numberr">Номер карты</string>
     <string name="hint_card_cvc_cvv">CVC/CVV</string>
     <string name="hint_card_validity">Valid THRU</string>
     <string name="hint_card_holders_name">Имя</string>
@@ -51,6 +51,22 @@
     <string name="text_void_et_name">Card</string>
 
     <string name="text_void_et_surname">Holder</string>
+
+    <string name="title_action_reset">Reset</string>
+
+    <string name="label_card_number">XXXX XXXX XXXX XXXX</string>
+    <string name="label_expired_date">MM/YY</string>
+    <string name="label_card_holder">CARD HOLDER</string>
+    <string name="label_cvv_code">CVV CODE</string>
+    <string name="label_pin">PIN</string>
+
+    <string name="hint_card_number">16-DIGIT CARD NUMBER</string>
+    <string name="hint_expired_date">EXPIRED DATE</string>
+    <string name="hint_card_holder">CARD HOLDER</string>
+    <string name="hint_cvv_code">CVV CODE</string>
+    <string name="hint_pin">PIN</string>
+
+    <string name="label_secure_submission">Secure Submission</string>
 
     <string-array name="card_type_array">
 
