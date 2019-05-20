@@ -195,7 +195,7 @@ public class Frag extends Fragment implements View.OnClickListener{
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @OnClick({R.id.action_button_delete})
+    @OnClick({R.id.action_button_delete, R.id.action_button_edit})
     @Override
     public void onClick(View v) {
 

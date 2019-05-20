@@ -4,13 +4,16 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +50,10 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
     private int mInt = 0;
     private String mString = "";
     private ThreadExecutors mExecutors = new ThreadExecutors();
+    private boolean mCheckRequestCodeForSave = true;
+    private int mId = 0;
+    int tmp = 4;
+    String ssss = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +62,8 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
 
         activitySubmitCreditCardBinding = DataBindingUtil.setContentView(this, R.layout.activity_submit_credit_card);
         card = new Card();
+
+        checkRequestCode();
 
         View.OnClickListener onHelpClickListener = v -> Toast.makeText(ActivitySubmitCreditCard.this, "The CVV Number (\"Card Verification Value\") is a 3 or 4 digit number on your credit and debit cards", Toast.LENGTH_LONG).show();
 
@@ -87,6 +96,7 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                     return;
                 }
                 lock = true;
+
                 for (int i = 4; i < s.length(); i += 5) {
 
                     if (s.toString().charAt(i) != ' ') {
@@ -95,7 +105,7 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                     }
                 }
 
-                Toast.makeText(getApplicationContext(), s.length()+"", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), s.length() + "", Toast.LENGTH_LONG).show();
 
                 if (s.length() == 19) {
 
@@ -361,28 +371,28 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
         String cardHolder = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardHolder.getText()).toString();
         int pin = Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditPin.getText()).toString());
         String validity = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditExpiredDate.getText()).toString();
-        String type = "";
 
         activitySubmitCreditCardBinding.viewPager.setCurrentItem(5);
-        Card newCard = new Card(number, cvc, validity, cardHolder, checkCardType(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText())), pin);
-        mExecutors.dbExecutor().execute(() -> mExecutors.dbExecutor().execute(() -> App.mInstance.getDataBase().mCardDao().insert(newCard)));
-//        card.setCardNumber(Long.parseLong(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText()).replaceAll("[^0-9]", "")));
-//        card.setCardNumber(Long.parseLong(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardNumber.getText()).toString()));
-//        card.setValidity(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditExpiredDate.getText()).toString());
-//        card.setCardHolderSurname(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardHolder.getText()).toString());
-//        card.setCVC(Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCvvCode.getText()).toString()));
-//        card.setPin(Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditPin.getText()).toString()));
+
+        if (mCheckRequestCodeForSave) {
+
+            Card newCard = new Card(number, cvc, validity, cardHolder, checkCardType(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText())), pin);
+            mExecutors.dbExecutor().execute(() -> mExecutors.dbExecutor().execute(() -> App.mInstance.getDataBase().mCardDao().insert(newCard)));
+        } else {
+
+            Card newCard = new Card(number, cvc, validity, cardHolder, checkCardType(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText())), pin, mId);
+            mExecutors.dbExecutor().execute(() -> mExecutors.dbExecutor().execute(() -> App.mInstance.getDataBase().mCardDao().update(newCard)));
+        }
 
         Toast.makeText(ActivitySubmitCreditCard.this, card.toString(), Toast.LENGTH_LONG).show();
 
-        new Handler().postDelayed(() -> {
+        activitySubmitCreditCardBinding.inputLayoutPin.setVisibility(View.INVISIBLE);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        activitySubmitCreditCardBinding.labelSecureSubmission.setVisibility(View.VISIBLE);
+        hideKeyboard(activitySubmitCreditCardBinding.inputEditPin);
+        activitySubmitCreditCardBinding.progressCircle.setVisibility(View.VISIBLE);
 
-            activitySubmitCreditCardBinding.inputLayoutPin.setVisibility(View.INVISIBLE);
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-            activitySubmitCreditCardBinding.labelSecureSubmission.setVisibility(View.VISIBLE);
-            hideKeyboard(activitySubmitCreditCardBinding.inputEditPin);
-            activitySubmitCreditCardBinding.progressCircle.setVisibility(View.VISIBLE);
-        }, 300);
+        new Handler().postDelayed(this::finish, 1000);
     }
 
     private void reset() {
@@ -483,11 +493,11 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
         }
     }
 
-    public static float convertDpToPixel(float dp, Context context){
+    public static float convertDpToPixel(float dp, Context context) {
 
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
-        return dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
 //    public static float convertPixelsToDp(float px, Context context){
@@ -593,5 +603,43 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
         }
 
         return mCardType;
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void checkRequestCode() {
+
+        Intent intent = getIntent();
+        com.example.admin.cardpassword.data.models.Card card = getIntent().getParcelableExtra("card");
+        String code = intent.getStringExtra("REQUEST_CODE");
+
+        String REQUEST_CODE = "2";
+        if (code != null && code.equals(REQUEST_CODE)) {
+
+            String cvc = String.valueOf(card.getCVC());
+            String pin = String.valueOf(card.getPin());
+
+            mCheckRequestCodeForSave = false;
+            ssss = String.valueOf(card.mCardNumber);
+            String firstSub = ssss.substring(1, 4);
+            String secondSub = ssss.substring(4, 8);
+            String thirdSub = ssss.substring(8, 12);
+            String fourthSub = ssss.substring(12, 16);
+            activitySubmitCreditCardBinding.inputEditCardNumber.setText(firstSub + " " + secondSub + " " + thirdSub + " " + fourthSub);
+            activitySubmitCreditCardBinding.inputEditCvvCode.setText(cvc);
+            activitySubmitCreditCardBinding.inputEditExpiredDate.setText(card.getValidity());
+            activitySubmitCreditCardBinding.inputEditCardHolder.setText(card.getCardHolderName());
+            activitySubmitCreditCardBinding.inputEditPin.setText(pin);
+            mId = card.getId();
+        }
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+
+        super.onPostCreate(savedInstanceState);
+        if (!mCheckRequestCodeForSave) {
+
+            new Handler().postDelayed(this::flipToBlue, 1000);
+        }
     }
 }

@@ -34,7 +34,8 @@ import butterknife.ButterKnife;
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
 
-    private int[] colors = {0xff03a9f4, 0xff259b24, 0xffff5722, 0xffe51c23, 0xff673ab7};
+    private int[] colors = {R.drawable.recangle_rounded_green, R.drawable.rectangle_rounded_indigo, R.drawable.rectangle_rounded_lime,
+            R.drawable.rectangle_rounded_purple, R.drawable.rectangle_rounded_red, R.drawable.rectangle_rounded_teal};
 
     private List<Card> mCardList;
     private final LayoutInflater mInflater;
@@ -61,9 +62,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder pViewHolder, int pI) {
 
         pViewHolder.bind(mCardList.get(pI), pI);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            pViewHolder.mView.setStrokeColor(colors[pI % colors.length]);
-        }
+        pViewHolder.mView.setStrokeColor(colors[pI % colors.length]);
     }
 
     public Card getCardAtPos(int pPosition) {

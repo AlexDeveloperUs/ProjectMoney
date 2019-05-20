@@ -69,10 +69,11 @@ public class VerticalSampleItemLayout extends FrameLayout {
         ViewCompat.setElevation(addV, elevation);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void setStrokeColor(int color) {
 
-        Drawable back = addV.getBackground();
-        back.setColorFilter(color, PorterDuff.Mode.OVERLAY);
+
+        Drawable back = getResources().getDrawable(color);
+//        back.setColorFilter(color, PorterDuff.Mode.OVERLAY);
+        addV.setBackground(back);
     }
 }

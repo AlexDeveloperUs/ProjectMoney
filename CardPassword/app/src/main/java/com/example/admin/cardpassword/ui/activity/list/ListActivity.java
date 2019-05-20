@@ -23,6 +23,7 @@ import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.ui.fragments.fragment1.Frag;
+import com.example.admin.cardpassword.utils.ActivitySubmitCreditCard;
 import com.example.admin.cardpassword.utils.LadderLayoutManager;
 import com.example.admin.cardpassword.utils.LadderSimpleSnapHelper;
 import com.example.admin.cardpassword.utils.OnSwipeTouchListener;
@@ -193,7 +194,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         String request = "2";
 
-        Intent intent = new Intent(ListActivity.this, CreateActivity.class);
+        Intent intent = new Intent(ListActivity.this, ActivitySubmitCreditCard.class);
         intent.putExtra("card", pCard);
         intent.putExtra("REQUEST_CODE", request);
 
