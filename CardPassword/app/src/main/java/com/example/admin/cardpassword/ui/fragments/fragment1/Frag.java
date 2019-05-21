@@ -1,7 +1,10 @@
 package com.example.admin.cardpassword.ui.fragments.fragment1;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +61,8 @@ public class Frag extends Fragment implements View.OnClickListener{
     private String mGetPin = "";
     private ListActivity mActivity;
 
-    private int[] colors = {0xff03a9f4, 0xff259b24, 0xffff5722, 0xffe51c23, 0xff673ab7};
+    private int[] background = {R.drawable.recangle_rounded_green, R.drawable.rectangle_rounded_indigo, R.drawable.rectangle_rounded_lime,
+            R.drawable.rectangle_rounded_purple, R.drawable.rectangle_rounded_red, R.drawable.rectangle_rounded_teal};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -212,20 +217,33 @@ public class Frag extends Fragment implements View.OnClickListener{
 
     private void setColors() {
 
+
+        @SuppressLint("Recycle")
+        TypedArray array = Objects.requireNonNull(getActivity()).getResources().obtainTypedArray(R.array.some_colors);
+
+        int[] colores = new int[array.length()];
+        for (int i = 0; i < array.length(); i++) {
+
+            colores[i] = array.getColor(i, 0);
+        }
+        array.recycle();
+
         int pos;
 
-        if (mActivity.getPos() > colors.length) {
+        if (mActivity.getPos() > colores.length) {
 
-            pos = (mActivity.getPos() % colors.length);
+            pos = (mActivity.getPos() % colores.length);
         } else {
 
             pos = mActivity.getPos();
         }
 
-        Drawable back = mCard.getBackground();
-        back.setColorFilter(colors[pos], PorterDuff.Mode.OVERLAY);
+        Drawable back = getResources().getDrawable(background[pos]);
+        mCard.setBackground(back);
 
-        mDelete.setBackgroundTintList(ColorStateList.valueOf(colors[pos]));
-        mEdit.setBackgroundTintList(ColorStateList.valueOf(colors[pos]));
+//        colors[pI % colors.length]
+
+        mDelete.setBackgroundTintList(ColorStateList.valueOf(colores[pos]));
+        mEdit.setBackgroundTintList(ColorStateList.valueOf(colores[pos]));
     }
 }

@@ -66,8 +66,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     RecyclerView mRecyclerView;
     @BindView(R.id.container)
     ConstraintLayout mLayout;
-        @BindView(R.id.bottom_app_bar)
-        BottomAppBar mBottomAppBar;
+//        @BindView(R.id.bottom_app_bar)
+//        BottomAppBar mBottomAppBar;
     Fragment fragment;
     FragmentManager fragmentManager;
 
@@ -151,7 +151,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         loadCards();
     }
 
-    @OnClick({R.id.fab, R.id.image_view_settings, R.id.image_view_cards})
+    @OnClick({R.id.fab})
     public void onClick(View v) {
 
         Intent intent;
@@ -161,14 +161,14 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
                 intent = new Intent(ListActivity.this, CreateActivity.class);
                 startActivityForResult(intent, CREATE_CARD_REQUEST);
                 break;
-            case R.id.image_view_settings:
-                intent = new Intent(ListActivity.this, SettingsActivity.class);
-                intent.putExtra("key", 1);
-                startActivity(intent);
-                finish();
-                break;
-            case R.id.image_view_cards:
-                break;
+//            case R.id.image_view_settings:
+//                intent = new Intent(ListActivity.this, SettingsActivity.class);
+//                intent.putExtra("key", 1);
+//                startActivity(intent);
+//                finish();
+//                break;
+//            case R.id.image_view_cards:
+//                break;
         }
     }
 
