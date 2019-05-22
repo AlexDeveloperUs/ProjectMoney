@@ -87,9 +87,11 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        @BindView(R.id.text_card_name_recycler)
+        TextView mCardName;
         @BindView(R.id.text_card_number_recycler)
         TextView cardNumber;
-        @BindView(R.id.text_card_cvc_card_element)
+        @BindView(R.id.text_cvv_code_recycler)
         TextView cvc;
         @BindView(R.id.text_expired_date_recycler)
         TextView validity;
@@ -117,8 +119,23 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         void bind(Card pCard, int pos) {
 
             cardNumber.setText(appendMinus(Long.toString(pCard.getCardNumber())));
-            cvc.setText(String.valueOf(pCard.getCVC()));
+//            cvc.setText(String.valueOf(pCard.getCVC()));
             validity.setText(pCard.getValidity());
+
+            if (pCard.getCardName().equals("")) {
+
+                mCardName.setText("Card name");
+            } else mCardName.setText(pCard.getCardName());
+
+            String cvcData = String.valueOf(pCard.getCVC());
+
+            if (cvcData.length() == 3) {
+
+                cvc.setText("*** ");
+            } else if (cvcData.length() == 4) {
+
+                cvc.setText("**** ");
+            }
 
             if (pCard.getCardHolderName().equals("") && pCard.getCardHolderSurname().equals("")) {
 

@@ -44,6 +44,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private List<Card> mCardList = new ArrayList<>();
     private CardListAdapter mAdapter;
     private ListContract.Presenter mPresenter = new ListPresenter(this);
+    private String mCardName = "";
     private String mNumber = "";
     private String mCvc = "";
     private String mValidity = "";
@@ -181,6 +182,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     public void getData(Card pCard) {
 
+        mCardName = pCard.getCardName();
         mNumber = String.valueOf(pCard.getCardNumber());
         mCvc = String.valueOf(pCard.getCVC());
         mValidity = pCard.getValidity();

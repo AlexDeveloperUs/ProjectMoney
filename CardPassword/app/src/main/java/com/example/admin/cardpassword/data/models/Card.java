@@ -15,6 +15,9 @@ public class Card implements Parcelable {
     @ColumnInfo(name = "cardId")
     public int mId;
 
+    @ColumnInfo(name = "cardName")
+    public String mCardName;
+
     @ColumnInfo(name = "cardNumber")
     public long mCardNumber;
 
@@ -52,6 +55,7 @@ public class Card implements Parcelable {
 
     public Card(Parcel in) {
 
+        mCardName = in.readString();
         mCardNumber = in.readLong();
         mCVC = in.readInt();
         mValidity = in.readString();
@@ -64,6 +68,17 @@ public class Card implements Parcelable {
 
     public Card(long pCardNumber, int pCVC, String pValidity, String pCardHolder, String pCardType, int pPin) {
 
+        mCardNumber = pCardNumber;
+        mCVC = pCVC;
+        mValidity = pValidity;
+        mCardHolderName = pCardHolder;
+        mCardType = pCardType;
+        mPin = pPin;
+    }
+
+    public Card(String pCardName, long pCardNumber, int pCVC, String pValidity, String pCardHolder, String pCardType, int pPin) {
+
+        mCardName = pCardName;
         mCardNumber = pCardNumber;
         mCVC = pCVC;
         mValidity = pValidity;
@@ -95,6 +110,27 @@ public class Card implements Parcelable {
         mId = pId;
     }
 
+    public Card(String pCardName, long pMByteCardNumber, int pMByteCvc, String pMValidityContains, String pCardHolder, String pCardType, int pMBytePin, int pId) {
+
+        mCardName = pCardName;
+        mCardNumber = pMByteCardNumber;
+        mCVC = pMByteCvc;
+        mValidity = pMValidityContains;
+        mCardHolderName = pCardHolder;
+        mCardType = pCardType;
+        mPin = pMBytePin;
+        mId = pId;
+    }
+
+    public String getCardName() {
+
+        return mCardName;
+    }
+
+    public void setCardName(String pCardName) {
+
+        mCardName = pCardName;
+    }
     public String getCardType() {
 
         return mCardType;
@@ -184,6 +220,7 @@ public class Card implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
+        dest.writeString(mCardName);
         dest.writeLong(mCardNumber);
         dest.writeInt(mCVC);
         dest.writeString(mValidity);

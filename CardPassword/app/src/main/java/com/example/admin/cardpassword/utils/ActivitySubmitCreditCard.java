@@ -169,7 +169,18 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
 
                 switch (position) {
                     case 0:
-                        updateProgressBar(20);
+                        updateProgressBar(17);
+                        activitySubmitCreditCardBinding.inputEditCardName.setFocusableInTouchMode(true);
+                        activitySubmitCreditCardBinding.inputEditCardNumber.setFocusable(false);
+                        activitySubmitCreditCardBinding.inputEditExpiredDate.setFocusable(false);
+                        activitySubmitCreditCardBinding.inputEditCardHolder.setFocusable(false);
+                        activitySubmitCreditCardBinding.inputEditCvvCode.setFocusable(false);
+                        activitySubmitCreditCardBinding.inputEditPin.setFocusable(false);
+                        activitySubmitCreditCardBinding.inputEditCardName.requestFocus();
+                        return;
+                    case 1:
+                        updateProgressBar(34);
+                        activitySubmitCreditCardBinding.inputEditCardName.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardNumber.setFocusableInTouchMode(true);
                         activitySubmitCreditCardBinding.inputEditExpiredDate.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardHolder.setFocusable(false);
@@ -177,8 +188,9 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                         activitySubmitCreditCardBinding.inputEditPin.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardNumber.requestFocus();
                         return;
-                    case 1:
-                        updateProgressBar(40);
+                    case 2:
+                        updateProgressBar(51);
+                        activitySubmitCreditCardBinding.inputEditCardName.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardNumber.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditExpiredDate.setFocusableInTouchMode(true);
                         activitySubmitCreditCardBinding.inputEditCardHolder.setFocusable(false);
@@ -186,8 +198,9 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                         activitySubmitCreditCardBinding.inputEditPin.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditExpiredDate.requestFocus();
                         return;
-                    case 2:
-                        updateProgressBar(50);
+                    case 3:
+                        updateProgressBar(68);
+                        activitySubmitCreditCardBinding.inputEditCardName.setFocusable(true);
                         activitySubmitCreditCardBinding.inputEditCardNumber.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditExpiredDate.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardHolder.setFocusableInTouchMode(true);
@@ -195,8 +208,9 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                         activitySubmitCreditCardBinding.inputEditPin.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardHolder.requestFocus();
                         return;
-                    case 3:
-                        updateProgressBar(80);
+                    case 4:
+                        updateProgressBar(85);
+                        activitySubmitCreditCardBinding.inputEditCardName.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardNumber.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditExpiredDate.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardHolder.setFocusable(false);
@@ -204,8 +218,9 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                         activitySubmitCreditCardBinding.inputEditPin.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCvvCode.requestFocus();
                         return;
-                    case 4:
+                    case 5:
                         updateProgressBar(100);
+                        activitySubmitCreditCardBinding.inputEditCardName.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardNumber.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditExpiredDate.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardHolder.setFocusable(false);
@@ -213,7 +228,8 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                         activitySubmitCreditCardBinding.inputEditPin.setFocusableInTouchMode(true);
                         activitySubmitCreditCardBinding.inputEditPin.requestFocus();
                         return;
-                    case 5:
+                    case 6:
+                        activitySubmitCreditCardBinding.inputEditCardName.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardNumber.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditExpiredDate.setFocusable(false);
                         activitySubmitCreditCardBinding.inputEditCardHolder.setFocusable(false);
@@ -236,6 +252,11 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                 switch (mInt) {
 
                     case 0:
+                        activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
+                        handled = true;
+                        mInt = 1;
+                        break;
+                    case 1:
                         if (mString.equals("")) {
 
                             Toast.makeText(getApplicationContext(), "Введите номер карты", Toast.LENGTH_LONG).show();
@@ -245,14 +266,9 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
 
                                 activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
                                 handled = true;
-                                mInt = 1;
+                                mInt = 2;
                             }
                         }
-                        break;
-                    case 1:
-                        activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
-                        handled = true;
-                        mInt = 2;
                         break;
                     case 2:
                         activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
@@ -270,9 +286,12 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                         mInt = 5;
                         break;
                     case 5:
+                        activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
+                        handled = true;
+                        mInt = 6;
+                        break;
+                    case 6:
                 }
-
-
             }
             if (actionId == EditorInfo.IME_ACTION_DONE) {
 
@@ -282,13 +301,14 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
             return handled;
         };
 
+        activitySubmitCreditCardBinding.inputEditCardName.setOnEditorActionListener(onEditorActionListener);
         activitySubmitCreditCardBinding.inputEditCardNumber.setOnEditorActionListener(onEditorActionListener);
         activitySubmitCreditCardBinding.inputEditExpiredDate.setOnEditorActionListener(onEditorActionListener);
         activitySubmitCreditCardBinding.inputEditCardHolder.setOnEditorActionListener(onEditorActionListener);
         activitySubmitCreditCardBinding.inputEditCvvCode.setOnEditorActionListener(onEditorActionListener);
         activitySubmitCreditCardBinding.inputEditPin.setOnEditorActionListener(onEditorActionListener);
 
-        activitySubmitCreditCardBinding.inputEditCardNumber.requestFocus();
+        activitySubmitCreditCardBinding.inputEditCardName.requestFocus();
 
         inSet = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.card_flip_in);
         outSet = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.card_flip_out);
@@ -304,21 +324,24 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
             switch (position) {
 
                 case 0:
-                    resId = R.id.input_layout_card_number;
+                    resId = R.id.input_layout_card_name;
                     break;
                 case 1:
-                    resId = R.id.input_layout_expired_date;
+                    resId = R.id.input_layout_card_number;
                     break;
                 case 2:
-                    resId = R.id.input_layout_card_holder;
+                    resId = R.id.input_layout_expired_date;
                     break;
                 case 3:
-                    resId = R.id.input_layout_cvv_code;
+                    resId = R.id.input_layout_card_holder;
                     break;
                 case 4:
-                    resId = R.id.input_layout_pin;
+                    resId = R.id.input_layout_cvv_code;
                     break;
                 case 5:
+                    resId = R.id.input_layout_pin;
+                    break;
+                case 6:
                     resId = R.id.space;
                     break;
             }
@@ -334,7 +357,7 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
         @Override
         public int getCount() {
 
-            return 6;
+            return 7;
         }
 
         @Override
@@ -366,21 +389,22 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
 
     private void submit() {
 
+        String name = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardName.getText()).toString();
         long number = Long.parseLong(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText()).replaceAll("[^0-9]", ""));
         int cvc = Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCvvCode.getText()).toString());
         String cardHolder = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardHolder.getText()).toString();
         int pin = Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditPin.getText()).toString());
         String validity = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditExpiredDate.getText()).toString();
 
-        activitySubmitCreditCardBinding.viewPager.setCurrentItem(5);
+        activitySubmitCreditCardBinding.viewPager.setCurrentItem(6);
 
         if (mCheckRequestCodeForSave) {
 
-            Card newCard = new Card(number, cvc, validity, cardHolder, checkCardType(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText())), pin);
+            Card newCard = new Card(name, number, cvc, validity, cardHolder, checkCardType(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText())), pin);
             mExecutors.dbExecutor().execute(() -> mExecutors.dbExecutor().execute(() -> App.mInstance.getDataBase().mCardDao().insert(newCard)));
         } else {
 
-            Card newCard = new Card(number, cvc, validity, cardHolder, checkCardType(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText())), pin, mId);
+            Card newCard = new Card(name, number, cvc, validity, cardHolder, checkCardType(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText())), pin, mId);
             mExecutors.dbExecutor().execute(() -> mExecutors.dbExecutor().execute(() -> App.mInstance.getDataBase().mCardDao().update(newCard)));
         }
 
@@ -404,13 +428,14 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
         activitySubmitCreditCardBinding.labelSecureSubmission.setVisibility(View.GONE);
         flipToGray();
         activitySubmitCreditCardBinding.viewPager.setCurrentItem(0);
+        activitySubmitCreditCardBinding.inputEditCardName.setText("");
         activitySubmitCreditCardBinding.inputEditCardNumber.setText("");
         activitySubmitCreditCardBinding.inputEditExpiredDate.setText("");
         activitySubmitCreditCardBinding.inputEditCardHolder.setText("");
         activitySubmitCreditCardBinding.inputEditCvvCode.setText("");
         activitySubmitCreditCardBinding.inputEditPin.setText("");
         activitySubmitCreditCardBinding.inputEditCardNumber.requestFocus();
-        showKeyboard(activitySubmitCreditCardBinding.inputEditCardNumber);
+        showKeyboard(activitySubmitCreditCardBinding.inputEditCardName);
     }
 
     private void flipToGray() {
@@ -624,6 +649,7 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
             String secondSub = ssss.substring(4, 8);
             String thirdSub = ssss.substring(8, 12);
             String fourthSub = ssss.substring(12, 16);
+            activitySubmitCreditCardBinding.inputEditCardName.setText(card.getCardName());
             activitySubmitCreditCardBinding.inputEditCardNumber.setText(firstSub + " " + secondSub + " " + thirdSub + " " + fourthSub);
             activitySubmitCreditCardBinding.inputEditCvvCode.setText(cvc);
             activitySubmitCreditCardBinding.inputEditExpiredDate.setText(card.getValidity());

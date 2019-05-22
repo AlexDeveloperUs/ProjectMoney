@@ -65,6 +65,7 @@
     <string name="hint_card_holder">CARD HOLDER</string>
     <string name="hint_cvv_code">CVV CODE</string>
     <string name="hint_pin">PIN</string>
+    <string name="hint_card_name">Card name</string>
 
     <string name="label_secure_submission">Secure Submission</string>
 
