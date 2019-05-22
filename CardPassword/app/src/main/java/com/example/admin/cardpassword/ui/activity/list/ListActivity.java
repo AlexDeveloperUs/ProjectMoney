@@ -310,6 +310,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         constraintSet.clone(mLayout);
         constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
+        constraintSet.connect(R.id.recycler_view, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 0);
         constraintSet.applyTo(mLayout);
     }
 }

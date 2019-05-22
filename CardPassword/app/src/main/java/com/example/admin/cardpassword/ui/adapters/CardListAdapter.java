@@ -87,20 +87,20 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        @BindView(R.id.text_card_number_element)
+        @BindView(R.id.text_card_number_recycler)
         TextView cardNumber;
         @BindView(R.id.text_card_cvc_card_element)
         TextView cvc;
-        @BindView(R.id.text_card_validity_element)
+        @BindView(R.id.text_expired_date_recycler)
         TextView validity;
-        @BindView(R.id.text_card_holder_name_element)
+        @BindView(R.id.text_card_holder_recycler)
         TextView cardHolderName;
         @BindView(R.id.text_card_holder_surname_element)
         TextView cardHolderSurname;
-        @BindView(R.id.image_card_element)
+        @BindView(R.id.text_pin_recycler)
+        TextView pin;
+        @BindView(R.id.image_card_element_recycler)
         ImageView mImageView;
-        @BindView(R.id.content)
-        ConstraintLayout mSwipeActionView;
         @BindView(R.id.card_element)
         View mCard;
         @BindView(R.id.container)
@@ -116,8 +116,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         @SuppressLint("SetTextI18n")
         void bind(Card pCard, int pos) {
 
-//            cardNumber.setText(appendMinus(Long.toString(pCard.getCardNumber())));
-            cardNumber.setText(Long.toString(pCard.getCardNumber()));
+            cardNumber.setText(appendMinus(Long.toString(pCard.getCardNumber())));
             cvc.setText(String.valueOf(pCard.getCVC()));
             validity.setText(pCard.getValidity());
 
@@ -177,6 +176,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         String thirdSubString = pS.substring(8, 12);
         String fourthSubString = pS.substring(12, 16);
 
-        return firstSubString + "-" + secondSubString + "-" + thirdSubString + "-" + fourthSubString;
+        return firstSubString + " " + secondSubString + " " + thirdSubString + " " + fourthSubString;
     }
 }

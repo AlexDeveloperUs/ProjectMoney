@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.example.admin.cardpassword.utils.VerticalSampleItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,6 +11,144 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_blue_recycler"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardCornerRadius="18.898dp"
+            app:cardElevation="12dp"
+            app:cardPreventCornerOverlap="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/card_constraint_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/blue_gradient"
+                app:layout_constraintDimensionRatio="H, 96:61">
+
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="24dp"
+                    android:id="@+id/text_card_name_recycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAllCaps="true"
+                    android:textSize="16sp"
+                    android:typeface="monospace"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@string/label_card_name"
+                    android:layout_marginStart="24dp" />
+
+                <TextView
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="32dp"
+                    android:id="@+id/text_card_number_recycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAllCaps="true"
+                    android:textSize="16sp"
+                    android:typeface="monospace"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_card_name_recycler"
+                    android:text="@string/label_card_number"
+                    android:layout_marginStart="24dp" />
+
+                <TextView
+                    android:layout_marginLeft="24dp"
+                    android:id="@+id/text_expired_date_recycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAllCaps="true"
+                    android:textSize="14sp"
+                    android:typeface="monospace"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_card_number_recycler"
+                    android:text="@string/label_expired_date"
+                    android:layout_marginStart="24dp"
+                    app:layout_constraintBottom_toTopOf="@id/text_card_holder_recycler"/>
+
+                <TextView
+                    android:id="@+id/text_card_holder_recycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginTop="50dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/label_card_holder"
+                    android:textAllCaps="true"
+                    android:textSize="14sp"
+                    android:typeface="monospace"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="20dp"/>
+
+                <TextView
+                    android:layout_marginRight="24dp"
+                    android:id="@+id/text_pin_recycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAllCaps="true"
+                    android:text="@string/label_hidden_pin"
+                    android:textSize="14sp"
+                    android:typeface="monospace"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_cvv_code_recycler"
+                    android:layout_marginEnd="24dp" />
+
+                <TextView
+                    android:id="@+id/text_cvv_code_recycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="32dp"
+                    android:textSize="14sp"
+                    android:typeface="monospace"
+                    app:layout_constraintRight_toLeftOf="@+id/icon_help_blue_recycler"
+                    app:layout_constraintTop_toBottomOf="@+id/text_card_name_recycler"
+                    android:text="@string/label_cvv_code" />
+
+                <ImageView
+                    android:id="@+id/icon_help_blue_recycler"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginRight="24dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/text_cvv_code_recycler"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/text_cvv_code_recycler"
+                    app:srcCompat="@drawable/ic_help_translucent_24dp"
+                    android:layout_marginEnd="24dp" />
+
+                <ImageView
+                    android:id="@+id/image_card_element_recycler"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginRight="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="10dp"/>
+            </android.support.constraint.ConstraintLayout>
+
+        </android.support.v7.widget.CardView>
 
         <View
             android:id="@+id/card_element"
@@ -22,7 +161,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            android:visibility="invisible"/>
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline_card_fragment_horizontal"
@@ -47,6 +187,7 @@
             app:layout_constraintGuide_percent="0.92" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/text_card_number_element"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -61,6 +202,7 @@
             app:layout_constraintTop_toTopOf="@id/guideline_card_fragment_horizontal" />
 
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_view_cvc"
@@ -69,6 +211,7 @@
             app:layout_constraintLeft_toLeftOf="@id/guideline_element_vertical_left_side" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/text_card_cvc_card_element"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,13 +226,14 @@
             app:layout_constraintTop_toBottomOf="@id/text_card_number_element" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/text_card_validity_element"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="65dp"
             android:layout_marginEnd="@dimen/margin_medium"
             android:layout_marginRight="@dimen/margin_medium"
-            android:text="@string/text_view_validity"
+            android:text="@string/text_about_pin"
             android:textColor="#ffffff"
             android:textSize="@dimen/text_size_medium"
             android:textStyle="bold"
@@ -97,6 +241,7 @@
             app:layout_constraintTop_toBottomOf="@id/text_card_number_element" />
 
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_valid_thru"
@@ -105,6 +250,7 @@
             app:layout_constraintRight_toRightOf="@id/guideline_card_fragment_vertical_right_side" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/text_card_holder_name_element"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -118,6 +264,7 @@
             app:layout_constraintBottom_toBottomOf="@id/card_element"/>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/text_card_holder_surname_element"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -133,6 +280,7 @@
             app:layout_constraintBottom_toBottomOf="@id/card_element"/>
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/image_card_element"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

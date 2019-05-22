@@ -68,6 +68,10 @@
 
     <string name="label_secure_submission">Secure Submission</string>
 
+    <string name="label_hidden_pin">****</string>
+    <string name="label_hidden_cvc">***</string>
+    <string name="label_card_name">Card name</string>
+
     <string-array name="card_type_array">
 
         <item>Visa</item>

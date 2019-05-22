@@ -126,8 +126,10 @@ public class Frag extends Fragment implements View.OnClickListener{
     }
 
     public void toActivity(String data) {
+
         Activity activity = getActivity();
         if (activity != null && !activity.isFinishing() && activity instanceof ListActivity) {
+
             ((ListActivity) activity).fromFragmentData(data);
         }
     }
