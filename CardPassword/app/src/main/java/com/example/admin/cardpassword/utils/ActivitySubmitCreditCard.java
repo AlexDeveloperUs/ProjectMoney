@@ -52,8 +52,6 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
     private ThreadExecutors mExecutors = new ThreadExecutors();
     private boolean mCheckRequestCodeForSave = true;
     private int mId = 0;
-    int tmp = 4;
-    String ssss = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +102,6 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                         s.insert(i, " ");
                     }
                 }
-
-                Toast.makeText(getApplicationContext(), s.length() + "", Toast.LENGTH_LONG).show();
 
                 if (s.length() == 19) {
 
@@ -525,13 +521,6 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
         return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
-//    public static float convertPixelsToDp(float px, Context context){
-//
-//        Resources resources = context.getResources();
-//        DisplayMetrics metrics = resources.getDisplayMetrics();
-//        return px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -644,11 +633,11 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
             String pin = String.valueOf(card.getPin());
 
             mCheckRequestCodeForSave = false;
-            ssss = String.valueOf(card.mCardNumber);
-            String firstSub = ssss.substring(1, 4);
-            String secondSub = ssss.substring(4, 8);
-            String thirdSub = ssss.substring(8, 12);
-            String fourthSub = ssss.substring(12, 16);
+            String substring = String.valueOf(card.mCardNumber);
+            String firstSub = substring.substring(1, 4);
+            String secondSub = substring.substring(4, 8);
+            String thirdSub = substring.substring(8, 12);
+            String fourthSub = substring.substring(12, 16);
             activitySubmitCreditCardBinding.inputEditCardName.setText(card.getCardName());
             activitySubmitCreditCardBinding.inputEditCardNumber.setText(firstSub + " " + secondSub + " " + thirdSub + " " + fourthSub);
             activitySubmitCreditCardBinding.inputEditCvvCode.setText(cvc);

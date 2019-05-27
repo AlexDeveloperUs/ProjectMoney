@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.models.Card;
@@ -23,6 +24,7 @@ import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.ui.fragments.fragment1.Frag;
+import com.example.admin.cardpassword.ui.fragments.fragment2.FragmentCardFlip;
 import com.example.admin.cardpassword.utils.ActivitySubmitCreditCard;
 import com.example.admin.cardpassword.utils.LadderLayoutManager;
 import com.example.admin.cardpassword.utils.LadderSimpleSnapHelper;
@@ -36,8 +38,9 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnLongClick;
 
-public class ListActivity extends AppCompatActivity implements ListContract.View, CardListAdapter.OnClickListener, View.OnClickListener {
+public class ListActivity extends AppCompatActivity implements ListContract.View, CardListAdapter.OnClickListener, View.OnClickListener, View.OnLongClickListener {
 
     private static final int CREATE_CARD_REQUEST = 1;
     private static final int EDIT_CARD_REQUEST = 2;
@@ -49,7 +52,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private String mCvc = "";
     private String mValidity = "";
     private String mName = "";
-    private String mSurname = "";
     private String mType = "";
     private String mPin = "";
 
@@ -67,8 +69,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     RecyclerView mRecyclerView;
     @BindView(R.id.container)
     ConstraintLayout mLayout;
-//        @BindView(R.id.bottom_app_bar)
-//        BottomAppBar mBottomAppBar;
     Fragment fragment;
     FragmentManager fragmentManager;
 
@@ -110,10 +110,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         });
 
         initViews();
-
-//        deleteAll();
-
-//        initialData();
     }
 
     @Override
@@ -129,7 +125,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         }
         fragment = fragmentManager.findFragmentById(R.id.fragment_card);
 
-            fragment = Frag.newInstance(mNumber, mCvc, mValidity, mName, mSurname, mType, mPin);
+            fragment = FragmentCardFlip.newInstance(mCardName, mNumber, mCvc, mValidity, mName, mType, mPin);
             fragmentManager.beginTransaction()
                     .replace(R.id.fragment_card, fragment)
                     .commit();
@@ -187,7 +183,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         mCvc = String.valueOf(pCard.getCVC());
         mValidity = pCard.getValidity();
         mName = pCard.getCardHolderName();
-        mSurname = pCard.getCardHolderSurname();
         mType = pCard.getCardType();
         mPin = String.valueOf(pCard.getPin());
     }
@@ -314,5 +309,13 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
         constraintSet.connect(R.id.recycler_view, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 0);
         constraintSet.applyTo(mLayout);
+    }
+
+    @OnLongClick(R.id.fab)
+    @Override
+    public boolean onLongClick(View v) {
+
+        Toast.makeText(this, "someText", Toast.LENGTH_SHORT).show();
+        return true;
     }
 }
