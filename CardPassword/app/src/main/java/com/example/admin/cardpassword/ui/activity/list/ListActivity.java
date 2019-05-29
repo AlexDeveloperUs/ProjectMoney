@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
-import android.support.design.bottomappbar.BottomAppBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
@@ -23,7 +24,6 @@ import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
-import com.example.admin.cardpassword.ui.fragments.fragment1.Frag;
 import com.example.admin.cardpassword.ui.fragments.fragment2.FragmentCardFlip;
 import com.example.admin.cardpassword.utils.ActivitySubmitCreditCard;
 import com.example.admin.cardpassword.utils.LadderLayoutManager;
@@ -54,23 +54,25 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private String mName = "";
     private String mType = "";
     private String mPin = "";
-
-    ConstraintSet constraintSet;
+    private ConstraintSet constraintSet;
+    private int pos;
+    private int tp = 0;
+    private int tt = 0;
+    private String fromFragment;
+    private Fragment fragment;
+    private FragmentManager fragmentManager;
 
     @BindView(R.id.fragment_card)
     FrameLayout mCardLayout;
-
-    int pos;
-    int tp = 0;
-    int tt = 0;
-    String fromFragment;
-
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.container)
     ConstraintLayout mLayout;
-    Fragment fragment;
-    FragmentManager fragmentManager;
+    @BindView(R.id.view_stub)
+    ViewStub mViewStub;
+    @BindView(R.id.image_add)
+    ImageView mAdd;
+    ImageView mBack;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -148,24 +150,30 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         loadCards();
     }
 
-    @OnClick({R.id.fab})
+    @OnClick({R.id.image_add, R.id.image_back_view_stub, R.id.image_add_view_stub, R.id.image_settings_view_stub})
     public void onClick(View v) {
 
         Intent intent;
         switch (v.getId()) {
 
-            case R.id.fab:
+            case R.id.image_add:
                 intent = new Intent(ListActivity.this, CreateActivity.class);
                 startActivityForResult(intent, CREATE_CARD_REQUEST);
                 break;
-//            case R.id.image_view_settings:
-//                intent = new Intent(ListActivity.this, SettingsActivity.class);
-//                intent.putExtra("key", 1);
-//                startActivity(intent);
-//                finish();
-//                break;
-//            case R.id.image_view_cards:
-//                break;
+            case R.id.image_settings_view_stub:
+                intent = new Intent(ListActivity.this, SettingsActivity.class);
+                intent.putExtra("key", 1);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.image_add_view_stub:
+                intent = new Intent(ListActivity.this, CreateActivity.class);
+                startActivityForResult(intent, CREATE_CARD_REQUEST);
+                break;
+            case R.id.image_back_view_stub:
+                mViewStub.setVisibility(View.GONE);
+                mAdd.setVisibility(View.VISIBLE);
+                break;
         }
     }
 
@@ -311,11 +319,16 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         constraintSet.applyTo(mLayout);
     }
 
-    @OnLongClick(R.id.fab)
+    @OnLongClick(R.id.image_add)
     @Override
     public boolean onLongClick(View v) {
 
-        Toast.makeText(this, "someText", Toast.LENGTH_SHORT).show();
+        if (mViewStub != null) {
+
+            mBack = findViewById(R.id.image_back_view_stub);
+        }
+        mAdd.setVisibility(View.INVISIBLE);
+        mViewStub.inflate();
         return true;
     }
 }

@@ -2,7 +2,9 @@ package com.example.admin.cardpassword.ui.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,9 +23,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHolder> {
-
-    private int[] colors = {R.drawable.recangle_rounded_green, R.drawable.rectangle_rounded_indigo, R.drawable.rectangle_rounded_lime,
-            R.drawable.rectangle_rounded_purple, R.drawable.rectangle_rounded_red, R.drawable.rectangle_rounded_teal};
 
     private List<Card> mCardList;
     private final LayoutInflater mInflater;
@@ -49,8 +48,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder pViewHolder, int pI) {
 
-        pViewHolder.bind(mCardList.get(pI), pI);
-        pViewHolder.mView.setStrokeColor(colors[pI % colors.length]);
+        pViewHolder.bind(mCardList.get(pI));
     }
 
     public Card getCardAtPos(int pPosition) {
@@ -95,19 +93,25 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         View mCard;
         @BindView(R.id.container)
         VerticalSampleItemLayout mView;
+        @BindView(R.id.card_constraint_recycler)
+        ConstraintLayout mBack;
+
+        private Context mContext;
 
         ViewHolder(@NonNull View itemView) {
 
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
+            mContext = itemView.getContext();
         }
 
         @SuppressLint("SetTextI18n")
-        void bind(Card pCard, int pos) {
+        void bind(Card pCard) {
+
+            Drawable background;
 
             cardNumber.setText(appendVoid(Long.toString(pCard.getCardNumber())));
-//            cvc.setText(String.valueOf(pCard.getCVC()));
             validity.setText(pCard.getValidity());
 
             if (pCard.getCardName().equals("")) {
@@ -139,18 +143,26 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
                 mImageView.setBackgroundResource(R.drawable.visa_rounded);
                 setParams();
+                background = mContext.getResources().getDrawable(R.drawable.visa_gradient);
+                mBack.setBackground(background);
             } else if (pCard.getCardType().toLowerCase().equals("mastercard")) {
 
                 mImageView.setBackgroundResource(R.drawable.ms_with_border);
                 setParams();
+                background = mContext.getResources().getDrawable(R.drawable.red_gradient);
+                mBack.setBackground(background);
             } else if (pCard.getCardType().toLowerCase().equals("belcard")) {
 
                 mImageView.setBackgroundResource(R.drawable.belcard);
                 setParams();
+                background = mContext.getResources().getDrawable(R.drawable.belcard_gradient);
+                mBack.setBackground(background);
             } else if (pCard.getCardType().toLowerCase().equals("maestro")) {
 
                 mImageView.setBackgroundResource(R.drawable.maestro);
                 setParams();
+                background = mContext.getResources().getDrawable(R.drawable.blue_gradient);
+                mBack.setBackground(background);
             }
         }
 
@@ -179,7 +191,6 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         String firstSubString = pS.substring(0, 4);
         String secondSubString = pS.substring(4, 8);
         String thirdSubString = pS.substring(8, 12);
-        String fourthSubString = pS.substring(12, 16);
 
         return firstSubString + " " + secondSubString + " " + thirdSubString + " " + "****";
     }

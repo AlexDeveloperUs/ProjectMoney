@@ -22,7 +22,7 @@
             android:id="@+id/card_constraint_back_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/blue_gradient"
+            android:background="@drawable/back_gradient"
             app:layout_constraintDimensionRatio="H, 96:61">
 
             <ImageView

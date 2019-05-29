@@ -2,11 +2,11 @@ package com.example.admin.cardpassword.ui.fragments.fragment2;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
@@ -27,7 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FragmentCardFlip extends Fragment implements View.OnClickListener{
+public class FragmentCardFlip extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.text_card_name_front_view)
     TextView mFrontCardName;
@@ -63,6 +62,8 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener{
     FloatingActionButton mEdit;
     @BindView(R.id.flip_view)
     EasyFlipView mFlipView;
+    @BindView(R.id.card_constraint_front_view)
+    ConstraintLayout mBack;
 
     private String mGetName = "";
     private String mGetNum = "";
@@ -72,9 +73,6 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener{
     private String mGetType = "";
     private String mGetPin = "";
     private ListActivity mActivity;
-
-    private int[] background = {R.drawable.recangle_rounded_green, R.drawable.rectangle_rounded_indigo, R.drawable.rectangle_rounded_lime,
-            R.drawable.rectangle_rounded_purple, R.drawable.rectangle_rounded_red, R.drawable.rectangle_rounded_teal};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -152,28 +150,39 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener{
         super.onActivityCreated(savedInstanceState);
     }
 
+    @SuppressLint("SetTextI18n")
     private void setData() {
+
+        Drawable back;
 
         if (mGetType.toLowerCase().equals("visa")) {
 
             mFrontImage.setBackgroundResource(R.drawable.visa_rounded);
             mBackImage.setBackgroundResource(R.drawable.visa_rounded);
             setParams();
+            back = getResources().getDrawable(R.drawable.visa_gradient);
+            mBack.setBackground(back);
         } else if (mGetType.toLowerCase().equals("mastercard")) {
 
             mFrontImage.setBackgroundResource(R.drawable.ms_without_border);
             mBackImage.setBackgroundResource(R.drawable.ms_without_border);
             setParams();
+            back = getResources().getDrawable(R.drawable.red_gradient);
+            mBack.setBackground(back);
         } else if (mGetType.toLowerCase().equals("belcard")) {
 
             mFrontImage.setBackgroundResource(R.drawable.belcard);
             mBackImage.setBackgroundResource(R.drawable.belcard);
             setParams();
+            back = getResources().getDrawable(R.drawable.belcard_gradient);
+            mBack.setBackground(back);
         } else if (mGetType.toLowerCase().equals("maestro")) {
 
             mFrontImage.setBackgroundResource(R.drawable.maestro);
             mBackImage.setBackgroundResource(R.drawable.maestro);
             setParams();
+            back = getResources().getDrawable(R.drawable.blue_gradient);
+            mBack.setBackground(back);
         }
 
         if (mGetCardHolder.equals("")) {
@@ -187,8 +196,8 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener{
         }
 
         mBackCardNumber.setText(appendVoid(mGetNum));
-        String te = appendVoid(mGetNum).substring(0, 15);
-        mFrontCardNumber.setText(te + "****");
+        String hiddenCardNumber = appendVoid(mGetNum).substring(0, 15);
+        mFrontCardNumber.setText(hiddenCardNumber + "****");
 
         mBackCvc.setText(mGetCvc + " ");
         if (mGetCvc.length() == 3) {
@@ -202,7 +211,8 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener{
         mFrontValidity.setText(mGetValidity);
         mBackPin.setText(mGetPin);
         mFrontPin.setText("****");
-        setColors();
+        mFrontCardName.setText(mGetName);
+        mBackCardName.setText(mGetName);
     }
 
     private void setParams() {
@@ -248,7 +258,6 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener{
                 mFlipView.setToHorizontalType();
                 mFlipView.setFlipTypeFromBack();
                 mFlipView.flipTheView();
-                Toast.makeText(getActivity(), "asd", Toast.LENGTH_LONG).show();
                 break;
             case R.id.image_flip_card_back:
                 mFlipView.setToHorizontalType();
@@ -256,36 +265,5 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener{
                 mFlipView.flipTheView();
                 break;
         }
-    }
-
-    private void setColors() {
-
-        @SuppressLint("Recycle")
-        TypedArray array = Objects.requireNonNull(getActivity()).getResources().obtainTypedArray(R.array.some_colors);
-
-        int[] colores = new int[array.length()];
-        for (int i = 0; i < array.length(); i++) {
-
-            colores[i] = array.getColor(i, 0);
-        }
-        array.recycle();
-
-        int pos;
-
-        if (mActivity.getPos() > colores.length) {
-
-            pos = (mActivity.getPos() % colores.length);
-        } else {
-
-            pos = mActivity.getPos();
-        }
-
-        Drawable back = getResources().getDrawable(background[pos]);
-//        mCard.setBackground(back);
-
-//        colors[pI % colors.length]
-
-//        mDelete.setBackgroundTintList(ColorStateList.valueOf(colores[pos]));
-//        mEdit.setBackgroundTintList(ColorStateList.valueOf(colores[pos]));
     }
 }
