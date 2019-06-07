@@ -73,6 +73,13 @@
     <string name="label_hidden_cvc">***</string>
     <string name="label_card_name">Card name</string>
 
+    <string name="visa">visa</string>
+    <string name="mastercard">mastercard</string>
+    <string name="belcard">belcard</string>
+    <string name="maestro">maestro</string>
+    <string name="current_password">currentPass</string>
+    <string name="text_without_cards">Сейчас у Вас нет карт, но в любой момент Вы можете их добавить</string>
+
     <string-array name="card_type_array">
 
         <item>Visa</item>

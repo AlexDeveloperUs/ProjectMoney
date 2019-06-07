@@ -44,8 +44,6 @@ public class AuthCheckPasswordActivity extends AppCompatActivity implements View
 
         SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_NAME, 0);
         mPassword = sharedPreferences.getString(SharedPrefs.SHARED_PREFERENCES_KEY, "");
-
-        checkIntent();
     }
 
     @OnClick({R.id.btn_one_check_pass, R.id.btn_two_check_pass, R.id.btn_three_check_pass, R.id.btn_four_check_pass,

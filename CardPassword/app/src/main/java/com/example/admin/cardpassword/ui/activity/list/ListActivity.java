@@ -14,18 +14,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewStub;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.models.Card;
-import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
-import com.example.admin.cardpassword.ui.activity.settings.SettingsActivity;
+import com.example.admin.cardpassword.ui.activity.submit.SubmitCardActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
+import com.example.admin.cardpassword.ui.fragments.fragment1.ControlButtonsFragment;
 import com.example.admin.cardpassword.ui.fragments.fragment2.FragmentCardFlip;
-import com.example.admin.cardpassword.utils.ActivitySubmitCreditCard;
 import com.example.admin.cardpassword.utils.LadderLayoutManager;
 import com.example.admin.cardpassword.utils.LadderSimpleSnapHelper;
 import com.example.admin.cardpassword.utils.OnSwipeTouchListener;
@@ -39,6 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import butterknife.Optional;
 
 public class ListActivity extends AppCompatActivity implements ListContract.View, CardListAdapter.OnClickListener, View.OnClickListener, View.OnLongClickListener {
 
@@ -55,12 +54,13 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private String mType = "";
     private String mPin = "";
     private ConstraintSet constraintSet;
-    private int pos;
-    private int tp = 0;
-    private int tt = 0;
-    private String fromFragment;
-    private Fragment fragment;
-    private FragmentManager fragmentManager;
+    private int mPos;
+    private int mCheckManager = 0;
+    private int mCheckFragment = 0;
+    private String mFromFragment;
+    private Fragment mFragment;
+    private FragmentManager mFragmentManager;
+    private Fragment mFrag;
 
     @BindView(R.id.fragment_card)
     FrameLayout mCardLayout;
@@ -68,11 +68,10 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     RecyclerView mRecyclerView;
     @BindView(R.id.container)
     ConstraintLayout mLayout;
-    @BindView(R.id.view_stub)
-    ViewStub mViewStub;
-    @BindView(R.id.image_add)
-    ImageView mAdd;
-    ImageView mBack;
+    @BindView(R.id.image_cards_back)
+    ImageView mCardsBack;
+    @BindView(R.id.text_without_cards)
+    TextView mTextWithoutCards;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -86,26 +85,26 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         mAdapter = new CardListAdapter(this, mCardList, this, this);
         constraintSet = new ConstraintSet();
-        fragmentManager = getSupportFragmentManager();
+        mFragmentManager = getSupportFragmentManager();
 
-        fromFragment = "";
+        mFromFragment = "";
 
         mCardLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
 
             public void onSwipeLeft() {
 
-                Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
+                Objects.requireNonNull(mFragment.getView()).setVisibility(View.GONE);
 
-                fromFragment = "";
+                mFromFragment = "";
 
                 setRecyclerViewToTop();
             }
 
             public void onSwipeRight() {
 
-                fromFragment = "";
+                mFromFragment = "";
 
-                Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
+                Objects.requireNonNull(mFragment.getView()).setVisibility(View.GONE);
 
                 setRecyclerViewToTop();
             }
@@ -119,28 +118,28 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         getData(mAdapter.getCardAtPos(pI));
 
-        pos = pI;
+        mPos = pI;
 
-        if (tt == 1) {
+        if (mCheckFragment == 1) {
 
-            Objects.requireNonNull(fragment.getView()).setVisibility(View.VISIBLE);
+            Objects.requireNonNull(mFragment.getView()).setVisibility(View.VISIBLE);
         }
-        fragment = fragmentManager.findFragmentById(R.id.fragment_card);
+        mFragment = mFragmentManager.findFragmentById(R.id.fragment_card);
 
-            fragment = FragmentCardFlip.newInstance(mCardName, mNumber, mCvc, mValidity, mName, mType, mPin);
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_card, fragment)
-                    .commit();
+        mFragment = FragmentCardFlip.newInstance(mCardName, mNumber, mCvc, mValidity, mName, mType, mPin);
+        mFragmentManager.beginTransaction()
+                .replace(R.id.fragment_card, mFragment)
+                .commit();
 
         constraintSet.clone(mLayout);
         constraintSet.connect(R.id.recycler_view, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
         constraintSet.connect(R.id.recycler_view, ConstraintSet.BOTTOM, R.id.horizontal_guideline_list_cards, ConstraintSet.BOTTOM, 0);
         constraintSet.applyTo(mLayout);
 
-        fromFragment = "y";
+        mFromFragment = "y";
         initViews();
 
-        tt = 1;
+        mCheckFragment = 1;
     }
 
     @Override
@@ -150,30 +149,15 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         loadCards();
     }
 
-    @OnClick({R.id.image_add, R.id.image_back_view_stub, R.id.image_add_view_stub, R.id.image_settings_view_stub})
+    @Optional
+    @OnClick({R.id.image_add})
     public void onClick(View v) {
 
         Intent intent;
-        switch (v.getId()) {
+        if (v.getId() == R.id.image_add) {
 
-            case R.id.image_add:
-                intent = new Intent(ListActivity.this, CreateActivity.class);
-                startActivityForResult(intent, CREATE_CARD_REQUEST);
-                break;
-            case R.id.image_settings_view_stub:
-                intent = new Intent(ListActivity.this, SettingsActivity.class);
-                intent.putExtra("key", 1);
-                startActivity(intent);
-                finish();
-                break;
-            case R.id.image_add_view_stub:
-                intent = new Intent(ListActivity.this, CreateActivity.class);
-                startActivityForResult(intent, CREATE_CARD_REQUEST);
-                break;
-            case R.id.image_back_view_stub:
-                mViewStub.setVisibility(View.GONE);
-                mAdd.setVisibility(View.VISIBLE);
-                break;
+            intent = new Intent(ListActivity.this, SubmitCardActivity.class);
+            startActivityForResult(intent, CREATE_CARD_REQUEST);
         }
     }
 
@@ -182,6 +166,11 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         assert data != null;
         mAdapter.notifyDataSetChanged();
+        if (!(mAdapter.getItemCount() == 0)) {
+
+            mTextWithoutCards.setVisibility(View.GONE);
+            mCardsBack.setVisibility(View.GONE);
+        }
     }
 
     public void getData(Card pCard) {
@@ -199,7 +188,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         String request = "2";
 
-        Intent intent = new Intent(ListActivity.this, ActivitySubmitCreditCard.class);
+        Intent intent = new Intent(ListActivity.this, SubmitCardActivity.class);
         intent.putExtra("card", pCard);
         intent.putExtra("REQUEST_CODE", request);
 
@@ -242,24 +231,24 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @SuppressLint("ClickableViewAccessibility")
     public void initViews() {
 
-        if (fromFragment.equals("")) {
+        if (mFromFragment.equals("")) {
 
 
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
             mRecyclerView.setAdapter(mAdapter);
             mRecyclerView.setLayoutManager(linearLayoutManager);
-        } else if (fromFragment.equals("y")) {
+        } else if (mFromFragment.equals("y")) {
 
             LadderLayoutManager llm = new LadderLayoutManager(0.7f).setChildDecorateHelper(new VerticalSampleChildDecorateHelper(getResources().getDimension(R.dimen.item_max_elevation)));
             llm.setMaxItemLayoutCount(5);
             llm.setChildPeekSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
             mRecyclerView.setLayoutManager(llm);
-            if (tp == 0) {
+            if (mCheckManager == 0) {
                 new LadderSimpleSnapHelper().attachToRecyclerView(mRecyclerView);
             }
             mRecyclerView.setAdapter(mAdapter);
-            tp = 1;
+            mCheckManager = 1;
 
             mRecyclerView.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
 
@@ -282,26 +271,21 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
     public void fromFragmentData(String data) {
 
-        fromFragment = data;
+        mFromFragment = data;
         initViews();
 
-        Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
+        Objects.requireNonNull(mFragment.getView()).setVisibility(View.GONE);
         setRecyclerViewToTop();
-    }
-
-    public int getPos() {
-
-        return pos;
     }
 
     public Card returnCard() {
 
-         return mAdapter.getCardAtPos(pos);
+        return mAdapter.getCardAtPos(mPos);
     }
 
     private void setDefaultRecyclerView() {
 
-        Objects.requireNonNull(fragment.getView()).setVisibility(View.GONE);
+        Objects.requireNonNull(mFragment.getView()).setVisibility(View.GONE);
         setRecyclerViewToTop();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -323,12 +307,18 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     @Override
     public boolean onLongClick(View v) {
 
-        if (mViewStub != null) {
+        mFrag = new ControlButtonsFragment();
 
-            mBack = findViewById(R.id.image_back_view_stub);
-        }
-        mAdd.setVisibility(View.INVISIBLE);
-        mViewStub.inflate();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.fragment_buttons, mFrag)
+                .commit();
+
         return true;
+    }
+
+    public void removeFromFragment() {
+
+        Objects.requireNonNull(mFrag.getView()).setVisibility(View.GONE);
+
     }
 }

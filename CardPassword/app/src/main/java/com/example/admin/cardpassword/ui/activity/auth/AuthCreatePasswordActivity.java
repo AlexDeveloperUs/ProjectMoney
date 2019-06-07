@@ -93,10 +93,7 @@ public class AuthCreatePasswordActivity extends AppCompatActivity implements Vie
 
     private void clearPassView() {
 
-        mFirstCircle.setBackgroundResource(R.drawable.void_circle);
-        mSecondCircle.setBackgroundResource(R.drawable.void_circle);
-        mThirdCircle.setBackgroundResource(R.drawable.void_circle);
-        mFourthCircle.setBackgroundResource(R.drawable.void_circle);
+        clearCircles();
         mPassword = "";
     }
 
@@ -132,12 +129,10 @@ public class AuthCreatePasswordActivity extends AppCompatActivity implements Vie
                     editable.apply();
 
                     startListActivity();
-
-                    Toast.makeText(AuthCreatePasswordActivity.this, "Confirmed Password", Toast.LENGTH_SHORT).show();
                 } else {
 
                     shakeWrongPass();
-                    Toast.makeText(AuthCreatePasswordActivity.this, "The password are not", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AuthCreatePasswordActivity.this, "Пароли не совпадают", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -155,48 +150,55 @@ public class AuthCreatePasswordActivity extends AppCompatActivity implements Vie
             R.id.btn_cancel})
     public void onClick(View v) {
 
+        if (mPassword.length() < 4) {
+            switch (v.getId()) {
+
+                case R.id.btn_one_check_pass:
+                    mPassword = mPassword.concat("1");
+                    drawCircle(mPassword);
+                    break;
+                case R.id.btn_two_check_pass:
+                    mPassword = mPassword.concat("2");
+                    drawCircle(mPassword);
+                    break;
+                case R.id.btn_three_check_pass:
+                    mPassword = mPassword.concat("3");
+                    drawCircle(mPassword);
+                    break;
+                case R.id.btn_four_check_pass:
+                    mPassword = mPassword.concat("4");
+                    drawCircle(mPassword);
+                    break;
+                case R.id.btn_five_check_pass:
+                    mPassword = mPassword.concat("5");
+                    drawCircle(mPassword);
+                    break;
+                case R.id.btn_six_check_pass:
+                    mPassword = mPassword.concat("6");
+                    drawCircle(mPassword);
+                    break;
+                case R.id.btn_seven_check_pass:
+                    mPassword = mPassword.concat("7");
+                    drawCircle(mPassword);
+                    break;
+                case R.id.btn_eight_check_pass:
+                    mPassword = mPassword.concat("8");
+                    drawCircle(mPassword);
+                    break;
+                case R.id.btn_nine_check_pass:
+                    mPassword = mPassword.concat("9");
+                    drawCircle(mPassword);
+                    break;
+                case R.id.btn_zero_check_pass:
+                    mPassword = mPassword.concat("0");
+                    drawCircle(mPassword);
+                    break;
+            }
+
+        }
+
         switch (v.getId()) {
 
-            case R.id.btn_one_check_pass:
-                mPassword = mPassword.concat("1");
-                drawCircle(mPassword);
-                break;
-            case R.id.btn_two_check_pass:
-                mPassword = mPassword.concat("2");
-                drawCircle(mPassword);
-                break;
-            case R.id.btn_three_check_pass:
-                mPassword = mPassword.concat("3");
-                drawCircle(mPassword);
-                break;
-            case R.id.btn_four_check_pass:
-                mPassword = mPassword.concat("4");
-                drawCircle(mPassword);
-                break;
-            case R.id.btn_five_check_pass:
-                mPassword = mPassword.concat("5");
-                drawCircle(mPassword);
-                break;
-            case R.id.btn_six_check_pass:
-                mPassword = mPassword.concat("6");
-                drawCircle(mPassword);
-                break;
-            case R.id.btn_seven_check_pass:
-                mPassword = mPassword.concat("7");
-                drawCircle(mPassword);
-                break;
-            case R.id.btn_eight_check_pass:
-                mPassword = mPassword.concat("8");
-                drawCircle(mPassword);
-                break;
-            case R.id.btn_nine_check_pass:
-                mPassword = mPassword.concat("9");
-                drawCircle(mPassword);
-                break;
-            case R.id.btn_zero_check_pass:
-                mPassword = mPassword.concat("0");
-                drawCircle(mPassword);
-                break;
             case R.id.btn_backspace_check_pass:
                 if (!mPassword.equals("")) {
 
@@ -212,10 +214,18 @@ public class AuthCreatePasswordActivity extends AppCompatActivity implements Vie
                 startListActivity();
                 break;
             case R.id.btn_cancel:
-                mPassword = "";
+                clearPassView();
                 mButtonSkip.setVisibility(View.VISIBLE);
                 mButtonCancel.setVisibility(View.INVISIBLE);
                 break;
         }
+    }
+
+    void clearCircles() {
+
+        mFirstCircle.setBackgroundResource(R.drawable.void_circle);
+        mSecondCircle.setBackgroundResource(R.drawable.void_circle);
+        mThirdCircle.setBackgroundResource(R.drawable.void_circle);
+        mFourthCircle.setBackgroundResource(R.drawable.void_circle);
     }
 }

@@ -14,6 +14,36 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/horizontal_guideline_list_cards" />
 
+    <ImageView
+        android:id="@+id/image_cards_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/margin_sixty_five"
+        android:background="@drawable/ic_cards_back"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_cards"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_cards"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.58" />
+
+    <TextView
+        android:id="@+id/text_without_cards"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_extra_large"
+        android:text="@string/text_without_cards"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/twenty_sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline_cards" />
+
     <android.support.constraint.Guideline
         android:id="@+id/wqe"
         android:layout_width="wrap_content"
@@ -39,21 +69,20 @@
 
     <ImageView
         android:id="@+id/image_add"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_margin="25dp"
+        android:layout_width="@dimen/margin_extra_large"
+        android:layout_height="@dimen/margin_extra_large"
+        android:layout_margin="@dimen/margin_half_extra_large"
         android:background="@drawable/add_button_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <ViewStub
-        android:id="@+id/view_stub"
+    <FrameLayout
+        android:id="@+id/fragment_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="25dp"
-        android:layout="@layout/viewstub_layout"
+        android:layout_marginEnd="@dimen/margin_half_extra_large"
+        android:layout_marginRight="@dimen/margin_half_extra_large"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="25dp" />
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

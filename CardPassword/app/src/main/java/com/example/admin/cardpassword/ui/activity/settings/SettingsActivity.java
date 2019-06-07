@@ -5,17 +5,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.bottomappbar.BottomAppBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Switch;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.ui.activity.auth.AuthCheckPasswordActivity;
 import com.example.admin.cardpassword.ui.activity.auth.AuthCreatePasswordActivity;
-import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
+import com.example.admin.cardpassword.ui.activity.submit.SubmitCardActivity;
 import com.example.admin.cardpassword.utils.SharedPrefs;
 
 import butterknife.BindView;
@@ -35,10 +33,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     Switch mSwitchChange;
     @BindView(R.id.switch_usage_pass)
     Switch mSwitchUsage;
-    @BindView(R.id.bottom_app_bar_settings)
-    BottomAppBar mBottomAppBar;
-    @BindView(R.id.image_view_cards_settings)
-    ImageView mImageViewCards;
 
     private String mPassIsCreated;
     SharedPreferences mSharedPreferences;
@@ -67,11 +61,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             mClass = ListActivity.class;
         } else if (check == KEY_CREATE_ACTIVITY) {
 
-            mClass = CreateActivity.class;
+            mClass = SubmitCardActivity.class;
         }
     }
 
-    @OnClick({R.id.fab_settings, R.id.image_view_cards_settings, R.id.switch_create_pass, R.id.switch_usage_pass, R.id.switch_change_pass})
+    @OnClick({R.id.fab_settings, R.id.switch_create_pass, R.id.switch_usage_pass, R.id.switch_change_pass})
     @Override
     public void onClick(View v) {
 
@@ -80,11 +74,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
             case R.id.fab_settings:
                 intent = new Intent(mContext, mClass);
-                startActivity(intent);
-                finish();
-                break;
-            case R.id.image_view_cards_settings:
-                intent = new Intent(mContext, ListActivity.class);
                 startActivity(intent);
                 finish();
                 break;

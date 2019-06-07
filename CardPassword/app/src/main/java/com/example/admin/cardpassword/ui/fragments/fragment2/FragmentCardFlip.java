@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,9 +56,9 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener {
     @BindView(R.id.image_card_element_front_view)
     ImageView mFrontImage;
     @BindView(R.id.action_button_delete_fragment)
-    FloatingActionButton mDelete;
+    ImageView mDelete;
     @BindView(R.id.action_button_edit_fragment)
-    FloatingActionButton mEdit;
+    ImageView mEdit;
     @BindView(R.id.flip_view)
     EasyFlipView mFlipView;
     @BindView(R.id.card_constraint_front_view)
@@ -117,14 +116,14 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener {
             @Override
             public void onSwipeRight() {
 
-                toActivity("");
+                toActivity();
                 super.onSwipeRight();
             }
 
             @Override
             public void onSwipeLeft() {
 
-                toActivity("");
+                toActivity();
                 super.onSwipeLeft();
             }
         });
@@ -135,12 +134,12 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    public void toActivity(String data) {
+    private void toActivity() {
 
         Activity activity = getActivity();
         if (activity != null && !activity.isFinishing() && activity instanceof ListActivity) {
 
-            ((ListActivity) activity).fromFragmentData(data);
+            ((ListActivity) activity).fromFragmentData("");
         }
     }
 
@@ -154,6 +153,16 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener {
     private void setData() {
 
         Drawable back;
+
+        if (mGetName.equals("")) {
+
+            mFrontCardName.setText(R.string.label_card_name);
+            mBackCardName.setText(R.string.label_card_name);
+        } else {
+
+            mFrontCardName.setText(mGetName);
+            mBackCardName.setText(mGetName);
+        }
 
         if (mGetType.toLowerCase().equals("visa")) {
 
@@ -187,8 +196,8 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener {
 
         if (mGetCardHolder.equals("")) {
 
-            mBackCardHolder.setText(R.string.text_void_et_name);
-            mFrontCardHolder.setText(R.string.text_void_et_surname);
+            mBackCardHolder.setText(R.string.hint_card_holder);
+            mFrontCardHolder.setText(R.string.hint_card_holder);
         } else {
 
             mBackCardHolder.setText(mGetCardHolder);

@@ -10,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_extra_large"
         android:text="@string/text_short_password_usage"
+        android:textSize="@dimen/text_size_medium"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_settings_left"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textSize="@dimen/text_size_medium"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_create_short_password"
@@ -20,9 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_extra_large"
         android:text="@string/text_create_short_password"
+        android:textSize="@dimen/text_size_medium"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_settings_left"
-        app:layout_constraintTop_toBottomOf="@id/text_usage_short_password"
-        android:textSize="@dimen/text_size_medium"/>
+        app:layout_constraintTop_toBottomOf="@id/text_usage_short_password" />
 
     <TextView
         android:id="@+id/text_change_short_password"
@@ -30,9 +30,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_extra_large"
         android:text="@string/text_change_short_password"
+        android:textSize="@dimen/text_size_medium"
         app:layout_constraintLeft_toLeftOf="@+id/guideline_settings_left"
-        app:layout_constraintTop_toBottomOf="@id/text_create_short_password"
-        android:textSize="@dimen/text_size_medium"/>
+        app:layout_constraintTop_toBottomOf="@id/text_create_short_password" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_settings_left"
@@ -41,19 +41,14 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.05" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline_settings_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85" />
-
     <Switch
         android:id="@+id/switch_usage_pass"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_extra_large"
-        app:layout_constraintLeft_toLeftOf="@id/guideline_settings_right"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
@@ -61,7 +56,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_extra_large"
-        app:layout_constraintLeft_toLeftOf="@id/guideline_settings_right"
+        android:layout_marginEnd="@dimen/item_radius"
+        android:layout_marginRight="@dimen/item_radius"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/switch_usage_pass" />
 
     <Switch
@@ -69,40 +66,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_extra_large"
-        app:layout_constraintLeft_toLeftOf="@id/guideline_settings_right"
+        android:layout_marginEnd="@dimen/item_radius"
+        android:layout_marginRight="@dimen/item_radius"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/switch_create_pass" />
 
-    <android.support.design.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+    <ImageView
+        android:id="@+id/fab_settings"
+        android:layout_width="@dimen/margin_extra_large"
+        android:layout_height="@dimen/margin_extra_large"
+        android:layout_margin="@dimen/margin_half_extra_large"
+        android:background="@drawable/back_button_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-        <android.support.design.bottomappbar.BottomAppBar
-            android:id="@+id/bottom_app_bar_settings"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="bottom"
-            app:backgroundTint="@color/colorPrimary"
-            app:fabAlignmentMode="end" />
-
-        <android.support.v7.widget.AppCompatImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/image_view_cards_settings"
-            android:background="@drawable/cards_selector"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="15dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/reply_selector"
-            app:layout_anchor="@id/bottom_app_bar_settings"
-            app:backgroundTint="@color/colorAccent"/>
-    </android.support.design.widget.CoordinatorLayout>
 </android.support.constraint.ConstraintLayout>

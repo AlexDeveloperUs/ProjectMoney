@@ -18,6 +18,8 @@
     <color name="blue">#2C7DE3</color>
     <color name="dark_blue">#1C6AC9</color>
 
+    <color name="gray">#484848</color>
+
     <array name="some_colors">
         <item>#4CAF50</item>
         <item>#7986CB</item>

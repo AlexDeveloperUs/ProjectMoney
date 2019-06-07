@@ -1,10 +1,11 @@
-package com.example.admin.cardpassword.utils;
+package com.example.admin.cardpassword.ui.activity.submit;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -21,8 +22,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -32,26 +31,34 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.admin.cardpassword.App;
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.databinding.ActivitySubmitCreditCardBinding;
 
 import java.util.Objects;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cards.pay.paycardsrecognizer.sdk.ScanCardIntent;
 
-public class ActivitySubmitCreditCard extends AppCompatActivity {
+
+public class SubmitCardActivity extends AppCompatActivity implements View.OnClickListener, SubmitCardContract.View {
 
     private boolean showingGray = true;
     private AnimatorSet inSet;
     private AnimatorSet outSet;
     private ActivitySubmitCreditCardBinding activitySubmitCreditCardBinding;
-    private Card card;
     private int mInt = 0;
     private String mString = "";
-    private ThreadExecutors mExecutors = new ThreadExecutors();
     private boolean mCheckRequestCodeForSave = true;
     private int mId = 0;
+    static final int REQUEST_CODE_SCAN_CARD = 1;
+    private SubmitCardContract.Presenter mPresenter = new SubmitCardPresenter(this);
+    private int mCvc = 0;
+    private int mPin = 0;
+    private String mName;
+    private String mValidity;
+    private String mCardHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +66,11 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         activitySubmitCreditCardBinding = DataBindingUtil.setContentView(this, R.layout.activity_submit_credit_card);
-        card = new Card();
+        ButterKnife.bind(this);
 
         checkRequestCode();
 
-        View.OnClickListener onHelpClickListener = v -> Toast.makeText(ActivitySubmitCreditCard.this, "The CVV Number (\"Card Verification Value\") is a 3 or 4 digit number on your credit and debit cards", Toast.LENGTH_LONG).show();
+        View.OnClickListener onHelpClickListener = v -> Toast.makeText(SubmitCardActivity.this, "The CVV Number (\"Card Verification Value\") is a 3 or 4 digit number on your credit and debit cards", Toast.LENGTH_LONG).show();
 
         activitySubmitCreditCardBinding.iconHelpGray.setOnClickListener(onHelpClickListener);
         activitySubmitCreditCardBinding.iconHelpBlue.setOnClickListener(onHelpClickListener);
@@ -145,7 +152,6 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
         Point size = new Point();
         display.getSize(size);
         int width = size.x;
-//        int height = size.y;
 
         PagerAdapter adapter = new MyPagerAdapter();
         activitySubmitCreditCardBinding.viewPager.setAdapter(adapter);
@@ -157,13 +163,13 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
             public void onPageSelected(int position) {
 
                 switch (position) {
+
                     case 0:
                         updateProgressBar(17);
                         activitySubmitCreditCardBinding.inputEditCardName.setFocusableInTouchMode(true);
@@ -236,7 +242,6 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
             }
         });
 
@@ -248,51 +253,54 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                 switch (mInt) {
 
                     case 0:
+                        mName = activitySubmitCreditCardBinding.inputEditCardName.getText().toString().equals("") ? "" :
+                                activitySubmitCreditCardBinding.inputEditCardName.getText().toString();
                         activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
                         handled = true;
                         mInt = 1;
                         break;
                     case 1:
-                        if (mString.equals("")) {
+                        if (mPresenter.checkByLuhnAlgorithm(mString)) {
 
-                            Toast.makeText(getApplicationContext(), "Введите номер карты", Toast.LENGTH_LONG).show();
-                        } else {
-
-                            if (checkByLuhnAlgorithm(mString)) {
-
-                                activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
-                                handled = true;
-                                mInt = 2;
-                            }
+                            activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
+                            handled = true;
+                            mInt = 2;
                         }
                         break;
                     case 2:
+                        mValidity = activitySubmitCreditCardBinding.inputEditExpiredDate.getText().toString().equals("") ? "" :
+                                activitySubmitCreditCardBinding.inputEditExpiredDate.getText().toString();
                         activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
                         handled = true;
                         mInt = 3;
                         break;
                     case 3:
+                        mCardHolder = activitySubmitCreditCardBinding.inputEditCardHolder.getText().toString().equals("") ? "" :
+                                activitySubmitCreditCardBinding.inputEditCardHolder.getText().toString();
                         activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
                         handled = true;
                         mInt = 4;
                         break;
                     case 4:
-                        activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
-                        handled = true;
-                        mInt = 5;
+                        mCvc = activitySubmitCreditCardBinding.inputEditCvvCode.getText().toString().equals("") ? 0 :
+                                Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCvvCode.getText()).toString());
+                        if (mPresenter.checkCVC(mCvc)) {
+                            activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
+                            handled = true;
+                            mInt = 5;
+                        }
                         break;
-                    case 5:
-                        activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
-                        handled = true;
-                        mInt = 6;
-                        break;
-                    case 6:
                 }
             }
             if (actionId == EditorInfo.IME_ACTION_DONE) {
 
-                submit();
-                handled = true;
+                mPin = (activitySubmitCreditCardBinding.inputEditPin.getText().toString()).equals("") ? 0 :
+                        Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCvvCode.getText()).toString());
+                if (mPresenter.checkPin(mPin)) {
+
+                    submit();
+                    handled = true;
+                }
             }
             return handled;
         };
@@ -308,6 +316,77 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
 
         inSet = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.card_flip_in);
         outSet = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.card_flip_out);
+    }
+
+    @OnClick({R.id.action_reset, R.id.image_close, R.id.action_scan})
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+
+            case R.id.action_reset:
+                reset();
+                break;
+            case R.id.image_close:
+                finish();
+                break;
+            case R.id.action_scan:
+                scanCard();
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SCAN_CARD) {
+
+            if (resultCode == Activity.RESULT_OK) {
+
+                assert data != null;
+                cards.pay.paycardsrecognizer.sdk.Card card = data.getParcelableExtra(ScanCardIntent.RESULT_PAYCARDS_CARD);
+
+                activitySubmitCreditCardBinding.inputEditCardNumber.setText(String.valueOf(card.getCardNumber()));
+                activitySubmitCreditCardBinding.inputEditExpiredDate.setText(card.getExpirationDate());
+                activitySubmitCreditCardBinding.inputEditCardHolder.setText(card.getCardHolderName());
+
+            }
+        }
+    }
+
+    private void scanCard() {
+
+        Intent intent = new ScanCardIntent.Builder(this).build();
+        startActivityForResult(intent, REQUEST_CODE_SCAN_CARD);
+    }
+
+    @Override
+    public void showToastNumber() {
+
+        Toast.makeText(getApplicationContext(), "Заполните номер карты!", Toast.LENGTH_LONG).show();
+        activitySubmitCreditCardBinding.inputEditCardNumber.requestFocus();
+    }
+
+    @Override
+    public void showToastCVC() {
+
+        Toast.makeText(getApplicationContext(), "Заполните CVC/CVV!", Toast.LENGTH_LONG).show();
+        activitySubmitCreditCardBinding.inputEditCvvCode.requestFocus();
+    }
+
+    @Override
+    public void showToastPin() {
+
+        Toast.makeText(getApplicationContext(), "Заполните PIN!", Toast.LENGTH_LONG).show();
+        activitySubmitCreditCardBinding.inputEditPin.requestFocus();
+    }
+
+    @Override
+    public void showToastCardExistence() {
+
+        Toast.makeText(getApplicationContext(), "Карты с таким номером не существует!", Toast.LENGTH_LONG).show();
+        activitySubmitCreditCardBinding.inputEditCardNumber.requestFocus();
     }
 
     private class MyPagerAdapter extends PagerAdapter {
@@ -347,7 +426,6 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
 
         @Override
         public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-
         }
 
         @Override
@@ -385,26 +463,24 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
 
     private void submit() {
 
-        String name = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardName.getText()).toString();
+        mName = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardName.getText()).toString();
         long number = Long.parseLong(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText()).replaceAll("[^0-9]", ""));
-        int cvc = Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCvvCode.getText()).toString());
-        String cardHolder = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardHolder.getText()).toString();
-        int pin = Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditPin.getText()).toString());
-        String validity = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditExpiredDate.getText()).toString();
+        mCvc = Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCvvCode.getText()).toString());
+        mValidity = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditExpiredDate.getText()).toString();
+        mCardHolder = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardHolder.getText()).toString();
+        mPin = Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditPin.getText()).toString());
 
         activitySubmitCreditCardBinding.viewPager.setCurrentItem(6);
 
         if (mCheckRequestCodeForSave) {
 
-            Card newCard = new Card(name, number, cvc, validity, cardHolder, checkCardType(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText())), pin);
-            mExecutors.dbExecutor().execute(() -> mExecutors.dbExecutor().execute(() -> App.mInstance.getDataBase().mCardDao().insert(newCard)));
+            Card newCard = new Card(mName, number, mCvc, mValidity, mCardHolder, mPresenter.checkCardType(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText())), mPin);
+            mPresenter.createCard(newCard);
         } else {
 
-            Card newCard = new Card(name, number, cvc, validity, cardHolder, checkCardType(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText())), pin, mId);
-            mExecutors.dbExecutor().execute(() -> mExecutors.dbExecutor().execute(() -> App.mInstance.getDataBase().mCardDao().update(newCard)));
+            Card newCard = new Card(mName, number, mCvc, mValidity, mCardHolder, mPresenter.checkCardType(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText())), mPin, mId);
+            mPresenter.updateCard(newCard);
         }
-
-        Toast.makeText(ActivitySubmitCreditCard.this, card.toString(), Toast.LENGTH_LONG).show();
 
         activitySubmitCreditCardBinding.inputLayoutPin.setVisibility(View.INVISIBLE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
@@ -457,7 +533,7 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animator animation) {
 
-                    activitySubmitCreditCardBinding.cardGray.setCardElevation(convertDpToPixel(12, ActivitySubmitCreditCard.this));
+                    activitySubmitCreditCardBinding.cardGray.setCardElevation(convertDpToPixel(12, SubmitCardActivity.this));
                 }
 
                 @Override
@@ -497,7 +573,7 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
                 @Override
                 public void onAnimationEnd(Animator animation) {
 
-                    activitySubmitCreditCardBinding.cardBlue.setCardElevation(convertDpToPixel(12, ActivitySubmitCreditCard.this));
+                    activitySubmitCreditCardBinding.cardBlue.setCardElevation(convertDpToPixel(12, SubmitCardActivity.this));
                 }
 
                 @Override
@@ -521,104 +597,6 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
         return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-
-            case R.id.action_reset:
-                reset();
-                return true;
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private boolean checkByLuhnAlgorithm(String pS) {
-
-        if (pS.equals("")) {
-
-            Toast.makeText(getApplicationContext(), "Заполните номер карты", Toast.LENGTH_LONG).show();
-            return false;
-        } else {
-
-            return checkCardExistence(Long.parseLong(pS.replaceAll("[^0-9]", "")));
-        }
-    }
-
-    private boolean checkCardExistence(long pNumber) {
-
-        long count = 0;
-        long character;
-
-        for (int i = 16; i > 0; i--) {
-
-            character = pNumber % 10;
-            pNumber /= 10;
-
-            if (i % 2 == 1) {
-
-                int check = (int) (character * 2);
-
-                if (check > 9) {
-
-                    count += check - 9;
-                } else {
-
-                    count += check;
-                }
-            } else {
-
-                count += character;
-            }
-        }
-
-        if (count % 10 == 0) {
-
-            Toast.makeText(getApplicationContext(), "Ok", Toast.LENGTH_LONG).show();
-            return true;
-        } else {
-
-            Toast.makeText(getApplicationContext(), "fuck", Toast.LENGTH_LONG).show();
-            return false;
-        }
-    }
-
-    public String checkCardType(String pS) {
-
-        pS = String.valueOf(Long.parseLong(pS.replaceAll("[^0-9]", "")));
-
-        String mCardType = "";
-
-        if (pS.charAt(0) == '4') {
-
-            mCardType = "visa";
-        } else if (pS.charAt(0) == '5' && (pS.charAt(1) == '1' || pS.charAt(1) == '2' || pS.charAt(1) == '3' || pS.charAt(1) == '4'
-                || pS.charAt(1) == '5')) {
-
-            mCardType = "mastercard";
-        } else if (pS.substring(0, 4).equals("9112")) {
-
-            mCardType = "belcard";
-        } else if ((pS.charAt(0) == '5' && (pS.charAt(1) == '0' || pS.charAt(1) == '6' || pS.charAt(1) == '7' || pS.charAt(1) == '8'))
-                || (pS.charAt(0) == '6' && (pS.charAt(1) == '3' || pS.charAt(1) == '7'))) {
-
-            mCardType = "maestro";
-        }
-
-        return mCardType;
-    }
-
     @SuppressLint("SetTextI18n")
     private void checkRequestCode() {
 
@@ -633,13 +611,8 @@ public class ActivitySubmitCreditCard extends AppCompatActivity {
             String pin = String.valueOf(card.getPin());
 
             mCheckRequestCodeForSave = false;
-            String substring = String.valueOf(card.mCardNumber);
-            String firstSub = substring.substring(1, 4);
-            String secondSub = substring.substring(4, 8);
-            String thirdSub = substring.substring(8, 12);
-            String fourthSub = substring.substring(12, 16);
             activitySubmitCreditCardBinding.inputEditCardName.setText(card.getCardName());
-            activitySubmitCreditCardBinding.inputEditCardNumber.setText(firstSub + " " + secondSub + " " + thirdSub + " " + fourthSub);
+            activitySubmitCreditCardBinding.inputEditCardNumber.setText(mPresenter.appendVoid(String.valueOf(card.mCardNumber)));
             activitySubmitCreditCardBinding.inputEditCvvCode.setText(cvc);
             activitySubmitCreditCardBinding.inputEditExpiredDate.setText(card.getValidity());
             activitySubmitCreditCardBinding.inputEditCardHolder.setText(card.getCardHolderName());
