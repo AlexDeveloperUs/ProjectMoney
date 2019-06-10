@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/pink" />
+            <padding android:bottom="@dimen/margin_five" />
+            <padding android:top="@dimen/margin_five" />
+            <padding android:left="@dimen/margin_five" />
+            <padding android:right="@dimen/margin_five" />
+            <corners android:radius="@dimen/margin_thirty_two" />
+        </shape>
+    </item>
+</selector>

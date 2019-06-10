@@ -166,15 +166,15 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener {
 
         if (mGetType.toLowerCase().equals("visa")) {
 
-            mFrontImage.setBackgroundResource(R.drawable.visa_rounded);
-            mBackImage.setBackgroundResource(R.drawable.visa_rounded);
+            mFrontImage.setBackgroundResource(R.drawable.ic_visa);
+            mBackImage.setBackgroundResource(R.drawable.ic_visa);
             setParams();
             back = getResources().getDrawable(R.drawable.visa_gradient);
             mBack.setBackground(back);
         } else if (mGetType.toLowerCase().equals("mastercard")) {
 
-            mFrontImage.setBackgroundResource(R.drawable.ms_without_border);
-            mBackImage.setBackgroundResource(R.drawable.ms_without_border);
+            mFrontImage.setBackgroundResource(R.drawable.ic_mastercard);
+            mBackImage.setBackgroundResource(R.drawable.ic_mastercard);
             setParams();
             back = getResources().getDrawable(R.drawable.red_gradient);
             mBack.setBackground(back);
@@ -187,8 +187,8 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener {
             mBack.setBackground(back);
         } else if (mGetType.toLowerCase().equals("maestro")) {
 
-            mFrontImage.setBackgroundResource(R.drawable.maestro);
-            mBackImage.setBackgroundResource(R.drawable.maestro);
+            mFrontImage.setBackgroundResource(R.drawable.ic_maestro);
+            mBackImage.setBackgroundResource(R.drawable.ic_maestro);
             setParams();
             back = getResources().getDrawable(R.drawable.blue_gradient);
             mBack.setBackground(back);
@@ -220,8 +220,6 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener {
         mFrontValidity.setText(mGetValidity);
         mBackPin.setText(mGetPin);
         mFrontPin.setText("****");
-        mFrontCardName.setText(mGetName);
-        mBackCardName.setText(mGetName);
     }
 
     private void setParams() {
@@ -251,7 +249,8 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @OnClick({R.id.image_flip_card, R.id.image_flip_card_back, R.id.action_button_edit_fragment, R.id.action_button_delete_fragment})
+    @OnClick({R.id.image_flip_card, R.id.image_flip_card_back, R.id.action_button_edit_fragment, R.id.action_button_delete_fragment,
+            R.id.action_button_back_fragment})
     @Override
     public void onClick(View v) {
 
@@ -272,6 +271,9 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener {
                 mFlipView.setToHorizontalType();
                 mFlipView.setFlipTypeFromBack();
                 mFlipView.flipTheView();
+                break;
+            case R.id.action_button_back_fragment:
+                toActivity();
                 break;
         }
     }

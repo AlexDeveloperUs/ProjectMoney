@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.Switch;
 
 import com.example.admin.cardpassword.R;
@@ -27,12 +30,14 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     private Class mClass;
     private Context mContext = SettingsActivity.this;
 
-    @BindView(R.id.switch_create_pass)
-    Switch mSwitchCreate;
-    @BindView(R.id.switch_change_pass)
-    Switch mSwitchChange;
-    @BindView(R.id.switch_usage_pass)
-    Switch mSwitchUsage;
+    @BindView(R.id.frame_usage_pass)
+    FrameLayout mLayout;
+    @BindView(R.id.frame_change_pass)
+    FrameLayout mChangeLayout;
+    @BindView(R.id.checkbox)
+    CheckBox mCheckBox;
+    @BindView(R.id.button_change_pass)
+    AppCompatButton mButton;
 
     private String mPassIsCreated;
     SharedPreferences mSharedPreferences;
@@ -65,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    @OnClick({R.id.fab_settings, R.id.switch_create_pass, R.id.switch_usage_pass, R.id.switch_change_pass})
+    @OnClick({R.id.fab_settings, R.id.button_change_pass, R.id.frame_usage_pass})
     @Override
     public void onClick(View v) {
 
@@ -77,24 +82,26 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(intent);
                 finish();
                 break;
-            case R.id.switch_create_pass:
-                intent = new Intent(getApplicationContext(), AuthCreatePasswordActivity.class);
-                SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_NAME, 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "first");
-                editor.apply();
-                startActivity(intent);
-                mSwitchCreate.setChecked(false);
-                break;
-            case R.id.switch_usage_pass:
-                if (!mSwitchUsage.isChecked()) {
+            case R.id.frame_usage_pass:
+                mCheckBox.setChecked(!mCheckBox.isChecked());
+                if (!mCheckBox.isChecked()) {
 
                     SharedPreferences.Editor edit = mSharedPreferences.edit();
                     edit.putString(SharedPrefs.SHARED_PREFERENCES_KEY, "disabled");
+                    mButton.setVisibility(View.GONE);
                     edit.apply();
+                } else {
+
+                    intent = new Intent(getApplicationContext(), AuthCreatePasswordActivity.class);
+                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_NAME, 0);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "first");
+                    editor.apply();
+                    mCheckBox.setChecked(!mCheckBox.isChecked());
+                    startActivity(intent);
                 }
                 break;
-            case R.id.switch_change_pass:
+            case R.id.button_change_pass:
                 intent = new Intent(getApplicationContext(), AuthCheckPasswordActivity.class);
                 intent.putExtra("currentPass", mPassIsCreated);
                 startActivity(intent);
@@ -110,7 +117,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
         if (mPassword.matches("[\\d]+")) {
 
-            mSwitchUsage.setChecked(true);
-        }
+            mCheckBox.setChecked(true);
+            mButton.setVisibility(View.VISIBLE);
+        } else mButton.setVisibility(View.GONE);
     }
 }

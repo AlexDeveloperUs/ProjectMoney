@@ -107,12 +107,12 @@ public class AuthCreatePasswordActivity extends AppCompatActivity implements Vie
 
         if (firstLaunch.equals("first")) {
 
-            if (pPassword.length() == 4 && mButtonCancel.getVisibility() == View.INVISIBLE) {
+            if (pPassword.length() == 4 && mButtonCancel.getVisibility() == View.GONE) {
 
                 confirmedPassword = pPassword;
                 Toast.makeText(AuthCreatePasswordActivity.this, "" + pPassword, Toast.LENGTH_SHORT).show();
 
-                mButtonSkip.setVisibility(View.INVISIBLE);
+                mButtonSkip.setVisibility(View.GONE);
                 mButtonCancel.setVisibility(View.VISIBLE);
                 clearPassView();
             } else if (pPassword.length() == 4 && mButtonCancel.getVisibility() == View.VISIBLE) {
@@ -194,7 +194,6 @@ public class AuthCreatePasswordActivity extends AppCompatActivity implements Vie
                     drawCircle(mPassword);
                     break;
             }
-
         }
 
         switch (v.getId()) {
@@ -216,7 +215,7 @@ public class AuthCreatePasswordActivity extends AppCompatActivity implements Vie
             case R.id.btn_cancel:
                 clearPassView();
                 mButtonSkip.setVisibility(View.VISIBLE);
-                mButtonCancel.setVisibility(View.INVISIBLE);
+                mButtonCancel.setVisibility(View.GONE);
                 break;
         }
     }

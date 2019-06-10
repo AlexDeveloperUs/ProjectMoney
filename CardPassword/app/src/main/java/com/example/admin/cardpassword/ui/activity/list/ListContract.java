@@ -10,7 +10,9 @@ public interface ListContract {
 
         void initData(ArrayList<Card> pCards);
 
-        void deleteAll();
+        void setForEmptyScreen();
+
+        void setForNonEmptyScreen();
     }
 
     interface Model {
@@ -18,8 +20,6 @@ public interface ListContract {
         void getCards();
 
         void deleteCard(Card pCard);
-
-        void deleteAll();
     }
 
     interface Presenter {
@@ -34,7 +34,5 @@ public interface ListContract {
         void loadCards();
 
         void deleteCard(Card pCard);
-
-        void deleteAll();
     }
 }

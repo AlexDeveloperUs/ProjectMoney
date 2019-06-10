@@ -93,20 +93,12 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
             public void onSwipeLeft() {
 
-                Objects.requireNonNull(mFragment.getView()).setVisibility(View.GONE);
-
-                mFromFragment = "";
-
-                setRecyclerViewToTop();
+                setDefaultManager();
             }
 
             public void onSwipeRight() {
 
-                mFromFragment = "";
-
-                Objects.requireNonNull(mFragment.getView()).setVisibility(View.GONE);
-
-                setRecyclerViewToTop();
+                setDefaultManager();
             }
         });
 
@@ -166,11 +158,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         assert data != null;
         mAdapter.notifyDataSetChanged();
-        if (!(mAdapter.getItemCount() == 0)) {
-
-            mTextWithoutCards.setVisibility(View.GONE);
-            mCardsBack.setVisibility(View.GONE);
-        }
+        mPresenter.loadCards();
     }
 
     public void getData(Card pCard) {
@@ -220,12 +208,6 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public void initData(ArrayList<Card> pCards) {
 
         this.setData(pCards);
-    }
-
-    @Override
-    public void deleteAll() {
-
-        mPresenter.deleteAll();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -320,5 +302,26 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
 
         Objects.requireNonNull(mFrag.getView()).setVisibility(View.GONE);
 
+    }
+
+    public void setForEmptyScreen() {
+
+        mTextWithoutCards.setVisibility(View.VISIBLE);
+        mCardsBack.setVisibility(View.VISIBLE);
+    }
+
+    public void setForNonEmptyScreen() {
+
+        mTextWithoutCards.setVisibility(View.GONE);
+        mCardsBack.setVisibility(View.GONE);
+    }
+
+    public void setDefaultManager() {
+
+        Objects.requireNonNull(mFragment.getView()).setVisibility(View.GONE);
+
+        mFromFragment = "";
+
+        setRecyclerViewToTop();
     }
 }

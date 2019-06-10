@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.ui.activity.list.ListActivity;
@@ -31,6 +32,8 @@ public class AuthCheckPasswordActivity extends AppCompatActivity implements View
     ImageView mForthCircle;
     @BindView(R.id.linear_pass_check)
     LinearLayout mLayout;
+    @BindView(R.id.text_confirm)
+    TextView mTextView;
 
     private String mCheck = "";
     private String mPassword;
@@ -143,6 +146,8 @@ public class AuthCheckPasswordActivity extends AppCompatActivity implements View
         String pas = currentPassword == null ? "" : currentPassword;
 
         if (pas.equals("")) {
+
+            mTextView.setVisibility(View.VISIBLE);
 
             if (mCheck.equals(mPassword)) {
 

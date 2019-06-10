@@ -58,4 +58,13 @@
         android:background="@drawable/edit_button_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_fragment" />
+
+    <ImageView
+        android:id="@+id/action_button_back_fragment"
+        android:layout_width="@dimen/margin_extra_large"
+        android:layout_height="@dimen/margin_extra_large"
+        android:layout_margin="@dimen/margin_half_extra_large"
+        android:background="@drawable/back_button_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 </android.support.constraint.ConstraintLayout>

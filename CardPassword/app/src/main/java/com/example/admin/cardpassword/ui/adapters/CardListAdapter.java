@@ -140,13 +140,13 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
 
             if (pCard.getCardType().toLowerCase().equals("visa")) {
 
-                mImageView.setBackgroundResource(R.drawable.visa_rounded);
+                mImageView.setBackgroundResource(R.drawable.ic_visa);
                 setParams();
                 background = mContext.getResources().getDrawable(R.drawable.visa_gradient);
                 mBack.setBackground(background);
             } else if (pCard.getCardType().toLowerCase().equals("mastercard")) {
 
-                mImageView.setBackgroundResource(R.drawable.ms_with_border);
+                mImageView.setBackgroundResource(R.drawable.ic_mastercard);
                 setParams();
                 background = mContext.getResources().getDrawable(R.drawable.red_gradient);
                 mBack.setBackground(background);
@@ -158,7 +158,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
                 mBack.setBackground(background);
             } else if (pCard.getCardType().toLowerCase().equals("maestro")) {
 
-                mImageView.setBackgroundResource(R.drawable.maestro);
+                mImageView.setBackgroundResource(R.drawable.ic_maestro);
                 setParams();
                 background = mContext.getResources().getDrawable(R.drawable.blue_gradient);
                 mBack.setBackground(background);

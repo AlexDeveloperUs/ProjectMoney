@@ -8,7 +8,7 @@
     <color name="switchTrackActive">#1565c0</color>
     <color name="transparent">#FF6C00</color>
     <color name="dark_pink">#e75480</color>
-    <color name="pink">#ad1457</color>
+    <color name="pink">#e7b7cf</color>
     <color name="switchThumbkNormal">#64b5f6</color>
 
     <color name="light_gray">#F0F5F5</color>
@@ -19,6 +19,7 @@
     <color name="dark_blue">#1C6AC9</color>
 
     <color name="gray">#484848</color>
+    <color name="black">#000000</color>
 
     <array name="some_colors">
         <item>#4CAF50</item>

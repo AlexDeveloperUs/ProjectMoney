@@ -19,7 +19,15 @@ public class ListPresenter implements ListContract.Presenter, ListContract.Prese
     @Override
     public void onSuccess(ArrayList<Card> pCards) {
 
-        mCreateActivity.initData(pCards);
+        if (pCards.size() == 0) {
+
+            mCreateActivity.setForEmptyScreen();
+            mCreateActivity.initData(pCards);
+        } else {
+
+            mCreateActivity.initData(pCards);
+            mCreateActivity.setForNonEmptyScreen();
+        }
     }
 
     @Override
@@ -37,11 +45,5 @@ public class ListPresenter implements ListContract.Presenter, ListContract.Prese
     public void deleteCard(Card pCard) {
 
         mModel.deleteCard(pCard);
-    }
-
-    @Override
-    public void deleteAll() {
-
-        mModel.deleteAll();
     }
 }

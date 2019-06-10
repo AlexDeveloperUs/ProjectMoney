@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/four"
+    <item android:drawable="@drawable/four_button_pressed"
         android:state_pressed="true" />
-    <item android:drawable="@drawable/four_fill" />
+    <item android:drawable="@drawable/four_button" />
 </selector>

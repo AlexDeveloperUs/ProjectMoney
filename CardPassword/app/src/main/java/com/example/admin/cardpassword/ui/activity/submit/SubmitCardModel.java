@@ -27,6 +27,6 @@ public class SubmitCardModel implements SubmitCardContract.Model {
     @Override
     public void editCard(Card pCard) {
 
-        mExecutors.dbExecutor().execute(() -> mCardDao.insert(pCard));
+        mExecutors.dbExecutor().execute(() -> mCardDao.update(pCard));
     }
 }

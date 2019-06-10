@@ -23,7 +23,7 @@ public interface CardDao {
     @Insert(onConflict = REPLACE)
     void insert(Card pCard);
 
-    @Update(onConflict = REPLACE)
+    @Update()
     void update(Card pCard);
 
     @Delete
