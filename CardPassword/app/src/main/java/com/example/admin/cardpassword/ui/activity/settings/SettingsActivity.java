@@ -10,7 +10,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
-import android.widget.Switch;
 
 import com.example.admin.cardpassword.R;
 import com.example.admin.cardpassword.ui.activity.auth.AuthCheckPasswordActivity;

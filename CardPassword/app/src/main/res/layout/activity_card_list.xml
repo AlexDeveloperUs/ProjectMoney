@@ -18,13 +18,13 @@
         android:id="@+id/image_cards_back"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/margin_sixty_five"
+        android:layout_margin="@dimen/_55sdp"
         android:background="@drawable/ic_cards_back"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/guideline_cards"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:visibility="visible"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_cards"
@@ -37,14 +37,14 @@
         android:id="@+id/text_without_cards"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_extra_large"
+        android:layout_margin="@dimen/_40sdp"
         android:text="@string/text_without_cards"
         android:textColor="@color/gray"
         android:textSize="@dimen/twenty_sp"
+        android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline_cards"
-        android:visibility="visible"/>
+        app:layout_constraintTop_toTopOf="@id/guideline_cards" />
 
     <android.support.constraint.Guideline
         android:id="@+id/wqe"
@@ -71,9 +71,9 @@
 
     <ImageView
         android:id="@+id/image_add"
-        android:layout_width="@dimen/margin_extra_large"
-        android:layout_height="@dimen/margin_extra_large"
-        android:layout_margin="@dimen/margin_half_extra_large"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_margin="@dimen/_21sdp"
         android:background="@drawable/add_button_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -82,8 +82,8 @@
         android:id="@+id/fragment_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_half_extra_large"
-        android:layout_marginRight="@dimen/margin_half_extra_large"
+        android:layout_marginEnd="@dimen/_21sdp"
+        android:layout_marginRight="@dimen/_21sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

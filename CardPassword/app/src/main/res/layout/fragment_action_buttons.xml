@@ -6,27 +6,27 @@
 
     <ImageView
         android:id="@+id/image_back_view_stub"
-        android:layout_width="@dimen/margin_extra_large"
-        android:layout_height="@dimen/margin_extra_large"
-        android:layout_marginBottom="@dimen/margin_half_extra_large"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_21sdp"
         android:background="@drawable/back_button_selector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/image_add_view_stub"
-        android:layout_width="@dimen/margin_extra_large"
-        android:layout_height="@dimen/margin_extra_large"
-        android:layout_marginBottom="@dimen/margin_half_extra_large"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_21sdp"
         android:background="@drawable/add_button_selector"
         app:layout_constraintBottom_toTopOf="@id/image_back_view_stub"
         app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/image_settings_view_stub"
-        android:layout_width="@dimen/margin_extra_large"
-        android:layout_height="@dimen/margin_extra_large"
-        android:layout_marginBottom="@dimen/margin_half_extra_large"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginBottom="@dimen/_21sdp"
         android:background="@drawable/settings_button_selector"
         app:layout_constraintBottom_toTopOf="@id/image_add_view_stub"
         app:layout_constraintRight_toRightOf="parent" />

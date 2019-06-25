@@ -6,8 +6,6 @@ import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 @Entity(tableName = "cards")
 public class Card implements Parcelable {
 
@@ -131,6 +129,7 @@ public class Card implements Parcelable {
 
         mCardName = pCardName;
     }
+
     public String getCardType() {
 
         return mCardType;

@@ -23,7 +23,7 @@ import com.example.admin.cardpassword.data.models.Card;
 import com.example.admin.cardpassword.ui.activity.submit.SubmitCardActivity;
 import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
 import com.example.admin.cardpassword.ui.fragments.fragment1.ControlButtonsFragment;
-import com.example.admin.cardpassword.ui.fragments.fragment2.FragmentCardFlip;
+import com.example.admin.cardpassword.ui.fragments.fragment2.CardFlipFragment;
 import com.example.admin.cardpassword.utils.LadderLayoutManager;
 import com.example.admin.cardpassword.utils.LadderSimpleSnapHelper;
 import com.example.admin.cardpassword.utils.OnSwipeTouchListener;
@@ -118,7 +118,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         }
         mFragment = mFragmentManager.findFragmentById(R.id.fragment_card);
 
-        mFragment = FragmentCardFlip.newInstance(mCardName, mNumber, mCvc, mValidity, mName, mType, mPin);
+        mFragment = CardFlipFragment.newInstance(mCardName, mNumber, mCvc, mValidity, mName, mType, mPin);
         mFragmentManager.beginTransaction()
                 .replace(R.id.fragment_card, mFragment)
                 .commit();

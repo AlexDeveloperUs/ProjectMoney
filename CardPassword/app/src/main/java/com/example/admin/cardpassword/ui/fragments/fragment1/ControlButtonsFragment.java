@@ -55,7 +55,7 @@ public class ControlButtonsFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.viewstub_layout, container, false);
+        View view = inflater.inflate(R.layout.fragment_action_buttons, container, false);
         ButterKnife.bind(this, view);
 
         return view;

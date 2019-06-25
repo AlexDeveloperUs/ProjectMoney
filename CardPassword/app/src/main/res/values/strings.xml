@@ -60,12 +60,12 @@
     <string name="label_cvv_code">CVV CODE</string>
     <string name="label_pin">PIN</string>
 
-    <string name="hint_card_number">16-DIGIT CARD NUMBER</string>
-    <string name="hint_expired_date">EXPIRED DATE</string>
+    <string name="hint_card_number">Номер карты</string>
+    <string name="hint_expired_date">Срок действия</string>
     <string name="hint_card_holder">CARD HOLDER</string>
-    <string name="hint_cvv_code">CVV CODE</string>
+    <string name="hint_cvv_code">CVV/CVC</string>
     <string name="hint_pin">PIN</string>
-    <string name="hint_card_name">Card name</string>
+    <string name="hint_card_name">Название</string>
 
     <string name="label_secure_submission">Secure Submission</string>
 

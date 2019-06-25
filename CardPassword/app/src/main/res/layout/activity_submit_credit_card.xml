@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/item_layout_offset"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@{inputEditCardName.text.toString().isEmpty() ? @string/label_card_name : inputEditCardName.text}"
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|start"
-                android:layout_margin="@dimen/margin_medium"
+                android:layout_margin="@dimen/_15sdp"
                 android:background="@drawable/ic_close_gray_24dp" />
 
             <ImageView
@@ -46,41 +46,41 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|top"
-                android:layout_margin="@dimen/margin_medium"
+                android:layout_margin="@dimen/_15sdp"
                 android:background="@drawable/ic_reset_blue_24dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/margin_extra_large"
+                android:layout_marginTop="@dimen/_40sdp"
                 android:background="@null">
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/card_blue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_thirty_two"
-                    android:layout_marginLeft="@dimen/margin_thirty_two"
-                    android:layout_marginTop="@dimen/margin_sixteen"
-                    android:layout_marginEnd="@dimen/margin_thirty_two"
-                    android:layout_marginRight="@dimen/margin_thirty_two"
+                    android:layout_marginStart="@dimen/_28sdp"
+                    android:layout_marginLeft="@dimen/_28sdp"
+                    android:layout_marginTop="@dimen/_13sdp"
+                    android:layout_marginEnd="@dimen/_28sdp"
+                    android:layout_marginRight="@dimen/_28sdp"
                     android:alpha="0"
-                    app:cardCornerRadius="@dimen/margin_twelve"
-                    app:cardElevation="@dimen/margin_twelve"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_10sdp"
                     app:cardPreventCornerOverlap="false">
 
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/blue_gradient"
-                        android:padding="@dimen/margin_twenty_four"
+                        android:padding="@dimen/_20sdp"
                         app:layout_constraintDimensionRatio="H, 96:61">
 
                         <TextView
                             android:id="@+id/text_card_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_eight"
+                            android:layout_marginTop="@dimen/_4sdp"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="@{inputEditCardNumber.text.toString().isEmpty() ? @string/label_card_number : inputEditCardNumber.text}"
@@ -96,9 +96,9 @@
                             android:id="@+id/text_expired_date"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_thirty_two"
-                            android:layout_marginEnd="@dimen/margin_eight"
-                            android:layout_marginRight="@dimen/margin_eight"
+                            android:layout_marginTop="@dimen/_28sdp"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:layout_marginRight="@dimen/_4sdp"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="@{inputEditExpiredDate.text.toString().isEmpty() ? @string/label_expired_date : inputEditExpiredDate.text}"
@@ -115,7 +115,7 @@
                             android:id="@+id/text_card_holder"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_sixteen"
+                            android:layout_marginTop="@dimen/_13sdp"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="@{inputEditCardHolder.text.toString().isEmpty() ? @string/label_card_holder : inputEditCardHolder.text}"
@@ -131,7 +131,7 @@
                             android:id="@+id/text_pin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_sixteen"
+                            android:layout_marginTop="@dimen/_13sdp"
                             android:ellipsize="end"
                             android:inputType="@{inputEditPin.text.toString().isEmpty() ? (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS) : (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD)}"
                             android:maxLines="1"
@@ -148,8 +148,8 @@
                             android:id="@+id/text_cvv_code"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/margin_eight"
-                            android:layout_marginRight="@dimen/margin_eight"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:layout_marginRight="@dimen/_4sdp"
                             android:ellipsize="end"
                             android:inputType="@{inputEditCvvCode.text.toString().isEmpty() ? (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS) : (InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD)}"
                             android:maxLines="1"
@@ -165,8 +165,8 @@
 
                         <ImageView
                             android:id="@+id/icon_help_blue"
-                            android:layout_width="@dimen/margin_eighteen"
-                            android:layout_height="@dimen/margin_eighteen"
+                            android:layout_width="@dimen/_14sdp"
+                            android:layout_height="@dimen/_14sdp"
                             app:layout_constraintBottom_toBottomOf="@+id/text_expired_date"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/text_expired_date"
@@ -180,27 +180,27 @@
                     android:id="@+id/card_gray"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_thirty_two"
-                    android:layout_marginLeft="@dimen/margin_thirty_two"
-                    android:layout_marginTop="@dimen/margin_sixteen"
-                    android:layout_marginEnd="@dimen/margin_thirty_two"
-                    android:layout_marginRight="@dimen/margin_thirty_two"
+                    android:layout_marginStart="@dimen/_28sdp"
+                    android:layout_marginLeft="@dimen/_28sdp"
+                    android:layout_marginTop="@dimen/_13sdp"
+                    android:layout_marginEnd="@dimen/_28sdp"
+                    android:layout_marginRight="@dimen/_28sdp"
                     android:alpha="1"
-                    app:cardCornerRadius="@dimen/margin_twelve"
-                    app:cardElevation="@dimen/margin_twelve"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/_10sdp"
                     app:cardPreventCornerOverlap="false">
 
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@color/dark_gray"
-                        android:padding="@dimen/margin_twenty_four">
+                        android:padding="@dimen/_20sdp">
 
                         <TextView
                             android:id="@+id/label_card_number"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_eight"
+                            android:layout_marginTop="@dimen/_4sdp"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="@string/label_card_number"
@@ -215,9 +215,9 @@
                             android:id="@+id/label_expired_date"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_thirty_two"
-                            android:layout_marginEnd="@dimen/margin_eight"
-                            android:layout_marginRight="@dimen/margin_eight"
+                            android:layout_marginTop="@dimen/_28sdp"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:layout_marginRight="@dimen/_4sdp"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="@string/label_expired_date"
@@ -233,7 +233,7 @@
                             android:id="@+id/label_card_holder"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_sixteen"
+                            android:layout_marginTop="@dimen/_13sdp"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="@string/label_card_holder"
@@ -263,8 +263,8 @@
                             android:id="@+id/label_cvv_code"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/margin_eight"
-                            android:layout_marginRight="@dimen/margin_eight"
+                            android:layout_marginEnd="@dimen/_4sdp"
+                            android:layout_marginRight="@dimen/_4sdp"
                             android:ellipsize="end"
                             android:maxLines="1"
                             android:text="@string/label_cvv_code"
@@ -278,8 +278,8 @@
 
                         <ImageView
                             android:id="@+id/icon_help_gray"
-                            android:layout_width="@dimen/margin_eighteen"
-                            android:layout_height="@dimen/margin_eighteen"
+                            android:layout_width="@dimen/_14sdp"
+                            android:layout_height="@dimen/_14sdp"
                             app:layout_constraintBottom_toBottomOf="@+id/label_expired_date"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/label_expired_date"
@@ -295,13 +295,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/card_gray"
-                    android:layout_marginTop="@dimen/margin_sixteen">
+                    android:layout_marginTop="@dimen/_13sdp">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/input_layout_card_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_sixteen">
+                        android:layout_margin="@dimen/_13sdp">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/input_edit_card_name"
@@ -312,7 +312,7 @@
                             android:hint="@string/hint_card_name"
                             android:imeOptions="actionNext"
                             android:inputType="textPersonName|textCapCharacters|textNoSuggestions"
-                            android:paddingTop="@dimen/margin_eight"
+                            android:paddingTop="@dimen/_4sdp"
                             tools:text="12/19" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -321,7 +321,7 @@
                         android:id="@+id/input_layout_card_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_sixteen">
+                        android:layout_margin="@dimen/_13sdp">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/input_edit_card_number"
@@ -333,7 +333,7 @@
                             android:imeOptions="actionNext"
                             android:inputType="phone"
                             android:maxLength="19"
-                            android:paddingTop="@dimen/margin_eight"
+                            android:paddingTop="@dimen/_4sdp"
                             tools:text="4242 4242 4242 4242" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -342,7 +342,7 @@
                         android:id="@+id/input_layout_expired_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_sixteen">
+                        android:layout_margin="@dimen/_13sdp">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/input_edit_expired_date"
@@ -354,7 +354,7 @@
                             android:imeOptions="actionNext"
                             android:inputType="date"
                             android:maxLength="5"
-                            android:paddingTop="@dimen/margin_eight"
+                            android:paddingTop="@dimen/_4sdp"
                             tools:text="12/19" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -363,7 +363,7 @@
                         android:id="@+id/input_layout_card_holder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_sixteen">
+                        android:layout_margin="@dimen/_13sdp">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/input_edit_card_holder"
@@ -374,7 +374,7 @@
                             android:hint="@string/hint_card_holder"
                             android:imeOptions="actionNext"
                             android:inputType="textPersonName|textCapCharacters|textNoSuggestions"
-                            android:paddingTop="@dimen/margin_eight"
+                            android:paddingTop="@dimen/_4sdp"
                             tools:text="12/19" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -383,7 +383,7 @@
                         android:id="@+id/input_layout_cvv_code"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_sixteen">
+                        android:layout_margin="@dimen/_13sdp">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/input_edit_cvv_code"
@@ -395,7 +395,7 @@
                             android:imeOptions="actionNext"
                             android:inputType="numberPassword"
                             android:maxLength="4"
-                            android:paddingTop="@dimen/margin_eight"
+                            android:paddingTop="@dimen/_4sdp"
                             tools:text="12/19" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -404,7 +404,7 @@
                         android:id="@+id/input_layout_pin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_sixteen">
+                        android:layout_margin="@dimen/_13sdp">
 
                         <android.support.design.widget.TextInputEditText
                             android:id="@+id/input_edit_pin"
@@ -416,7 +416,7 @@
                             android:imeOptions="actionDone"
                             android:inputType="numberPassword"
                             android:maxLength="4"
-                            android:paddingTop="@dimen/margin_eight"
+                            android:paddingTop="@dimen/_4sdp"
                             tools:text="12/19" />
 
                     </android.support.design.widget.TextInputLayout>
@@ -430,19 +430,19 @@
 
                 <ProgressBar
                     android:id="@+id/progress_circle"
-                    android:layout_width="@dimen/margin_fourty_eight"
-                    android:layout_height="@dimen/margin_fourty_eight"
+                    android:layout_width="@dimen/_38sdp"
+                    android:layout_height="@dimen/_38sdp"
                     android:layout_below="@+id/view_pager"
                     android:layout_centerHorizontal="true"
                     android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/icon_lock"
-                    android:layout_width="@dimen/margin_sixteen"
-                    android:layout_height="@dimen/margin_sixteen"
+                    android:layout_width="@dimen/_13sdp"
+                    android:layout_height="@dimen/_13sdp"
                     android:layout_below="@+id/view_pager"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/margin_sixteen"
+                    android:layout_marginTop="@dimen/_13sdp"
                     app:srcCompat="@drawable/ic_lock_translucent_24dp" />
 
                 <ProgressBar
@@ -455,29 +455,14 @@
                     android:layout_marginBottom="-8dp"
                     android:progress="25" />
 
-                <TextView
-                    android:id="@+id/label_secure_submission"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="@color/blue"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/margin_fourteen"
-                    android:paddingBottom="@dimen/margin_fourteen"
-                    android:text="@string/label_secure_submission"
-                    android:textColor="@color/light_gray"
-                    android:textSize="@dimen/sixteen_sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
             </RelativeLayout>
 
             <ImageView
                 android:id="@+id/action_scan"
-                android:layout_width="@dimen/margin_extra_large"
-                android:layout_height="@dimen/margin_extra_large"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/margin_half_extra_large"
+                android:layout_margin="@dimen/_21sdp"
                 android:background="@drawable/cam_button_selector" />
 
         </android.support.design.widget.CoordinatorLayout>

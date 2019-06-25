@@ -21,6 +21,11 @@
     <color name="gray">#484848</color>
     <color name="black">#000000</color>
 
+    <color name="color_action_btns">#fa6e59</color>
+    <color name="color_number_btns">#92aac7</color>
+    <color name="c">#E3AE57</color>
+    <color name="color_number_back_btns">#92aac7</color>
+
     <array name="some_colors">
         <item>#4CAF50</item>
         <item>#7986CB</item>

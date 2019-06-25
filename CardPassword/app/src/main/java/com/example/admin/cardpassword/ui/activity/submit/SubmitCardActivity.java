@@ -22,6 +22,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -59,6 +60,9 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
     private String mName;
     private String mValidity;
     private String mCardHolder;
+    private int mIndex = 4;
+
+    private Toast mToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,12 +106,12 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
                 }
                 lock = true;
 
-                for (int i = 4; i < s.length(); i += 5) {
+                if (s.length() % 4 == 0 && mIndex < s.length()) {
 
-                    if (s.toString().charAt(i) != ' ') {
-
-                        s.insert(i, " ");
+                    if (s.toString().charAt(mIndex) != ' ') {
+                        s.insert(mIndex, " ");
                     }
+                    mIndex += 5;
                 }
 
                 if (s.length() == 19) {
@@ -140,7 +144,7 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
                     return;
                 }
                 lock = true;
-                if (s.length() > 2 && s.toString().charAt(2) != '/') {
+                if (s.length() > 2 && !(s.toString().contains("/"))) {
 
                     s.insert(2, "/");
                 }
@@ -347,9 +351,10 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
                 assert data != null;
                 cards.pay.paycardsrecognizer.sdk.Card card = data.getParcelableExtra(ScanCardIntent.RESULT_PAYCARDS_CARD);
 
-                activitySubmitCreditCardBinding.inputEditCardNumber.setText(String.valueOf(card.getCardNumber()));
+                activitySubmitCreditCardBinding.inputEditCardNumber.setText(mPresenter.appendVoid(card.getCardNumber()));
                 activitySubmitCreditCardBinding.inputEditExpiredDate.setText(card.getExpirationDate());
                 activitySubmitCreditCardBinding.inputEditCardHolder.setText(card.getCardHolderName());
+                activitySubmitCreditCardBinding.inputEditCardName.requestFocus();
 
             }
         }
@@ -364,28 +369,40 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void showToastNumber() {
 
-        Toast.makeText(getApplicationContext(), "Заполните номер карты!", Toast.LENGTH_LONG).show();
+        mToast = Toast.makeText(getApplicationContext(), "Заполните номер карты!", Toast.LENGTH_LONG);
+        mToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        mToast.show();
+
         activitySubmitCreditCardBinding.inputEditCardNumber.requestFocus();
     }
 
     @Override
     public void showToastCVC() {
 
-        Toast.makeText(getApplicationContext(), "Заполните CVC/CVV!", Toast.LENGTH_LONG).show();
+        mToast = Toast.makeText(getApplicationContext(), "Заполните CVC/CVV!", Toast.LENGTH_LONG);
+        mToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        mToast.show();
+
         activitySubmitCreditCardBinding.inputEditCvvCode.requestFocus();
     }
 
     @Override
     public void showToastPin() {
 
-        Toast.makeText(getApplicationContext(), "Заполните PIN!", Toast.LENGTH_LONG).show();
+        mToast = Toast.makeText(getApplicationContext(), "Заполните PIN!", Toast.LENGTH_LONG);
+        mToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        mToast.show();
+
         activitySubmitCreditCardBinding.inputEditPin.requestFocus();
     }
 
     @Override
     public void showToastCardExistence() {
 
-        Toast.makeText(getApplicationContext(), "Карты с таким номером не существует!", Toast.LENGTH_LONG).show();
+        mToast = Toast.makeText(getApplicationContext(), "Карты с таким номером не существует!", Toast.LENGTH_LONG);
+        mToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        mToast.show();
+
         activitySubmitCreditCardBinding.inputEditCardNumber.requestFocus();
     }
 
@@ -484,7 +501,6 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
 
         activitySubmitCreditCardBinding.inputLayoutPin.setVisibility(View.INVISIBLE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-        activitySubmitCreditCardBinding.labelSecureSubmission.setVisibility(View.VISIBLE);
         hideKeyboard(activitySubmitCreditCardBinding.inputEditPin);
         activitySubmitCreditCardBinding.progressCircle.setVisibility(View.VISIBLE);
 
@@ -497,7 +513,6 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
 
         activitySubmitCreditCardBinding.inputLayoutPin.setVisibility(View.VISIBLE);
         activitySubmitCreditCardBinding.progressCircle.setVisibility(View.GONE);
-        activitySubmitCreditCardBinding.labelSecureSubmission.setVisibility(View.GONE);
         flipToGray();
         activitySubmitCreditCardBinding.viewPager.setCurrentItem(0);
         activitySubmitCreditCardBinding.inputEditCardName.setText("");
@@ -506,7 +521,7 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
         activitySubmitCreditCardBinding.inputEditCardHolder.setText("");
         activitySubmitCreditCardBinding.inputEditCvvCode.setText("");
         activitySubmitCreditCardBinding.inputEditPin.setText("");
-        activitySubmitCreditCardBinding.inputEditCardNumber.requestFocus();
+        activitySubmitCreditCardBinding.inputEditCardName.requestFocus();
         showKeyboard(activitySubmitCreditCardBinding.inputEditCardName);
     }
 

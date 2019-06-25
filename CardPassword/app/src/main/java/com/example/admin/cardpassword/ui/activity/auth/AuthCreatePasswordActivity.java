@@ -110,7 +110,6 @@ public class AuthCreatePasswordActivity extends AppCompatActivity implements Vie
             if (pPassword.length() == 4 && mButtonCancel.getVisibility() == View.GONE) {
 
                 confirmedPassword = pPassword;
-                Toast.makeText(AuthCreatePasswordActivity.this, "" + pPassword, Toast.LENGTH_SHORT).show();
 
                 mButtonSkip.setVisibility(View.GONE);
                 mButtonCancel.setVisibility(View.VISIBLE);

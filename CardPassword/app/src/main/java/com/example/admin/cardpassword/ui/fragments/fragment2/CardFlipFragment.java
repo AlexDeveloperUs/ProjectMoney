@@ -25,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FragmentCardFlip extends Fragment implements View.OnClickListener {
+public class CardFlipFragment extends Fragment implements View.OnClickListener {
 
     @BindView(R.id.text_card_name_front_view)
     TextView mFrontCardName;
@@ -89,9 +89,9 @@ public class FragmentCardFlip extends Fragment implements View.OnClickListener {
         super.onCreate(savedInstanceState);
     }
 
-    public static FragmentCardFlip newInstance(String pName, String pNumber, String pCvc, String pValidity, String pCardholder, String pType, String pPin) {
+    public static CardFlipFragment newInstance(String pName, String pNumber, String pCvc, String pValidity, String pCardholder, String pType, String pPin) {
 
-        FragmentCardFlip fragment = new FragmentCardFlip();
+        CardFlipFragment fragment = new CardFlipFragment();
         Bundle args = new Bundle();
         args.putString("name", pName);
         args.putString("num", pNumber);
