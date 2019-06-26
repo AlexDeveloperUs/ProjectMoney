@@ -633,6 +633,7 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
             activitySubmitCreditCardBinding.inputEditCardHolder.setText(card.getCardHolderName());
             activitySubmitCreditCardBinding.inputEditPin.setText(pin);
             mId = card.getId();
+            mString = mPresenter.appendVoid(String.valueOf(card.mCardNumber));
         }
     }
 
