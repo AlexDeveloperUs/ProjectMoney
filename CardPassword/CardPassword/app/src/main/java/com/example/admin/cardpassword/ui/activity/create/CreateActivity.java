@@ -1,4 +1,4 @@
-package com.example.admin.cardpassword.ui.activity.create;
+package com.flexsoft.cardpassword.ui.activity.create;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -17,10 +17,10 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.admin.cardpassword.R;
-import com.example.admin.cardpassword.data.DatabaseClient;
-import com.example.admin.cardpassword.data.models.Card;
-import com.example.admin.cardpassword.ui.activity.list.ListActivity;
+import com.flexsoft.cardpassword.R;
+import com.flexsoft.cardpassword.data.DatabaseClient;
+import com.flexsoft.cardpassword.data.models.Card;
+import com.flexsoft.cardpassword.ui.activity.list.ListActivity;
 import com.github.pinball83.maskededittext.MaskedEditText;
 
 import butterknife.BindView;

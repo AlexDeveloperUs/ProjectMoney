@@ -1,8 +1,8 @@
-package com.example.admin.cardpassword.ui.activity.create;
+package com.flexsoft.cardpassword.ui.activity.create;
 
 import android.view.View;
 
-import com.example.admin.cardpassword.data.models.Card;
+import com.flexsoft.cardpassword.data.models.Card;
 
 public class CreatePresenter implements CreateContract.Presenter{
 

@@ -1,7 +1,7 @@
-package com.example.admin.cardpassword.ui.activity.list;
+package com.flexsoft.cardpassword.ui.activity.list;
 
-import com.example.admin.cardpassword.data.dao.CardDao;
-import com.example.admin.cardpassword.data.models.Card;
+import com.flexsoft.cardpassword.data.dao.CardDao;
+import com.flexsoft.cardpassword.data.models.Card;
 
 public class ListPresenter implements ListContract.Presenter {
 

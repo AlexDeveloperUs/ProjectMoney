@@ -1,9 +1,9 @@
-package com.example.admin.cardpassword.ui.activity.auth;
+package com.flexsoft.cardpassword.ui.activity.auth;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.admin.cardpassword.R;
+import com.flexsoft.cardpassword.R;
 
 public class AuthActivity extends AppCompatActivity {
 

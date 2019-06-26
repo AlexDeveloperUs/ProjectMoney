@@ -1,4 +1,4 @@
-package com.example.admin.cardpassword.ui.views;
+package com.flexsoft.cardpassword.ui.views;
 
 public class CustomDialog {
 }

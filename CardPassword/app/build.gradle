@@ -8,7 +8,7 @@ android {
 //    }
 
     defaultConfig {
-        applicationId "com.example.admin.cardpassword"
+        applicationId "com.flexsoft.cardpassword"
         minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
@@ -27,8 +27,24 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs {
+        debug {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+        release {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
@@ -36,9 +52,18 @@ android {
         }
 
         debug {
+            signingConfig signingConfigs.debug
             minifyEnabled true
             debuggable true
             proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+    }
+
+    applicationVariants.all { variant ->
+        def date = new Date()
+        def formattedDate = date.format('yyyy-MM-dd')
+        variant.outputs.all {
+            outputFileName = "card_keeper" + "_v${variant.versionName}_${formattedDate}_${variant.buildType.name}" + ".apk"
         }
     }
 }

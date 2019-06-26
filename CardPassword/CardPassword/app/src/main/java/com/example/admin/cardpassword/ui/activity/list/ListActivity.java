@@ -1,4 +1,4 @@
-package com.example.admin.cardpassword.ui.activity.list;
+package com.flexsoft.cardpassword.ui.activity.list;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,13 +12,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.admin.cardpassword.R;
-import com.example.admin.cardpassword.ui.adapters.CardListAdapter;
-import com.example.admin.cardpassword.App;
-import com.example.admin.cardpassword.data.AppDataBase;
-import com.example.admin.cardpassword.data.models.Card;
-import com.example.admin.cardpassword.data.dao.CardDao;
-import com.example.admin.cardpassword.ui.activity.create.CreateActivity;
+import com.flexsoft.cardpassword.R;
+import com.flexsoft.cardpassword.ui.adapters.CardListAdapter;
+import com.flexsoft.cardpassword.App;
+import com.flexsoft.cardpassword.data.AppDataBase;
+import com.flexsoft.cardpassword.data.models.Card;
+import com.flexsoft.cardpassword.data.dao.CardDao;
+import com.flexsoft.cardpassword.ui.activity.create.CreateActivity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.admin.cardpassword.data.dao;
+package com.flexsoft.cardpassword.data.dao;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
@@ -6,7 +6,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.example.admin.cardpassword.data.models.Card;
+import com.flexsoft.cardpassword.data.models.Card;
 
 import java.util.List;
 

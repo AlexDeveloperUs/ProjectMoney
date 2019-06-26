@@ -1,4 +1,4 @@
-package com.example.admin.cardpassword.ui.activity.auth;
+package com.flexsoft.cardpassword.ui.activity.auth;
 
 public interface AuthContract {
 }

@@ -1,4 +1,4 @@
-package com.example.admin.cardpassword.ui.adapters;
+package com.flexsoft.cardpassword.ui.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.admin.cardpassword.R;
-import com.example.admin.cardpassword.data.models.Card;
+import com.flexsoft.cardpassword.R;
+import com.flexsoft.cardpassword.data.models.Card;
 
 import java.util.List;
 

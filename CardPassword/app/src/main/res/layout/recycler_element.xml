@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.admin.cardpassword.utils.VerticalSampleItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.flexsoft.cardpassword.utils.VerticalSampleItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
@@ -310,4 +310,4 @@
             app:layout_constraintTop_toBottomOf="@id/text_card_validity_element" />
 
     </android.support.constraint.ConstraintLayout>
-</com.example.admin.cardpassword.utils.VerticalSampleItemLayout>
+</com.flexsoft.cardpassword.utils.VerticalSampleItemLayout>

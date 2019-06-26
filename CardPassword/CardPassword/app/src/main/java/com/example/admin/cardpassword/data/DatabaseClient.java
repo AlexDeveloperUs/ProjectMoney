@@ -1,4 +1,4 @@
-package com.example.admin.cardpassword.data;
+package com.flexsoft.cardpassword.data;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;

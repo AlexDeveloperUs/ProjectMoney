@@ -1,4 +1,4 @@
-package com.example.admin.cardpassword.data.models;
+package com.flexsoft.cardpassword.data.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

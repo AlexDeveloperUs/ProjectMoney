@@ -1,9 +1,9 @@
-package com.example.admin.cardpassword.ui.activity.create;
+package com.flexsoft.cardpassword.ui.activity.create;
 
-import com.example.admin.cardpassword.App;
-import com.example.admin.cardpassword.data.AppDataBase;
-import com.example.admin.cardpassword.data.dao.CardDao;
-import com.example.admin.cardpassword.data.models.Card;
+import com.flexsoft.cardpassword.App;
+import com.flexsoft.cardpassword.data.AppDataBase;
+import com.flexsoft.cardpassword.data.dao.CardDao;
+import com.flexsoft.cardpassword.data.models.Card;
 
 public class CreateModel implements CreateContract.Model {
 
