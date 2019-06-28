@@ -29,6 +29,7 @@ import android.view.WindowManager;
 import android.view.animation.DecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ import com.flexsoft.cardpassword.databinding.ActivitySubmitCreditCardBinding;
 
 import java.util.Objects;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cards.pay.paycardsrecognizer.sdk.ScanCardIntent;
@@ -63,6 +65,8 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
     private int mIndex = 4;
 
     private Toast mToast;
+    @BindView(R.id.action_scan)
+    ImageView mScan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -299,7 +303,7 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
             if (actionId == EditorInfo.IME_ACTION_DONE) {
 
                 mPin = (activitySubmitCreditCardBinding.inputEditPin.getText().toString()).equals("") ? 0 :
-                        Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCvvCode.getText()).toString());
+                        Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditPin.getText()).toString());
                 if (mPresenter.checkPin(mPin)) {
 
                     submit();
@@ -487,7 +491,7 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
         mCardHolder = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardHolder.getText()).toString();
         mPin = Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditPin.getText()).toString());
 
-        activitySubmitCreditCardBinding.viewPager.setCurrentItem(6);
+        activitySubmitCreditCardBinding.viewPager.setCurrentItem(7);
 
         if (mCheckRequestCodeForSave) {
 
@@ -615,12 +619,16 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
     @SuppressLint("SetTextI18n")
     private void checkRequestCode() {
 
+        mScan.setVisibility(View.VISIBLE);
+
         Intent intent = getIntent();
         com.flexsoft.cardpassword.data.models.Card card = getIntent().getParcelableExtra("card");
         String code = intent.getStringExtra("REQUEST_CODE");
 
         String REQUEST_CODE = "2";
         if (code != null && code.equals(REQUEST_CODE)) {
+
+            mScan.setVisibility(View.GONE);
 
             String cvc = String.valueOf(card.getCVC());
             String pin = String.valueOf(card.getPin());
