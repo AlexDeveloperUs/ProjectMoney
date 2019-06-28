@@ -72,6 +72,8 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     ImageView mCardsBack;
     @BindView(R.id.text_without_cards)
     TextView mTextWithoutCards;
+    @BindView(R.id.image_add)
+    ImageView mAdd;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -222,7 +224,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
             mRecyclerView.setLayoutManager(linearLayoutManager);
         } else if (mFromFragment.equals("y")) {
 
-            LadderLayoutManager llm = new LadderLayoutManager(0.7f).setChildDecorateHelper(new VerticalSampleChildDecorateHelper(getResources().getDimension(R.dimen.item_max_elevation)));
+            LadderLayoutManager llm = new LadderLayoutManager(0.6f).setChildDecorateHelper(new VerticalSampleChildDecorateHelper(getResources().getDimension(R.dimen.item_max_elevation)));
             llm.setMaxItemLayoutCount(5);
             llm.setChildPeekSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
             mRecyclerView.setLayoutManager(llm);
@@ -290,7 +292,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public boolean onLongClick(View v) {
 
         mFrag = new ControlButtonsFragment();
-
+        mAdd.setVisibility(View.GONE);
         mFragmentManager.beginTransaction()
                 .replace(R.id.fragment_buttons, mFrag)
                 .commit();
@@ -301,7 +303,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     public void removeFromFragment() {
 
         Objects.requireNonNull(mFrag.getView()).setVisibility(View.GONE);
-
+        mAdd.setVisibility(View.VISIBLE);
     }
 
     public void setForEmptyScreen() {

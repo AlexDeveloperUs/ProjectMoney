@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -21,6 +22,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AuthCheckPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     @BindView(R.id.first_void_circle_create)
     ImageView mFirstCircle;

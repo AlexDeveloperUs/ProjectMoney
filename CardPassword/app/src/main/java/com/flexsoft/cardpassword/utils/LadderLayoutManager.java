@@ -37,7 +37,7 @@ public class LadderLayoutManager extends RecyclerView.LayoutManager implements R
 
     public LadderLayoutManager(float itemHeightWidthRatio) {
 
-        this(itemHeightWidthRatio, 0.95f, VERTICAL);
+        this(itemHeightWidthRatio, 0.9f, VERTICAL);
     }
 
     private LadderLayoutManager(float itemHeightWidthRatio, float scale, int orientation) {
