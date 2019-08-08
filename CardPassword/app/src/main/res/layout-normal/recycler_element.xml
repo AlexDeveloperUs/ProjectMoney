@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.flexsoft.cardpassword.utils.VerticalSampleItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/_15sdp">
+    style="@style/NormalCardLayout"
+    android:layout_marginTop="@dimen/margin_twenty">
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/content"
@@ -17,7 +15,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:cardCornerRadius="18.898dp"
-            app:cardElevation="@dimen/_10sdp"
+            app:cardElevation="20dp"
             app:cardPreventCornerOverlap="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,123 +31,62 @@
 
                 <TextView
                     android:id="@+id/text_card_name_recycler"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
+                    style="@style/NormalTextCardName"
                     android:text="@string/label_card_name"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/sp_sixteen"
-                    android:typeface="monospace"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/text_card_number_recycler"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_28sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
+                    style="@style/NormalTextCardNumber"
                     android:text="@string/label_card_number"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/sp_sixteen"
-                    android:typeface="monospace"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_card_name_recycler" />
 
                 <TextView
                     android:id="@+id/text_expired_date_recycler"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
+                    style="@style/NormalTextMonth"
                     android:text="@string/label_expired_date"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/sp_fourteen"
-                    android:typeface="monospace"
                     app:layout_constraintBottom_toTopOf="@id/text_card_holder_recycler"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_card_number_recycler" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginLeft="@dimen/_20sdp"
+                    style="@style/NormalTextValidTHRU"
                     android:text="@string/hint_card_validity"
                     app:layout_constraintBottom_toTopOf="@id/text_expired_date_recycler"
                     app:layout_constraintLeft_toLeftOf="parent" />
 
                 <TextView
                     android:id="@+id/text_card_holder_recycler"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_40sdp"
-                    android:layout_marginBottom="@dimen/_15sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
+                    style="@style/NormalTextCardHolder"
                     android:text="@string/label_card_holder"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/sp_fourteen"
-                    android:typeface="monospace"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent" />
 
                 <TextView
                     android:id="@+id/text_pin_recycler"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_28sdp"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
+                    style="@style/NormalTextPin"
                     android:text="@string/label_hidden_pin"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/sp_fourteen"
-                    android:typeface="monospace"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/text_cvv_code_recycler" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
+                    style="@style/NormalTextCVCLabel"
                     android:text="@string/text_view_cvc"
                     app:layout_constraintBottom_toTopOf="@id/text_cvv_code_recycler"
                     app:layout_constraintRight_toRightOf="parent" />
 
                 <TextView
                     android:id="@+id/text_cvv_code_recycler"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_28sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
+                    style="@style/NormalTextCVCCode"
                     android:text="@string/label_cvv_code"
-                    android:textAllCaps="true"
-                    android:textSize="@dimen/sp_fourteen"
-                    android:typeface="monospace"
                     app:layout_constraintRight_toLeftOf="@+id/icon_help_blue_recycler"
                     app:layout_constraintTop_toBottomOf="@+id/text_card_name_recycler" />
 
                 <ImageView
                     android:id="@+id/icon_help_blue_recycler"
-                    android:layout_width="@dimen/_14sdp"
-                    android:layout_height="@dimen/_14sdp"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
+                    style="@style/NormalInfoImage"
                     app:layout_constraintBottom_toBottomOf="@+id/text_cvv_code_recycler"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/text_cvv_code_recycler"
@@ -157,11 +94,7 @@
 
                 <ImageView
                     android:id="@+id/image_card_element_recycler"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
-                    android:layout_marginBottom="@dimen/_5sdp"
+                    style="@style/NormalCardImage"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </android.support.constraint.ConstraintLayout>

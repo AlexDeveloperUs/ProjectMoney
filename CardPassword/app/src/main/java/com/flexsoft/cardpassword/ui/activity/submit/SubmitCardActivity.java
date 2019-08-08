@@ -45,7 +45,7 @@ import butterknife.OnClick;
 import cards.pay.paycardsrecognizer.sdk.ScanCardIntent;
 
 
-public class SubmitCardActivity extends AppCompatActivity implements View.OnClickListener, SubmitCardContract.View {
+public class SubmitCardActivity extends AppCompatActivity implements SubmitCardContract.View {
 
     private boolean showingGray = true;
     private AnimatorSet inSet;
@@ -63,10 +63,13 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
     private String mValidity;
     private String mCardHolder;
     private int mIndex = 4;
+    private String REQUEST_CODE;
 
     private Toast mToast;
     @BindView(R.id.action_scan)
     ImageView mScan;
+    @BindView(R.id.action_reset)
+    ImageView mResetButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -327,7 +330,6 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
     }
 
     @OnClick({R.id.action_reset, R.id.image_close, R.id.action_scan})
-    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
@@ -373,7 +375,7 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void showToastNumber() {
 
-        mToast = Toast.makeText(getApplicationContext(), "Заполните номер карты!", Toast.LENGTH_LONG);
+        mToast = Toast.makeText(getApplicationContext(), R.string.empty_card_number, Toast.LENGTH_LONG);
         mToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         mToast.show();
 
@@ -383,7 +385,7 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void showToastCVC() {
 
-        mToast = Toast.makeText(getApplicationContext(), "Заполните CVC/CVV!", Toast.LENGTH_LONG);
+        mToast = Toast.makeText(getApplicationContext(), R.string.empty_cvc_cvv, Toast.LENGTH_LONG);
         mToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         mToast.show();
 
@@ -393,7 +395,7 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void showToastPin() {
 
-        mToast = Toast.makeText(getApplicationContext(), "Заполните PIN!", Toast.LENGTH_LONG);
+        mToast = Toast.makeText(getApplicationContext(), R.string.empty_pin, Toast.LENGTH_LONG);
         mToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         mToast.show();
 
@@ -403,7 +405,7 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void showToastCardExistence() {
 
-        mToast = Toast.makeText(getApplicationContext(), "Карты с таким номером не существует!", Toast.LENGTH_LONG);
+        mToast = Toast.makeText(getApplicationContext(), R.string.no_such_card, Toast.LENGTH_LONG);
         mToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         mToast.show();
 
@@ -625,7 +627,7 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
         com.flexsoft.cardpassword.data.models.Card card = getIntent().getParcelableExtra("card");
         String code = intent.getStringExtra("REQUEST_CODE");
 
-        String REQUEST_CODE = "2";
+        REQUEST_CODE = "2";
         if (code != null && code.equals(REQUEST_CODE)) {
 
             mScan.setVisibility(View.GONE);
@@ -643,6 +645,8 @@ public class SubmitCardActivity extends AppCompatActivity implements View.OnClic
             mId = card.getId();
             mString = mPresenter.appendVoid(String.valueOf(card.mCardNumber));
         }
+
+        mResetButton.setVisibility(mCheckRequestCodeForSave ? View.VISIBLE : View.GONE);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.flexsoft.cardpassword.ui.activity.auth;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AuthCreatePasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class AuthCreatePasswordActivity extends AppCompatActivity {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -67,6 +68,7 @@ public class AuthCreatePasswordActivity extends AppCompatActivity implements Vie
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "notFirst");
             editor.apply();
+//            Bundle
         }
     }
 

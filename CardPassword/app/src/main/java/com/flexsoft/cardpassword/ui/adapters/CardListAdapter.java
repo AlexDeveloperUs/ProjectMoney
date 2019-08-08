@@ -17,6 +17,9 @@ import com.flexsoft.cardpassword.data.models.Card;
 import com.flexsoft.cardpassword.ui.activity.list.ListActivity;
 import com.flexsoft.cardpassword.utils.VerticalSampleItemLayout;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -192,5 +195,81 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.ViewHo
         String thirdSubString = pS.substring(8, 12);
 
         return firstSubString + " " + secondSubString + " " + thirdSubString + " " + "****";
+    }
+}
+
+class asd<K, V> {
+
+    private K mKey;
+    private V mValue;
+
+    asd(K pKey, V pValue) {
+        mKey = pKey;
+        mValue = pValue;
+    }
+
+    public K getKey() {
+        return mKey;
+    }
+
+    public void setKey(K pKey) {
+        mKey = pKey;
+    }
+
+    public V getValue() {
+        return mValue;
+    }
+
+    public void setValue(V pValue) {
+        mValue = pValue;
+    }
+}
+
+class ch {
+    public static void main(String[] args) {
+        asd<String, Integer> tuple = new asd<>("name", 12);
+
+        System.out.println(tuple.getKey());
+
+        System.out.println(tuple.getValue());
+
+        ThreeTuple<String, String, Integer> newTuple = new ThreeTuple<>("First", "Second", 1);
+
+        System.out.println(newTuple.getFirst());
+        System.out.println(newTuple.getThird());
+        System.out.println(newTuple.getSecond());
+    }
+}
+
+class ThreeTuple<A, B, C> extends asd<A, B> {
+    private C mC;
+
+    ThreeTuple(A pA, B pB, C pC) {
+        super(pA, pB);
+        mC = pC;
+    }
+
+    public A getFirst() {
+        return super.getKey();
+    }
+
+    public void setFirst(A pFirst) {
+        super.setKey(pFirst);
+    }
+
+    public B getSecond() {
+        return super.getValue();
+    }
+
+    public void setSecond(B pSecond) {
+        super.setValue(pSecond);
+    }
+
+    public C getThird() {
+        return mC;
+    }
+
+    public void setThird(C pThird) {
+        mC = pThird;
     }
 }

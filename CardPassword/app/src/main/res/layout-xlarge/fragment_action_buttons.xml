@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/image_back_view_stub"
+        style="@style/XLargeFloatingActionButton"
+        android:background="@drawable/back_button_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:contentDescription="@string/back" />
+
+    <ImageView
+        android:id="@+id/image_add_view_stub"
+        style="@style/XLargeFloatingActionButton"
+        android:background="@drawable/add_button_selector"
+        app:layout_constraintBottom_toTopOf="@id/image_back_view_stub"
+        app:layout_constraintRight_toRightOf="parent"
+        android:contentDescription="@string/add" />
+
+    <ImageView
+        android:id="@+id/image_settings_view_stub"
+        style="@style/XLargeFloatingActionButton"
+        android:background="@drawable/settings_button_selector"
+        app:layout_constraintBottom_toTopOf="@id/image_add_view_stub"
+        app:layout_constraintRight_toRightOf="parent"
+        android:contentDescription="@string/settings" />
+</android.support.constraint.ConstraintLayout>

@@ -7,23 +7,23 @@
     <View
         android:id="@+id/view_top_line"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_4sdp"
+        android:layout_height="5dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/top_shadow"
         app:layout_constraintBottom_toTopOf="@id/flip_view"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/asdasd"
-        android:layout_marginTop="@dimen/_1sdp"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/asdasd" />
 
     <View
         android:id="@+id/view_bottom_line"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_4sdp"
+        android:layout_height="5dp"
         android:background="@drawable/bot_shadow"
-        app:layout_constraintTop_toBottomOf="@id/flip_view"
+        app:layout_constraintBottom_toTopOf="@id/action_button_delete_fragment"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/action_button_delete_fragment"/>
+        app:layout_constraintTop_toBottomOf="@id/flip_view" />
 
     <android.support.constraint.Guideline
         android:id="@+id/asdasd"
@@ -60,37 +60,31 @@
 
     <ImageView
         android:id="@+id/action_button_delete_fragment"
-        android:layout_width="@dimen/_44sdp"
-        android:layout_height="@dimen/_44sdp"
-        android:layout_marginEnd="@dimen/_20sdp"
-        android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        style="@style/NormalFloatingActionButton"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
         android:background="@drawable/delete_button_selector"
+        android:contentDescription="@string/delete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="@id/guideline_vertical_fragment"
-        android:contentDescription="@string/delete" />
+        app:layout_constraintRight_toRightOf="@id/guideline_vertical_fragment" />
 
     <ImageView
         android:id="@+id/action_button_edit_fragment"
-        android:layout_width="@dimen/_44sdp"
-        android:layout_height="@dimen/_44sdp"
-        android:layout_marginStart="@dimen/_20sdp"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        style="@style/NormalFloatingActionButton"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
         android:background="@drawable/edit_button_selector"
+        android:contentDescription="@string/change"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_fragment"
-        android:contentDescription="@string/change" />
+        app:layout_constraintLeft_toLeftOf="@id/guideline_vertical_fragment" />
 
     <ImageView
         android:id="@+id/action_button_back_fragment"
-        android:layout_width="@dimen/_44sdp"
-        android:layout_height="@dimen/_44sdp"
-        android:layout_marginLeft="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        style="@style/NormalFloatingActionButton"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
         android:background="@drawable/back_button_selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:contentDescription="@string/back"
-        android:layout_marginStart="@dimen/_20sdp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 </android.support.constraint.ConstraintLayout>

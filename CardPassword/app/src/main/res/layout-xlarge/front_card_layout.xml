@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/XLargeCardLayout">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_front_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardCornerRadius="18.898dp"
+        app:cardElevation="20dp"
+        app:cardPreventCornerOverlap="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="H, 96:61"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/card_constraint_front_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/blue_gradient"
+            app:layout_constraintDimensionRatio="H, 96:61">
+
+            <TextView
+                android:id="@+id/text_card_name_front_view"
+                style="@style/XLargeTextCardName"
+                android:text="@string/label_card_name"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_card_number_front_view"
+                style="@style/XLargeTextCardNumber"
+                android:text="@string/label_card_number"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_card_name_front_view" />
+
+            <TextView
+                android:id="@+id/text_expired_date_front_view"
+                style="@style/XLargeTextMonth"
+                android:text="@string/label_expired_date"
+                app:layout_constraintBottom_toTopOf="@id/text_card_holder_front_view"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_card_number_front_view" />
+
+            <TextView
+                style="@style/XLargeTextValidTHRU"
+                android:text="@string/hint_card_validity"
+                app:layout_constraintBottom_toTopOf="@id/text_expired_date_front_view"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:id="@+id/text_card_holder_front_view"
+                style="@style/XLargeTextCardHolder"
+                android:text="@string/label_card_holder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <TextView
+                android:id="@+id/text_pin_front_view"
+                style="@style/XLargeTextPin"
+                android:text="@string/label_hidden_pin"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_cvv_code_front_view" />
+
+            <TextView
+                style="@style/XLargeTextCVCLabel"
+                android:text="@string/text_view_cvc"
+                app:layout_constraintBottom_toTopOf="@id/text_cvv_code_front_view"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <TextView
+                android:id="@+id/text_cvv_code_front_view"
+                style="@style/XLargeTextCVCCode"
+                android:text="@string/label_cvv_code"
+                app:layout_constraintRight_toLeftOf="@+id/icon_help_blue_front_view"
+                app:layout_constraintTop_toBottomOf="@+id/text_card_name_front_view" />
+
+            <ImageView
+                android:id="@+id/icon_help_blue_front_view"
+                style="@style/XLargeInfoImage"
+                android:contentDescription="TODO"
+                app:layout_constraintBottom_toBottomOf="@+id/text_cvv_code_front_view"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_cvv_code_front_view"
+                app:srcCompat="@drawable/ic_help_translucent_24dp" />
+
+            <ImageView
+                android:id="@+id/image_card_element_front_view"
+                style="@style/XLargeCardImage"
+                android:contentDescription="@string/card_type_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/image_flip_card"
+                style="@style/XLargeFlipImage"
+                android:contentDescription="@string/image_card_flip"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_flip_selector" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.constraint.ConstraintLayout>

@@ -196,8 +196,8 @@ public class CardFlipFragment extends Fragment implements View.OnClickListener {
 
         if (mGetCardHolder.equals("")) {
 
-            mBackCardHolder.setText(R.string.hint_card_holder);
-            mFrontCardHolder.setText(R.string.hint_card_holder);
+            mBackCardHolder.setText(R.string.text_card_holder);
+            mFrontCardHolder.setText(R.string.text_card_holder);
         } else {
 
             mBackCardHolder.setText(mGetCardHolder);

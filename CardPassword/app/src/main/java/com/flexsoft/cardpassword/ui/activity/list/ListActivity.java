@@ -39,7 +39,7 @@ import butterknife.OnClick;
 import butterknife.OnLongClick;
 import butterknife.Optional;
 
-public class ListActivity extends AppCompatActivity implements ListContract.View, CardListAdapter.OnClickListener, View.OnClickListener, View.OnLongClickListener {
+public class ListActivity extends AppCompatActivity implements ListContract.View, CardListAdapter.OnClickListener, View.OnLongClickListener {
 
     private static final int CREATE_CARD_REQUEST = 1;
     private static final int EDIT_CARD_REQUEST = 2;
@@ -224,7 +224,7 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
             mRecyclerView.setLayoutManager(linearLayoutManager);
         } else if (mFromFragment.equals("y")) {
 
-            LadderLayoutManager llm = new LadderLayoutManager(0.6f).setChildDecorateHelper(new VerticalSampleChildDecorateHelper(getResources().getDimension(R.dimen.item_max_elevation)));
+            LadderLayoutManager llm = new LadderLayoutManager(0.6f).setChildDecorateHelper(new VerticalSampleChildDecorateHelper(getResources().getDimension(R.dimen.margin_ten)));
             llm.setMaxItemLayoutCount(5);
             llm.setChildPeekSize((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
             mRecyclerView.setLayoutManager(llm);

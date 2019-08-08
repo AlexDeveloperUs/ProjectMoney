@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|start"
             android:text="@string/text_short_password_usage"
-            android:textSize="@dimen/text_size_medium" />
+            android:textSize="@dimen/sp_twenty" />
 
         <CheckBox
             android:id="@+id/checkbox"

@@ -21,29 +21,29 @@
     <style name="Container" parent="TextAppearance.AppCompat.Body1">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
-        <item name="android:paddingBottom">@dimen/activity_vertical_margin</item>
-        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
-        <item name="android:paddingTop">@dimen/activity_vertical_margin</item>
+        <item name="android:paddingBottom">@dimen/margin_sixteen</item>
+        <item name="android:paddingLeft">@dimen/margin_sixteen</item>
+        <item name="android:paddingRight">@dimen/margin_sixteen</item>
+        <item name="android:paddingTop">@dimen/margin_sixteen</item>
         <item name="android:minHeight">?listPreferredItemHeight</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:background">@android:color/background_light</item>
     </style>
 
     <style name="IconDelete">
-        <item name="android:layout_width">40dp</item>
-        <item name="android:layout_height">40dp</item>
-        <item name="android:layout_marginLeft">30dp</item>
-        <item name="android:layout_marginRight">30dp</item>
+        <item name="android:layout_width">@dimen/margin_forty</item>
+        <item name="android:layout_height">@dimen/margin_forty</item>
+        <item name="android:layout_marginLeft">@dimen/margin_thirty</item>
+        <item name="android:layout_marginRight">@dimen/margin_thirty</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:src">@drawable/ic_delete</item>
     </style>
 
     <style name="IconEdit">
-        <item name="android:layout_width">40dp</item>
-        <item name="android:layout_height">40dp</item>
-        <item name="android:layout_marginLeft">30dp</item>
-        <item name="android:layout_marginRight">30dp</item>
+        <item name="android:layout_width">@dimen/margin_forty</item>
+        <item name="android:layout_height">@dimen/margin_forty</item>
+        <item name="android:layout_marginLeft">@dimen/margin_thirty</item>
+        <item name="android:layout_marginRight">@dimen/margin_thirty</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:src">@drawable/ic_edit</item>
     </style>
@@ -51,15 +51,13 @@
     <style name="ErrorText" parent="TextAppearance.AppCompat.Small">
         <item name="android:textStyle">bold|italic</item>
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/sp_sixteen</item>
     </style>
 
     <style name="HintText" parent="TextAppearance.AppCompat.Small">
         <item name="android:textStyle">bold|italic</item>
         <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:textSize">16sp</item>
-
-        style name="AppTheme.NoActionBar">
+        <item name="android:textSize">@dimen/sp_sixteen</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -69,6 +67,463 @@
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="NormalDigitImageButtons">
+        <item name="android:layout_width">@dimen/margin_sixty_five</item>
+        <item name="android:layout_height">@dimen/margin_sixty_five</item>
+        <item name="android:layout_marginTop">@dimen/margin_twenty</item>
+        <item name="android:layout_marginEnd">@dimen/margin_thirty</item>
+        <item name="android:layout_marginRight">@dimen/margin_thirty</item>
+        <item name="android:layout_marginLeft">@dimen/margin_thirty</item>
+        <item name="android:layout_marginStart">@dimen/margin_thirty</item>
+    </style>
+
+    <style name="LargeCircleImage">
+        <item name="android:layout_width">@dimen/margin_twenty_five</item>
+        <item name="android:layout_height">@dimen/margin_twenty_five</item>
+        <item name="android:layout_margin">@dimen/margin_eight</item>
+    </style>
+
+    <style name="LargeDigitImageButtons">
+        <item name="android:layout_height">@dimen/margin_eighty</item>
+        <item name="android:layout_width">@dimen/margin_eighty</item>
+        <item name="android:layout_marginStart">@dimen/margin_thirty</item>
+        <item name="android:layout_marginLeft">@dimen/margin_thirty</item>
+        <item name="android:layout_marginRight">@dimen/margin_thirty</item>
+        <item name="android:layout_marginEnd">@dimen/margin_thirty</item>
+        <item name="android:layout_marginTop">@dimen/margin_twenty_five</item>
+    </style>
+
+    <style name="NormalCircleButtons">
+        <item name="android:layout_height">@dimen/margin_twenty</item>
+        <item name="android:layout_width">@dimen/margin_twenty</item>
+        <item name="android:layout_margin">@dimen/margin_seven</item>
+    </style>
+
+    <style name="XLargeCircleButtons">
+        <item name="android:layout_height">@dimen/margin_forty</item>
+        <item name="android:layout_width">@dimen/margin_forty</item>
+        <item name="android:layout_margin">@dimen/margin_ten</item>
+    </style>
+
+    <style name="XLargeDigitImageButtons">
+        <item name="android:layout_height">@dimen/margin_one_hundred_twenty</item>
+        <item name="android:layout_width">@dimen/margin_one_hundred_twenty</item>
+        <item name="android:layout_marginStart">@dimen/margin_seventy</item>
+        <item name="android:layout_marginLeft">@dimen/margin_seventy</item>
+        <item name="android:layout_marginRight">@dimen/margin_seventy</item>
+        <item name="android:layout_marginEnd">@dimen/margin_seventy</item>
+        <item name="android:layout_marginTop">@dimen/margin_forty</item>
+    </style>
+
+    <style name="LargeFloatingActionButton">
+        <item name="android:layout_height">@dimen/margin_sixty</item>
+        <item name="android:layout_width">@dimen/margin_sixty</item>
+        <item name="android:layout_marginRight">@dimen/margin_fifteen</item>
+        <item name="android:layout_marginEnd">@dimen/margin_fifteen</item>
+        <item name="android:layout_marginBottom">@dimen/margin_fifteen</item>
+    </style>
+
+    <style name="NormalFloatingActionButton">
+        <item name="android:layout_height">@dimen/margin_forty</item>
+        <item name="android:layout_width">@dimen/margin_forty</item>
+        <item name="android:layout_marginRight">@dimen/margin_fifteen</item>
+        <item name="android:layout_marginEnd">@dimen/margin_fifteen</item>
+        <item name="android:layout_marginBottom">@dimen/margin_fifteen</item>
+    </style>
+
+    <style name="XLargeFloatingActionButton">
+        <item name="android:layout_height">@dimen/margin_eighty</item>
+        <item name="android:layout_width">@dimen/margin_eighty</item>
+        <item name="android:layout_marginRight">@dimen/margin_twenty</item>
+        <item name="android:layout_marginEnd">@dimen/margin_twenty</item>
+        <item name="android:layout_marginBottom">@dimen/margin_twenty</item>
+    </style>
+
+    // Large Card
+    <style name="LargeCardLayout">
+        <item name="android:layout_marginLeft">@dimen/margin_twenty</item>
+        <item name="android:layout_marginRight">@dimen/margin_twenty</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="LargeFlipImage">
+        <item name="android:layout_height">@dimen/margin_forty</item>
+        <item name="android:layout_width">@dimen/margin_forty</item>
+        <item name="android:layout_margin">@dimen/margin_twenty</item>
+    </style>
+
+    <style name="LargeTextCardName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin_thirty_five</item>
+        <item name="android:layout_marginStart">@dimen/margin_thirty_five</item>
+        <item name="android:layout_marginTop">@dimen/margin_thirty</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_nineteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="LargeTextCardNumber">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_thirty_five</item>
+        <item name="android:layout_marginLeft">@dimen/margin_thirty_five</item>
+        <item name="android:layout_marginTop">@dimen/margin_fifty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_nineteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="LargeTextMonth">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin_thirty_five</item>
+        <item name="android:layout_marginStart">@dimen/margin_thirty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_nineteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="LargeTextValidTHRU">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_thirty_five</item>
+        <item name="android:layout_marginLeft">@dimen/margin_thirty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_seventeen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="LargeTextCardHolder">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/margin_thirty</item>
+        <item name="android:layout_marginStart">@dimen/margin_thirty_five</item>
+        <item name="android:layout_marginLeft">@dimen/margin_thirty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_nineteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="LargeTextPin">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_fifty_five</item>
+        <item name="android:layout_marginRight">@dimen/margin_forty</item>
+        <item name="android:layout_marginEnd">@dimen/margin_forty</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_nineteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="LargeTextCVCLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/margin_forty</item>
+        <item name="android:layout_marginRight">@dimen/margin_forty</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_seventeen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="LargeTextCVCCode">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_fifty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_nineteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="LargeInfoImage">
+        <item name="android:layout_height">@dimen/margin_twenty_five</item>
+        <item name="android:layout_width">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginEnd">@dimen/margin_forty</item>
+        <item name="android:layout_marginRight">@dimen/margin_forty</item>
+    </style>
+
+    <style name="LargeCardImage">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/margin_forty</item>
+        <item name="android:layout_marginRight">@dimen/margin_forty</item>
+        <item name="android:layout_marginBottom">@dimen/margin_twenty_two</item>
+    </style>
+
+    // Normal Card
+    <style name="NormalCardLayout">
+        <item name="android:layout_marginLeft">@dimen/margin_twenty</item>
+        <item name="android:layout_marginRight">@dimen/margin_twenty</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="NormalFlipImage">
+        <item name="android:layout_height">@dimen/margin_twenty_five</item>
+        <item name="android:layout_width">@dimen/margin_twenty_five</item>
+        <item name="android:layout_margin">@dimen/margin_ten</item>
+    </style>
+
+    <style name="NormalTextCardName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginStart">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginTop">@dimen/margin_twenty</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_fifteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="NormalTextCardNumber">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginLeft">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginTop">@dimen/margin_thirty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_fifteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="NormalTextMonth">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginStart">@dimen/margin_twenty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_fifteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="NormalTextValidTHRU">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginLeft">@dimen/margin_twenty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_fourteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="NormalTextCardHolder">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/margin_twenty</item>
+        <item name="android:layout_marginStart">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginLeft">@dimen/margin_twenty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_fifteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="NormalTextPin">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_thirty_five</item>
+        <item name="android:layout_marginRight">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginEnd">@dimen/margin_twenty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_fifteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="NormalTextCVCLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginRight">@dimen/margin_twenty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_fourteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="NormalTextCVCCode">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_thirty_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_fifteen</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="NormalInfoImage">
+        <item name="android:layout_height">@dimen/margin_eighteen</item>
+        <item name="android:layout_width">@dimen/margin_eighteen</item>
+        <item name="android:layout_marginEnd">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginRight">@dimen/margin_twenty_five</item>
+    </style>
+
+    <style name="NormalCardImage">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginRight">@dimen/margin_twenty_five</item>
+        <item name="android:layout_marginBottom">@dimen/margin_ten</item>
+    </style>
+
+    // XLarge Card
+    <style name="XLargeCardLayout">
+        <item name="android:layout_marginLeft">@dimen/margin_forty</item>
+        <item name="android:layout_marginRight">@dimen/margin_forty</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="XLargeFlipImage">
+        <item name="android:layout_height">@dimen/margin_fifty</item>
+        <item name="android:layout_width">@dimen/margin_fifty</item>
+        <item name="android:layout_margin">@dimen/margin_twenty</item>
+    </style>
+
+    <style name="XLargeTextCardName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin_fifty</item>
+        <item name="android:layout_marginStart">@dimen/margin_fifty</item>
+        <item name="android:layout_marginTop">@dimen/margin_forty</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_twenty_seven</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="XLargeTextCardNumber">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_fifty</item>
+        <item name="android:layout_marginLeft">@dimen/margin_fifty</item>
+        <item name="android:layout_marginTop">@dimen/margin_seventy_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_twenty_seven</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="XLargeTextMonth">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/margin_fifty</item>
+        <item name="android:layout_marginStart">@dimen/margin_fifty</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_twenty_seven</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="XLargeTextValidTHRU">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">@dimen/margin_fifty</item>
+        <item name="android:layout_marginLeft">@dimen/margin_fifty</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_twenty_four</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="XLargeTextCardHolder">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/margin_forty</item>
+        <item name="android:layout_marginStart">@dimen/margin_fifty</item>
+        <item name="android:layout_marginLeft">@dimen/margin_fifty</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_twenty_seven</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="XLargeTextPin">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_seventy_five</item>
+        <item name="android:layout_marginRight">@dimen/margin_fifty</item>
+        <item name="android:layout_marginEnd">@dimen/margin_fifty</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_twenty_seven</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="XLargeTextCVCLabel">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/margin_fifty</item>
+        <item name="android:layout_marginRight">@dimen/margin_fifty</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_twenty_four</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="XLargeTextCVCCode">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_seventy_five</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">@dimen/sp_twenty_seven</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="XLargeInfoImage">
+        <item name="android:layout_height">@dimen/margin_forty</item>
+        <item name="android:layout_width">@dimen/margin_forty</item>
+        <item name="android:layout_marginEnd">@dimen/margin_fifty</item>
+        <item name="android:layout_marginRight">@dimen/margin_fifty</item>
+    </style>
+
+    <style name="XLargeCardImage">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/margin_forty</item>
+        <item name="android:layout_marginRight">@dimen/margin_forty</item>
+        <item name="android:layout_marginBottom">@dimen/margin_twenty_two</item>
+    </style>
+
 </resources>
 
 

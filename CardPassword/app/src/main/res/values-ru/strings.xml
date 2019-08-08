@@ -1,0 +1,117 @@
+<resources>
+    <string name="app_name">Card Keeper</string>
+
+    <string name="hint_login">Введите логин..</string>
+    <string name="hint_password">Введите пароль..</string>
+    <string name="btn_log_in">Войти</string>
+
+    <string name="text_card_number">Номер карты</string>
+    <string name="text_cvs">CVS/CVV</string>
+    <string name="text_card_holder">Владелец</string>
+    <string name="text_validity">Срок действия</string>
+    <string name="text_password">Пароль</string>
+    <string name="text_card_type">Тип карты</string>
+    <string name="btn_registration">Создать аккаунт</string>
+
+    <string name="text_view_card_number">XXXX-XXXX-XXXX-XXXX</string>
+    <string name="text_view_cvc">CVC/CVV</string>
+    <string name="text_view_validity">MM/YY</string>
+    <string name="text_view_card_holder_name">Ivan</string>
+    <string name="text_view_card_holder_surname">Ivanov</string>
+
+    <string name="check_string_card_type_mc">Master Card</string>
+    <string name="check_string_card_type_visa">Visa</string>
+
+    <string name="menu_delete_card">Удалить карту</string>
+    <string name="menu_edit_card">Изменить карту</string>
+    <string name="menu_delete_all_cards">Удалить все карты</string>
+
+    <string name="hint_card_numberr">Номер карты</string>
+    <string name="hint_card_cvc_cvv">CVC/CVV</string>
+    <string name="hint_card_validity">Срок действия</string>
+    <string name="hint_card_holders_name">Имя</string>
+    <string name="hint_card_holders_surname">Фамилия</string>
+    <string name="hint_card_pin">PIN</string>
+    <string name="text_spinner">VISA/MASTERCARD</string>
+    <string name="btn_text_save_card">Сохранить карту</string>
+
+    <string name="error_text_void_string">Поле не может быть пустым</string>
+    <string name="error_text_incomplete_string">Заполните поле полностью</string>
+
+    <string name="switch_left_side"><b>&lt;-</b></string>
+    <string name="switch_right_side"><b>-&gt;</b></string>
+
+    <string name="text_valid_thru">VALID THRU</string>
+    <string name="text_about_pin">Пароль от Вашей карты:</string>
+
+    <string name="text_short_password_usage">Использовать пароль</string>
+    <string name="text_create_short_password">Создать пароль</string>
+    <string name="text_change_short_password">Изменить пароль</string>
+
+    <string name="text_void_et_name">Card</string>
+
+    <string name="text_void_et_surname">Holder</string>
+
+    <string name="title_action_reset">Reset</string>
+
+    <string name="label_card_number">XXXX XXXX XXXX XXXX</string>
+    <string name="label_expired_date">MM/YY</string>
+    <string name="label_card_holder">CARD HOLDER</string>
+    <string name="label_cvv_code">CVV CODE</string>
+    <string name="label_pin">PIN</string>
+
+    <string name="hint_card_number">Номер карты</string>
+    <string name="hint_expired_date">Срок действия</string>
+    <string name="hint_card_holder">CARD HOLDER</string>
+    <string name="hint_cvv_code">CVV/CVC</string>
+    <string name="hint_pin">PIN</string>
+    <string name="hint_card_name">Название</string>
+
+    <string name="label_secure_submission">Secure Submission</string>
+
+    <string name="label_hidden_pin">****</string>
+    <string name="label_hidden_cvc">***</string>
+    <string name="label_card_name">Card name</string>
+
+    <string name="visa">visa</string>
+    <string name="mastercard">mastercard</string>
+    <string name="belcard">belcard</string>
+    <string name="maestro">maestro</string>
+    <string name="current_password">currentPass</string>
+    <string name="text_without_cards">Сейчас у Вас нет карт, но в любой момент Вы можете их добавить</string>
+    <string name="cancel">Cancel</string>
+    <string name="skip">Skip</string>
+    <string name="text_confirm">Введите текущий пароль</string>
+    <string name="add">добавить</string>
+    <string name="settings">настройки</string>
+    <string name="photo">сделать фотографию карты</string>
+    <string name="delete">удалить</string>
+    <string name="change">изменить</string>
+    <string name="back">назад</string>
+    <string name="card_type_image">тип карты</string>
+    <string name="image_card_flip">перевернуть карту</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="_6">6</string>
+    <string name="_7">7</string>
+    <string name="_8">8</string>
+    <string name="_9">9</string>
+    <string name="_0">0</string>
+    <string name="retry">обновить</string>
+    <string name="cvc_info">информация о cvc</string>
+    <string name="card_list">список карт</string>
+    <string name="password_doesnt_match">Пароли не совпадают</string>
+    <string name="empty_card_number">Заполните номер карты!</string>
+    <string name="empty_cvc_cvv">Заполните CVC/CVV!</string>
+    <string name="empty_pin">Заполните PIN!</string>
+    <string name="no_such_card">Карты с таким номером не существует!</string>
+
+    <string-array name="card_type_array">
+
+        <item>Visa</item>
+        <item>MasterCard</item>
+    </string-array>
+</resources>

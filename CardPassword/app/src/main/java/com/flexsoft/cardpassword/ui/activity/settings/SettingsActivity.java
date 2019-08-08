@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
+public class SettingsActivity extends AppCompatActivity {
 
     private static final int KEY_LIST_ACTIVITY = 1;
     private static final int KEY_CREATE_ACTIVITY = 2;
@@ -31,8 +31,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     @BindView(R.id.frame_usage_pass)
     FrameLayout mLayout;
-    @BindView(R.id.frame_change_pass)
-    FrameLayout mChangeLayout;
     @BindView(R.id.checkbox)
     CheckBox mCheckBox;
     @BindView(R.id.button_change_pass)
@@ -70,7 +68,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @OnClick({R.id.fab_settings, R.id.button_change_pass, R.id.frame_usage_pass})
-    @Override
     public void onClick(View v) {
 
         Intent intent;

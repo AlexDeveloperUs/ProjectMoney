@@ -18,13 +18,13 @@
         android:id="@+id/image_cards_back"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="@dimen/_55sdp"
-        app:srcCompat="@drawable/ic_cards_back"
+        android:layout_margin="@dimen/margin_fifty"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@id/guideline_cards"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_cards_back" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_cards"
@@ -37,7 +37,7 @@
         android:id="@+id/text_without_cards"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_40sdp"
+        android:layout_margin="@dimen/margin_thirty_five"
         android:text="@string/text_without_cards"
         android:textColor="@color/translucent_white"
         android:textSize="@dimen/sp_twenty"
@@ -57,11 +57,11 @@
         android:id="@+id/recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/card_list"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/card_list"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.Guideline
         android:id="@+id/horizontal_guideline_list_cards"
@@ -72,22 +72,18 @@
 
     <ImageView
         android:id="@+id/image_add"
-        android:layout_width="@dimen/_44sdp"
-        android:layout_height="@dimen/_44sdp"
-        android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+        style="@style/NormalFloatingActionButton"
         android:background="@drawable/add_button_selector"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:contentDescription="@string/add"
-        android:layout_marginEnd="@dimen/_20sdp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <FrameLayout
         android:id="@+id/fragment_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_21sdp"
-        android:layout_marginRight="@dimen/_21sdp"
+        android:layout_marginEnd="@dimen/margin_fifteen"
+        android:layout_marginRight="@dimen/margin_fifteen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

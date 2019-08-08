@@ -29,7 +29,7 @@
                 android:text="@{inputEditCardName.text.toString().isEmpty() ? @string/label_card_name : inputEditCardName.text}"
                 android:textAllCaps="true"
                 android:textColor="@{inputEditCardName.text.toString().isEmpty() ? @color/white : @color/white}"
-                android:textSize="@dimen/sp_fourteen"
+                android:textSize="@dimen/sp_fifteen"
                 android:typeface="monospace"
                 tools:text="@string/label_card_name" />
 
@@ -39,8 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|start"
                 android:layout_margin="@dimen/_20sdp"
-                app:srcCompat="@drawable/ic_close_gray_24dp"
-                android:contentDescription="@string/back" />
+                android:contentDescription="@string/back"
+                app:srcCompat="@drawable/ic_close_gray_24dp" />
 
             <ImageView
                 android:id="@+id/action_reset"
@@ -48,8 +48,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|top"
                 android:layout_margin="@dimen/_15sdp"
-                app:srcCompat="@drawable/ic_reset_blue_24dp"
-                android:contentDescription="@string/retry" />
+                android:contentDescription="@string/retry"
+                app:srcCompat="@drawable/ic_reset_blue_24dp" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -88,7 +88,7 @@
                             android:text="@{inputEditCardNumber.text.toString().isEmpty() ? @string/label_card_number : inputEditCardNumber.text}"
                             android:textAllCaps="true"
                             android:textColor="@{inputEditCardNumber.text.toString().isEmpty() ? @color/white : @color/white}"
-                            android:textSize="@dimen/sp_sixteen"
+                            android:textSize="@dimen/sp_fifteen"
                             android:typeface="monospace"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -106,7 +106,7 @@
                             android:text="@{inputEditExpiredDate.text.toString().isEmpty() ? @string/label_expired_date : inputEditExpiredDate.text}"
                             android:textAllCaps="true"
                             android:textColor="@{inputEditExpiredDate.text.toString().isEmpty() ? @color/white : @color/white}"
-                            android:textSize="@dimen/sp_fourteen"
+                            android:textSize="@dimen/sp_fifteen"
                             android:typeface="monospace"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toLeftOf="@+id/text_cvv_code"
@@ -123,7 +123,7 @@
                             android:text="@{inputEditCardHolder.text.toString().isEmpty() ? @string/label_card_holder : inputEditCardHolder.text}"
                             android:textAllCaps="true"
                             android:textColor="@{inputEditCardHolder.text.toString().isEmpty() ? @color/white : @color/white}"
-                            android:textSize="@dimen/sp_fourteen"
+                            android:textSize="@dimen/sp_fifteen"
                             android:typeface="monospace"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/text_expired_date"
@@ -140,7 +140,7 @@
                             android:text="@{inputEditPin.text.toString().isEmpty() ? @string/label_pin : inputEditPin.text}"
                             android:textAllCaps="true"
                             android:textColor="@{inputEditCardHolder.text.toString().isEmpty() ? @color/white : @color/white}"
-                            android:textSize="@dimen/sp_fourteen"
+                            android:textSize="@dimen/sp_fifteen"
                             android:typeface="monospace"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/text_expired_date" />
@@ -158,7 +158,7 @@
                             android:text="@{inputEditCvvCode.text.toString().isEmpty() ? @string/label_cvv_code : inputEditCvvCode.text}"
                             android:textAllCaps="true"
                             android:textColor="@{inputEditCvvCode.text.toString().isEmpty() ? @color/white : @color/white}"
-                            android:textSize="@dimen/sp_fourteen"
+                            android:textSize="@dimen/sp_fifteen"
                             android:typeface="monospace"
                             app:layout_constraintBottom_toBottomOf="@+id/text_expired_date"
                             app:layout_constraintRight_toLeftOf="@+id/icon_help_blue"
@@ -169,11 +169,11 @@
                             android:id="@+id/icon_help_blue"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
+                            android:contentDescription="@string/cvc_info"
                             app:layout_constraintBottom_toBottomOf="@+id/text_expired_date"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/text_expired_date"
-                            app:srcCompat="@drawable/ic_help_translucent_24dp"
-                            android:contentDescription="@string/cvc_info" />
+                            app:srcCompat="@drawable/ic_help_translucent_24dp" />
 
                     </android.support.constraint.ConstraintLayout>
 
@@ -209,7 +209,7 @@
                             android:text="@string/label_card_number"
                             android:textAllCaps="true"
                             android:textColor="@color/light_gray"
-                            android:textSize="@dimen/sp_sixteen"
+                            android:textSize="@dimen/sp_fifteen"
                             android:typeface="monospace"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -226,7 +226,7 @@
                             android:text="@string/label_expired_date"
                             android:textAllCaps="true"
                             android:textColor="@color/translucent_white"
-                            android:textSize="@dimen/sp_fourteen"
+                            android:textSize="@dimen/sp_fifteen"
                             android:typeface="monospace"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toLeftOf="@+id/label_cvv_code"
@@ -242,7 +242,7 @@
                             android:text="@string/label_card_holder"
                             android:textAllCaps="true"
                             android:textColor="@color/translucent_white"
-                            android:textSize="@dimen/sp_fourteen"
+                            android:textSize="@dimen/sp_fifteen"
                             android:typeface="monospace"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/label_expired_date" />
@@ -257,7 +257,7 @@
                             android:text="@string/label_pin"
                             android:textAllCaps="true"
                             android:textColor="@color/translucent_white"
-                            android:textSize="@dimen/sp_fourteen"
+                            android:textSize="@dimen/sp_fifteen"
                             android:typeface="monospace"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/label_expired_date" />
@@ -273,7 +273,7 @@
                             android:text="@string/label_cvv_code"
                             android:textAllCaps="true"
                             android:textColor="@color/translucent_white"
-                            android:textSize="@dimen/sp_fourteen"
+                            android:textSize="@dimen/sp_fifteen"
                             android:typeface="monospace"
                             app:layout_constraintBottom_toBottomOf="@+id/label_expired_date"
                             app:layout_constraintRight_toLeftOf="@+id/icon_help_gray"
@@ -283,11 +283,11 @@
                             android:id="@+id/icon_help_gray"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
+                            android:contentDescription="@string/cvc_info"
                             app:layout_constraintBottom_toBottomOf="@+id/label_expired_date"
                             app:layout_constraintRight_toRightOf="parent"
                             app:layout_constraintTop_toTopOf="@+id/label_expired_date"
-                            app:srcCompat="@drawable/ic_help_translucent_24dp"
-                            android:contentDescription="@string/cvc_info" />
+                            app:srcCompat="@drawable/ic_help_translucent_24dp" />
 
                     </android.support.constraint.ConstraintLayout>
 
@@ -469,14 +469,10 @@
 
             <ImageView
                 android:id="@+id/action_scan"
-                android:layout_width="@dimen/_44sdp"
-                android:layout_height="@dimen/_44sdp"
+                style="@style/NormalFloatingActionButton"
                 android:layout_gravity="bottom|end"
-                android:layout_marginRight="@dimen/_20sdp"
                 android:background="@drawable/cam_button_selector"
-                android:contentDescription="@string/photo"
-                android:layout_marginEnd="@dimen/_20sdp"
-                android:layout_marginBottom="@dimen/_15sdp"/>
+                android:contentDescription="@string/photo" />
 
         </android.support.design.widget.CoordinatorLayout>
 

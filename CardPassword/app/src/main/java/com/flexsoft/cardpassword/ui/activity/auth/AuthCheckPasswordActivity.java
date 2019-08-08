@@ -17,11 +17,14 @@ import com.flexsoft.cardpassword.R;
 import com.flexsoft.cardpassword.ui.activity.list.ListActivity;
 import com.flexsoft.cardpassword.utils.SharedPrefs;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AuthCheckPasswordActivity extends AppCompatActivity implements View.OnClickListener {
+public class AuthCheckPasswordActivity extends AppCompatActivity {
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -57,7 +60,6 @@ public class AuthCheckPasswordActivity extends AppCompatActivity implements View
     @OnClick({R.id.btn_one_check_pass, R.id.btn_two_check_pass, R.id.btn_three_check_pass, R.id.btn_four_check_pass,
             R.id.btn_five_check_pass, R.id.btn_six_check_pass, R.id.btn_seven_check_pass, R.id.btn_eight_check_pass,
             R.id.btn_nine_check_pass, R.id.btn_zero_check_pass, R.id.btn_backspace_check_pass})
-    @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
