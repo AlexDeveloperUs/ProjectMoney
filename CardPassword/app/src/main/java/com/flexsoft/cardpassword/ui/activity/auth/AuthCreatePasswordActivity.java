@@ -1,8 +1,6 @@
 package com.flexsoft.cardpassword.ui.activity.auth;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -43,8 +41,8 @@ public class AuthCreatePasswordActivity extends AppCompatActivity {
     @BindView(R.id.btn_skip)
     Button mButtonSkip;
 
-    private String mPassword = "";
-    private String confirmedPassword = "";
+    private String mPassword = SharedPrefs.EMPTY_STRING;
+    private String confirmedPassword = SharedPrefs.EMPTY_STRING;
 
     private String firstLaunch;
 
@@ -60,15 +58,12 @@ public class AuthCreatePasswordActivity extends AppCompatActivity {
 
     private void firstLaunchCheck() {
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_NAME, MODE_PRIVATE);
-        firstLaunch = sharedPreferences.getString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "first");
-        assert firstLaunch != null;
-        if (firstLaunch.equals("first")) {
+        firstLaunch = SharedPrefs.getFirstLaunch();
 
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "notFirst");
-            editor.apply();
-//            Bundle
+        assert firstLaunch != null;
+        if (firstLaunch.equals(SharedPrefs.FIRST)) {
+
+            SharedPrefs.setFirstLaunch(SharedPrefs.NOT_FIRST);
         }
     }
 
@@ -101,7 +96,7 @@ public class AuthCreatePasswordActivity extends AppCompatActivity {
     private void clearPassView() {
 
         clearCircles();
-        mPassword = "";
+        mPassword = SharedPrefs.EMPTY_STRING;
     }
 
     private void shakeWrongPass() {
@@ -112,33 +107,26 @@ public class AuthCreatePasswordActivity extends AppCompatActivity {
 
     private void createShortPassword(String pPassword) {
 
-        if (firstLaunch.equals("first")) {
+        if (firstLaunch.equals(SharedPrefs.FIRST)) {
 
             if (pPassword.length() == 4 && mButtonCancel.getVisibility() == View.GONE) {
 
                 confirmedPassword = pPassword;
 
-                mButtonSkip.setVisibility(View.GONE);
-                mButtonCancel.setVisibility(View.VISIBLE);
+                setButtonsVisibility(false);
+
                 clearPassView();
             } else if (pPassword.length() == 4 && mButtonCancel.getVisibility() == View.VISIBLE) {
 
                 if (confirmedPassword.equals(pPassword)) {
 
-                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_NAME, 0);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(SharedPrefs.SHARED_PREFERENCES_KEY, confirmedPassword);
-                    editor.apply();
-
-                    SharedPreferences.Editor editable = sharedPreferences.edit();
-                    editable.putString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "notFirst");
-                    editable.apply();
-
+                    SharedPrefs.setCurrentPassword(confirmedPassword);
+                    SharedPrefs.setFirstLaunch(SharedPrefs.NOT_FIRST);
                     startListActivity();
                 } else {
 
                     shakeWrongPass();
-                    Toast.makeText(AuthCreatePasswordActivity.this, "Пароли не совпадают", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AuthCreatePasswordActivity.this, R.string.password_doesnt_match, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -205,23 +193,20 @@ public class AuthCreatePasswordActivity extends AppCompatActivity {
         switch (v.getId()) {
 
             case R.id.btn_backspace_check_pass:
-                if (!mPassword.equals("")) {
+                if (!mPassword.equals(SharedPrefs.EMPTY_STRING)) {
 
                     mPassword = mPassword.substring(0, mPassword.length() - 1);
                     drawCircle(mPassword);
                 }
                 break;
             case R.id.btn_skip:
-                SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_NAME, 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(SharedPrefs.SHARED_PREFERENCES_KEY, "skipped");
-                editor.apply();
+
+                SharedPrefs.setCurrentPassword(SharedPrefs.SKIPPED);
                 startListActivity();
                 break;
             case R.id.btn_cancel:
                 clearPassView();
-                mButtonSkip.setVisibility(View.VISIBLE);
-                mButtonCancel.setVisibility(View.GONE);
+                setButtonsVisibility(true);
                 break;
         }
     }
@@ -232,5 +217,10 @@ public class AuthCreatePasswordActivity extends AppCompatActivity {
         mSecondCircle.setBackgroundResource(R.drawable.void_circle);
         mThirdCircle.setBackgroundResource(R.drawable.void_circle);
         mFourthCircle.setBackgroundResource(R.drawable.void_circle);
+    }
+
+    private void setButtonsVisibility(boolean pCheck) {
+        mButtonSkip.setVisibility(pCheck ? View.VISIBLE : View.GONE);
+        mButtonCancel.setVisibility(pCheck ? View.GONE : View.VISIBLE);
     }
 }

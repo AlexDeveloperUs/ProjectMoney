@@ -1,6 +1,7 @@
 package com.flexsoft.cardpassword.ui.activity.submit;
 
 import com.flexsoft.cardpassword.data.models.Card;
+import com.flexsoft.cardpassword.utils.SharedPrefs;
 
 public class SubmitCardPresenter implements SubmitCardContract.Presenter {
 
@@ -64,9 +65,9 @@ public class SubmitCardPresenter implements SubmitCardContract.Presenter {
     @Override
     public String checkCardType(String pS) {
 
-        pS = String.valueOf(Long.parseLong(pS.replaceAll("[^0-9]", "")));
+        pS = String.valueOf(Long.parseLong(pS.replaceAll("[^0-9]", SharedPrefs.EMPTY_STRING)));
 
-        String mCardType = "";
+        String mCardType = SharedPrefs.EMPTY_STRING;
 
         if (pS.charAt(0) == '4') {
 
@@ -90,24 +91,24 @@ public class SubmitCardPresenter implements SubmitCardContract.Presenter {
     @Override
     public boolean checkByLuhnAlgorithm(String pS) {
 
-        if (pS.equals("")) {
+        if (pS.equals(SharedPrefs.EMPTY_STRING)) {
 
             mView.showToastNumber();
             return false;
         } else {
 
-            return checkCardExistence(Long.parseLong(pS.replaceAll("[^0-9]", "")));
+            return checkCardExistence(Long.parseLong(pS.replaceAll("[^0-9]", SharedPrefs.EMPTY_STRING)));
         }
     }
 
     @Override
-    public boolean checkCVC(int pI) {
+    public boolean checkCVC(String pI) {
 
-        if (pI == 0) {
+        if (pI.equals(SharedPrefs.EMPTY_STRING)) {
 
             mView.showToastCVC();
             return false;
-        } else if ((int) (Math.log10(pI) + 1) < 3) {
+        } else if (pI.length() < 3) {
 
             mView.showToastCVC();
             return false;
@@ -115,13 +116,13 @@ public class SubmitCardPresenter implements SubmitCardContract.Presenter {
     }
 
     @Override
-    public boolean checkPin(int pI) {
+    public boolean checkPin(String pI) {
 
-        if (pI == 0) {
+        if (pI.equals(SharedPrefs.EMPTY_STRING)) {
 
             mView.showToastPin();
             return false;
-        } else if ((int) (Math.log10(pI) + 1) < 4) {
+        } else if (pI.length() < 4) {
 
             mView.showToastPin();
             return false;

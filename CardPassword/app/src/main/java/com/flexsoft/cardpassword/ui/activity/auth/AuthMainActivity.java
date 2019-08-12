@@ -18,28 +18,30 @@ public class AuthMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_auth);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_NAME, 0);
-        String mPassword = sharedPreferences.getString(SharedPrefs.SHARED_PREFERENCES_KEY, "");
+        SharedPrefs sharedPrefs = new SharedPrefs(this);
 
-        assert mPassword != null;
+        String password = SharedPrefs.getCurrentPassword();
+
+        assert password != null;
+
         Intent intent;
 
-        if (mPassword.equals("")) {
+        if (password.equals(SharedPrefs.EMPTY_STRING)) {
 
             intent = new Intent(getApplicationContext(), AuthCreatePasswordActivity.class);
             startActivity(intent);
             finish();
-        } else if (mPassword.matches("[\\d]+")) {
+        } else if (password.matches(SharedPrefs.DIGITS)) {
 
             intent = new Intent(getApplicationContext(), AuthCheckPasswordActivity.class);
             startActivity(intent);
             finish();
-        } else if (mPassword.contains("skipped")) {
+        } else if (password.contains(SharedPrefs.SKIPPED)) {
 
             intent = new Intent(getApplicationContext(), ListActivity.class);
             startActivity(intent);
             finish();
-        } else if (mPassword.contains("disabled")) {
+        } else if (password.contains(SharedPrefs.DISABLED)) {
 
             intent = new Intent(getApplicationContext(), ListActivity.class);
             startActivity(intent);

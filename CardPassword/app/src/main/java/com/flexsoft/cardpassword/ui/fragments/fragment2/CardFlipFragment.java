@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.flexsoft.cardpassword.R;
 import com.flexsoft.cardpassword.ui.activity.list.ListActivity;
 import com.flexsoft.cardpassword.utils.OnSwipeTouchListener;
+import com.flexsoft.cardpassword.utils.SharedPrefs;
 import com.wajahatkarim3.easyflipview.EasyFlipView;
 
 import java.util.Objects;
@@ -64,13 +65,13 @@ public class CardFlipFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.card_constraint_front_view)
     ConstraintLayout mBack;
 
-    private String mGetName = "";
-    private String mGetNum = "";
-    private String mGetCvc = "";
-    private String mGetValidity = "";
-    private String mGetCardHolder = "";
-    private String mGetType = "";
-    private String mGetPin = "";
+    private String mGetName = SharedPrefs.EMPTY_STRING;
+    private String mGetNum = SharedPrefs.EMPTY_STRING;
+    private String mGetCvc = SharedPrefs.EMPTY_STRING;
+    private String mGetValidity = SharedPrefs.EMPTY_STRING;
+    private String mGetCardHolder = SharedPrefs.EMPTY_STRING;
+    private String mGetType = SharedPrefs.EMPTY_STRING;
+    private String mGetPin = SharedPrefs.EMPTY_STRING;
     private ListActivity mActivity;
 
     @Override
@@ -78,13 +79,13 @@ public class CardFlipFragment extends Fragment implements View.OnClickListener {
 
         if (getArguments() != null) {
 
-            mGetName = getArguments().getString("name", "");
-            mGetNum = getArguments().getString("num", "");
-            mGetCvc = getArguments().getString("cvc", "");
-            mGetValidity = getArguments().getString("val", "");
-            mGetCardHolder = getArguments().getString("cardholder", "");
-            mGetType = getArguments().getString("type", "");
-            mGetPin = getArguments().getString("pin", "");
+            mGetName = getArguments().getString(SharedPrefs.NAME, SharedPrefs.EMPTY_STRING);
+            mGetNum = getArguments().getString(SharedPrefs.NUMBER, SharedPrefs.EMPTY_STRING);
+            mGetCvc = getArguments().getString(SharedPrefs.CVC, SharedPrefs.EMPTY_STRING);
+            mGetValidity = getArguments().getString(SharedPrefs.VALIDITY, SharedPrefs.EMPTY_STRING);
+            mGetCardHolder = getArguments().getString(SharedPrefs.CARDHOLDER, SharedPrefs.EMPTY_STRING);
+            mGetType = getArguments().getString(SharedPrefs.TYPE, SharedPrefs.EMPTY_STRING);
+            mGetPin = getArguments().getString(SharedPrefs.PIN, SharedPrefs.EMPTY_STRING);
         }
         super.onCreate(savedInstanceState);
     }
@@ -93,13 +94,13 @@ public class CardFlipFragment extends Fragment implements View.OnClickListener {
 
         CardFlipFragment fragment = new CardFlipFragment();
         Bundle args = new Bundle();
-        args.putString("name", pName);
-        args.putString("num", pNumber);
-        args.putString("cvc", pCvc);
-        args.putString("val", pValidity);
-        args.putString("cardholder", pCardholder);
-        args.putString("type", pType);
-        args.putString("pin", pPin);
+        args.putString(SharedPrefs.NAME, pName);
+        args.putString(SharedPrefs.NUMBER, pNumber);
+        args.putString(SharedPrefs.CVC, pCvc);
+        args.putString(SharedPrefs.VALIDITY, pValidity);
+        args.putString(SharedPrefs.CARDHOLDER, pCardholder);
+        args.putString(SharedPrefs.TYPE, pType);
+        args.putString(SharedPrefs.PIN, pPin);
         fragment.setArguments(args);
         return fragment;
     }
@@ -139,7 +140,7 @@ public class CardFlipFragment extends Fragment implements View.OnClickListener {
         Activity activity = getActivity();
         if (activity != null && !activity.isFinishing() && activity instanceof ListActivity) {
 
-            ((ListActivity) activity).fromFragmentData("");
+            ((ListActivity) activity).fromFragmentData(SharedPrefs.EMPTY_STRING);
         }
     }
 
@@ -154,7 +155,7 @@ public class CardFlipFragment extends Fragment implements View.OnClickListener {
 
         Drawable back;
 
-        if (mGetName.equals("")) {
+        if (mGetName.equals(SharedPrefs.EMPTY_STRING)) {
 
             mFrontCardName.setText(R.string.label_card_name);
             mBackCardName.setText(R.string.label_card_name);
@@ -194,7 +195,7 @@ public class CardFlipFragment extends Fragment implements View.OnClickListener {
             mBack.setBackground(back);
         }
 
-        if (mGetCardHolder.equals("")) {
+        if (mGetCardHolder.equals(SharedPrefs.EMPTY_STRING)) {
 
             mBackCardHolder.setText(R.string.text_card_holder);
             mFrontCardHolder.setText(R.string.text_card_holder);

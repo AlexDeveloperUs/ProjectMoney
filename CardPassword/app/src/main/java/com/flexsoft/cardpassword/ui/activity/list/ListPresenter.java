@@ -21,12 +21,12 @@ public class ListPresenter implements ListContract.Presenter, ListContract.Prese
 
         if (pCards.size() == 0) {
 
-            mCreateActivity.setForEmptyScreen();
+            mCreateActivity.setVisibility(true);
             mCreateActivity.initData(pCards);
         } else {
 
             mCreateActivity.initData(pCards);
-            mCreateActivity.setForNonEmptyScreen();
+            mCreateActivity.setVisibility(false);
         }
     }
 

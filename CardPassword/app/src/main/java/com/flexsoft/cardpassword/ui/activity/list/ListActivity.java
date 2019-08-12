@@ -27,6 +27,7 @@ import com.flexsoft.cardpassword.ui.fragments.fragment2.CardFlipFragment;
 import com.flexsoft.cardpassword.utils.LadderLayoutManager;
 import com.flexsoft.cardpassword.utils.LadderSimpleSnapHelper;
 import com.flexsoft.cardpassword.utils.OnSwipeTouchListener;
+import com.flexsoft.cardpassword.utils.SharedPrefs;
 import com.flexsoft.cardpassword.utils.VerticalSampleChildDecorateHelper;
 
 import java.util.ArrayList;
@@ -46,13 +47,13 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
     private List<Card> mCardList = new ArrayList<>();
     private CardListAdapter mAdapter;
     private ListContract.Presenter mPresenter = new ListPresenter(this);
-    private String mCardName = "";
-    private String mNumber = "";
-    private String mCvc = "";
-    private String mValidity = "";
-    private String mName = "";
-    private String mType = "";
-    private String mPin = "";
+    private String mCardName = SharedPrefs.EMPTY_STRING;
+    private String mNumber = SharedPrefs.EMPTY_STRING;
+    private String mCvc = SharedPrefs.EMPTY_STRING;
+    private String mValidity = SharedPrefs.EMPTY_STRING;
+    private String mName = SharedPrefs.EMPTY_STRING;
+    private String mType = SharedPrefs.EMPTY_STRING;
+    private String mPin = SharedPrefs.EMPTY_STRING;
     private ConstraintSet constraintSet;
     private int mPos;
     private int mCheckManager = 0;
@@ -84,12 +85,11 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         ButterKnife.bind(this);
 
         loadCards();
-
         mAdapter = new CardListAdapter(this, mCardList, this, this);
         constraintSet = new ConstraintSet();
         mFragmentManager = getSupportFragmentManager();
 
-        mFromFragment = "";
+        mFromFragment = SharedPrefs.EMPTY_STRING;
 
         mCardLayout.setOnTouchListener(new OnSwipeTouchListener(this) {
 
@@ -212,10 +212,16 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         this.setData(pCards);
     }
 
+    @Override
+    public void setVisibility(boolean pCheck) {
+        mTextWithoutCards.setVisibility(pCheck ? View.VISIBLE : View.GONE);
+        mCardsBack.setVisibility(pCheck ? View.VISIBLE : View.GONE);
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     public void initViews() {
 
-        if (mFromFragment.equals("")) {
+        if (mFromFragment.equals(SharedPrefs.EMPTY_STRING)) {
 
 
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -306,23 +312,11 @@ public class ListActivity extends AppCompatActivity implements ListContract.View
         mAdd.setVisibility(View.VISIBLE);
     }
 
-    public void setForEmptyScreen() {
-
-        mTextWithoutCards.setVisibility(View.VISIBLE);
-        mCardsBack.setVisibility(View.VISIBLE);
-    }
-
-    public void setForNonEmptyScreen() {
-
-        mTextWithoutCards.setVisibility(View.GONE);
-        mCardsBack.setVisibility(View.GONE);
-    }
-
     public void setDefaultManager() {
 
         Objects.requireNonNull(mFragment.getView()).setVisibility(View.GONE);
 
-        mFromFragment = "";
+        mFromFragment = SharedPrefs.EMPTY_STRING;
 
         setRecyclerViewToTop();
     }

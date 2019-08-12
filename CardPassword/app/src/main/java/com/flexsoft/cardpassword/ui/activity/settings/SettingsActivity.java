@@ -2,7 +2,6 @@ package com.flexsoft.cardpassword.ui.activity.settings;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +36,6 @@ public class SettingsActivity extends AppCompatActivity {
     AppCompatButton mButton;
 
     private String mPassIsCreated;
-    SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,9 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         checkIntent();
 
-        mSharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_NAME, 0);
-        mPassIsCreated = mSharedPreferences.getString(SharedPrefs.SHARED_PREFERENCES_KEY, "");
-
+        mPassIsCreated = SharedPrefs.getCurrentPassword();
         checkPasswordExistence();
     }
 
@@ -82,24 +78,19 @@ public class SettingsActivity extends AppCompatActivity {
                 mCheckBox.setChecked(!mCheckBox.isChecked());
                 if (!mCheckBox.isChecked()) {
 
-                    SharedPreferences.Editor edit = mSharedPreferences.edit();
-                    edit.putString(SharedPrefs.SHARED_PREFERENCES_KEY, "disabled");
-                    mButton.setVisibility(View.GONE);
-                    edit.apply();
+                    SharedPrefs.setCurrentPassword(SharedPrefs.DISABLED);
                 } else {
 
                     intent = new Intent(getApplicationContext(), AuthCreatePasswordActivity.class);
-                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_NAME, 0);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "first");
-                    editor.apply();
+
+                    SharedPrefs.setFirstLaunch(SharedPrefs.FIRST);
                     mCheckBox.setChecked(!mCheckBox.isChecked());
                     startActivity(intent);
                 }
                 break;
             case R.id.button_change_pass:
                 intent = new Intent(getApplicationContext(), AuthCheckPasswordActivity.class);
-                intent.putExtra("currentPass", mPassIsCreated);
+                intent.putExtra(SharedPrefs.CURRENT_PASSWORD, mPassIsCreated);
                 startActivity(intent);
                 break;
         }
@@ -107,11 +98,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void checkPasswordExistence() {
 
-        String mPassword = mSharedPreferences.getString(SharedPrefs.SHARED_PREFERENCES_KEY, "");
+        String password = SharedPrefs.getCurrentPassword();
 
-        assert mPassword != null;
-
-        if (mPassword.matches("[\\d]+")) {
+        if (password.matches(SharedPrefs.DIGITS)) {
 
             mCheckBox.setChecked(true);
             mButton.setVisibility(View.VISIBLE);

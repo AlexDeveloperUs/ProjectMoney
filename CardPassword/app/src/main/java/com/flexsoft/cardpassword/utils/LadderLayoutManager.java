@@ -376,9 +376,7 @@ public class LadderLayoutManager extends RecyclerView.LayoutManager implements R
             isBottom = true;
             return this;
         }
-
     }
-
 
     @Override
     public Parcelable onSaveInstanceState() {

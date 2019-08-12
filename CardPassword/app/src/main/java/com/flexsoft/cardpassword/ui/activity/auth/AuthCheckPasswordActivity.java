@@ -1,7 +1,6 @@
 package com.flexsoft.cardpassword.ui.activity.auth;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -16,9 +15,6 @@ import android.widget.TextView;
 import com.flexsoft.cardpassword.R;
 import com.flexsoft.cardpassword.ui.activity.list.ListActivity;
 import com.flexsoft.cardpassword.utils.SharedPrefs;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +39,7 @@ public class AuthCheckPasswordActivity extends AppCompatActivity {
     @BindView(R.id.text_confirm)
     TextView mTextView;
 
-    private String mCheck = "";
+    private String mCheck = SharedPrefs.EMPTY_STRING;
     private String mPassword;
 
     @Override
@@ -53,8 +49,7 @@ public class AuthCheckPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_auth_check_password);
         ButterKnife.bind(this);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_NAME, 0);
-        mPassword = sharedPreferences.getString(SharedPrefs.SHARED_PREFERENCES_KEY, "");
+        mPassword = SharedPrefs.getCurrentPassword();
     }
 
     @OnClick({R.id.btn_one_check_pass, R.id.btn_two_check_pass, R.id.btn_three_check_pass, R.id.btn_four_check_pass,
@@ -105,7 +100,7 @@ public class AuthCheckPasswordActivity extends AppCompatActivity {
                 drawCircle(mCheck);
                 break;
             case R.id.btn_backspace_check_pass:
-                if (!mCheck.equals("")) {
+                if (!mCheck.equals(SharedPrefs.EMPTY_STRING)) {
 
                     mCheck = mCheck.substring(0, mCheck.length() - 1);
                     drawCircle(mCheck);
@@ -149,10 +144,10 @@ public class AuthCheckPasswordActivity extends AppCompatActivity {
     private void checkIntent() {
 
         Intent intent = getIntent();
-        String currentPassword = intent.getStringExtra("currentPass");
-        String pas = currentPassword == null ? "" : currentPassword;
+        String currentPassword = intent.getStringExtra(SharedPrefs.CURRENT_PASSWORD);
+        String pas = currentPassword == null ? SharedPrefs.EMPTY_STRING : currentPassword;
 
-        if (pas.equals("")) {
+        if (pas.equals(SharedPrefs.EMPTY_STRING)) {
 
             mTextView.setVisibility(View.VISIBLE);
 
@@ -166,10 +161,7 @@ public class AuthCheckPasswordActivity extends AppCompatActivity {
 
             if (currentPassword.equals(mCheck)) {
 
-                SharedPreferences sharedPreferences = getSharedPreferences(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_NAME, 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(SharedPrefs.SHARED_PREFERENCES_FIRST_LAUNCH_KEY, "first");
-                editor.apply();
+                SharedPrefs.setFirstLaunch(SharedPrefs.FIRST);
 
                 intent = new Intent(getApplicationContext(), AuthCreatePasswordActivity.class);
                 startActivity(intent);

@@ -10,9 +10,7 @@ public interface ListContract {
 
         void initData(ArrayList<Card> pCards);
 
-        void setForEmptyScreen();
-
-        void setForNonEmptyScreen();
+        void setVisibility(boolean pCheck);
     }
 
     interface Model {

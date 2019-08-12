@@ -34,9 +34,9 @@ public interface SubmitCardContract {
 
         boolean checkByLuhnAlgorithm(String pS);
 
-        boolean checkCVC(int pI);
+        boolean checkCVC(String pI);
 
-        boolean checkPin(int pI);
+        boolean checkPin(String pI);
 
         String appendVoid(String pS);
     }

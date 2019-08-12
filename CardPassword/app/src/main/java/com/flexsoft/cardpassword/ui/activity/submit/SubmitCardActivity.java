@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.flexsoft.cardpassword.R;
 import com.flexsoft.cardpassword.data.models.Card;
 import com.flexsoft.cardpassword.databinding.ActivitySubmitCreditCardBinding;
+import com.flexsoft.cardpassword.utils.SharedPrefs;
 
 import java.util.Objects;
 
@@ -52,13 +53,13 @@ public class SubmitCardActivity extends AppCompatActivity implements SubmitCardC
     private AnimatorSet outSet;
     private ActivitySubmitCreditCardBinding activitySubmitCreditCardBinding;
     private int mInt = 0;
-    private String mString = "";
     private boolean mCheckRequestCodeForSave = true;
     private int mId = 0;
     static final int REQUEST_CODE_SCAN_CARD = 1;
     private SubmitCardContract.Presenter mPresenter = new SubmitCardPresenter(this);
-    private int mCvc = 0;
-    private int mPin = 0;
+    private String mNumber = SharedPrefs.EMPTY_STRING;
+    private String mCvc;
+    private String mPin;
     private String mName;
     private String mValidity;
     private String mCardHolder;
@@ -123,7 +124,7 @@ public class SubmitCardActivity extends AppCompatActivity implements SubmitCardC
 
                 if (s.length() == 19) {
 
-                    mString = s.toString();
+                    mNumber = s.toString();
                 }
                 lock = false;
             }
@@ -264,14 +265,14 @@ public class SubmitCardActivity extends AppCompatActivity implements SubmitCardC
                 switch (mInt) {
 
                     case 0:
-                        mName = activitySubmitCreditCardBinding.inputEditCardName.getText().toString().equals("") ? "" :
+                        mName = activitySubmitCreditCardBinding.inputEditCardName.getText().toString().equals(SharedPrefs.EMPTY_STRING) ? SharedPrefs.EMPTY_STRING :
                                 activitySubmitCreditCardBinding.inputEditCardName.getText().toString();
                         activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
                         handled = true;
                         mInt = 1;
                         break;
                     case 1:
-                        if (mPresenter.checkByLuhnAlgorithm(mString)) {
+                        if (mPresenter.checkByLuhnAlgorithm(mNumber)) {
 
                             activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
                             handled = true;
@@ -279,22 +280,22 @@ public class SubmitCardActivity extends AppCompatActivity implements SubmitCardC
                         }
                         break;
                     case 2:
-                        mValidity = activitySubmitCreditCardBinding.inputEditExpiredDate.getText().toString().equals("") ? "" :
+                        mValidity = activitySubmitCreditCardBinding.inputEditExpiredDate.getText().toString().equals(SharedPrefs.EMPTY_STRING) ? SharedPrefs.EMPTY_STRING :
                                 activitySubmitCreditCardBinding.inputEditExpiredDate.getText().toString();
                         activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
                         handled = true;
                         mInt = 3;
                         break;
                     case 3:
-                        mCardHolder = activitySubmitCreditCardBinding.inputEditCardHolder.getText().toString().equals("") ? "" :
+                        mCardHolder = activitySubmitCreditCardBinding.inputEditCardHolder.getText().toString().equals(SharedPrefs.EMPTY_STRING) ? SharedPrefs.EMPTY_STRING :
                                 activitySubmitCreditCardBinding.inputEditCardHolder.getText().toString();
                         activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
                         handled = true;
                         mInt = 4;
                         break;
                     case 4:
-                        mCvc = activitySubmitCreditCardBinding.inputEditCvvCode.getText().toString().equals("") ? 0 :
-                                Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCvvCode.getText()).toString());
+                        mCvc = activitySubmitCreditCardBinding.inputEditCvvCode.getText().toString().equals(SharedPrefs.EMPTY_STRING) ? SharedPrefs.EMPTY_STRING :
+                                Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCvvCode.getText()).toString();
                         if (mPresenter.checkCVC(mCvc)) {
                             activitySubmitCreditCardBinding.viewPager.setCurrentItem(activitySubmitCreditCardBinding.viewPager.getCurrentItem() + 1);
                             handled = true;
@@ -305,8 +306,8 @@ public class SubmitCardActivity extends AppCompatActivity implements SubmitCardC
             }
             if (actionId == EditorInfo.IME_ACTION_DONE) {
 
-                mPin = (activitySubmitCreditCardBinding.inputEditPin.getText().toString()).equals("") ? 0 :
-                        Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditPin.getText()).toString());
+                mPin = (activitySubmitCreditCardBinding.inputEditPin.getText().toString()).equals(SharedPrefs.EMPTY_STRING) ? SharedPrefs.EMPTY_STRING :
+                        Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditPin.getText()).toString();
                 if (mPresenter.checkPin(mPin)) {
 
                     submit();
@@ -487,11 +488,11 @@ public class SubmitCardActivity extends AppCompatActivity implements SubmitCardC
     private void submit() {
 
         mName = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardName.getText()).toString();
-        long number = Long.parseLong(String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText()).replaceAll("[^0-9]", ""));
-        mCvc = Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCvvCode.getText()).toString());
+        String number = String.valueOf(activitySubmitCreditCardBinding.inputEditCardNumber.getText()).replaceAll("[^0-9]", SharedPrefs.EMPTY_STRING);
+        mCvc = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCvvCode.getText()).toString();
         mValidity = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditExpiredDate.getText()).toString();
         mCardHolder = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditCardHolder.getText()).toString();
-        mPin = Integer.parseInt(Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditPin.getText()).toString());
+        mPin = Objects.requireNonNull(activitySubmitCreditCardBinding.inputEditPin.getText()).toString();
 
         activitySubmitCreditCardBinding.viewPager.setCurrentItem(7);
 
@@ -517,16 +518,18 @@ public class SubmitCardActivity extends AppCompatActivity implements SubmitCardC
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
+        mInt = 0;
+
         activitySubmitCreditCardBinding.inputLayoutPin.setVisibility(View.VISIBLE);
         activitySubmitCreditCardBinding.progressCircle.setVisibility(View.GONE);
         flipToGray();
         activitySubmitCreditCardBinding.viewPager.setCurrentItem(0);
-        activitySubmitCreditCardBinding.inputEditCardName.setText("");
-        activitySubmitCreditCardBinding.inputEditCardNumber.setText("");
-        activitySubmitCreditCardBinding.inputEditExpiredDate.setText("");
-        activitySubmitCreditCardBinding.inputEditCardHolder.setText("");
-        activitySubmitCreditCardBinding.inputEditCvvCode.setText("");
-        activitySubmitCreditCardBinding.inputEditPin.setText("");
+        activitySubmitCreditCardBinding.inputEditCardName.setText(SharedPrefs.EMPTY_STRING);
+        activitySubmitCreditCardBinding.inputEditCardNumber.setText(SharedPrefs.EMPTY_STRING);
+        activitySubmitCreditCardBinding.inputEditExpiredDate.setText(SharedPrefs.EMPTY_STRING);
+        activitySubmitCreditCardBinding.inputEditCardHolder.setText(SharedPrefs.EMPTY_STRING);
+        activitySubmitCreditCardBinding.inputEditCvvCode.setText(SharedPrefs.EMPTY_STRING);
+        activitySubmitCreditCardBinding.inputEditPin.setText(SharedPrefs.EMPTY_STRING);
         activitySubmitCreditCardBinding.inputEditCardName.requestFocus();
         showKeyboard(activitySubmitCreditCardBinding.inputEditCardName);
     }
@@ -637,13 +640,13 @@ public class SubmitCardActivity extends AppCompatActivity implements SubmitCardC
 
             mCheckRequestCodeForSave = false;
             activitySubmitCreditCardBinding.inputEditCardName.setText(card.getCardName());
-            activitySubmitCreditCardBinding.inputEditCardNumber.setText(mPresenter.appendVoid(String.valueOf(card.mCardNumber)));
+            activitySubmitCreditCardBinding.inputEditCardNumber.setText(mPresenter.appendVoid(card.mCardNumber));
             activitySubmitCreditCardBinding.inputEditCvvCode.setText(cvc);
             activitySubmitCreditCardBinding.inputEditExpiredDate.setText(card.getValidity());
             activitySubmitCreditCardBinding.inputEditCardHolder.setText(card.getCardHolderName());
             activitySubmitCreditCardBinding.inputEditPin.setText(pin);
             mId = card.getId();
-            mString = mPresenter.appendVoid(String.valueOf(card.mCardNumber));
+            mNumber = mPresenter.appendVoid(card.mCardNumber);
         }
 
         mResetButton.setVisibility(mCheckRequestCodeForSave ? View.VISIBLE : View.GONE);

@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase;
 import com.flexsoft.cardpassword.data.dao.CardDao;
 import com.flexsoft.cardpassword.data.models.Card;
 
-@Database(entities = {Card.class}, version = 2, exportSchema = false)
+@Database(entities = {Card.class}, version = 3, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
 
     public abstract CardDao mCardDao();

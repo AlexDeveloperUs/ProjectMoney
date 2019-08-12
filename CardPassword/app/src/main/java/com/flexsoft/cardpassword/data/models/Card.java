@@ -17,10 +17,10 @@ public class Card implements Parcelable {
     public String mCardName;
 
     @ColumnInfo(name = "cardNumber")
-    public long mCardNumber;
+    public String mCardNumber;
 
     @ColumnInfo(name = "cardCVC")
-    public int mCVC;
+    public String mCVC;
 
     @ColumnInfo(name = "cardValidity")
     public String mValidity;
@@ -35,46 +35,25 @@ public class Card implements Parcelable {
     public String mCardType;
 
     @ColumnInfo(name = "cardPIN")
-    public int mPin;
+    public String mPin;
 
     public Card() {
-    }
-
-    public Card(long pCardNumber, int pCVC, String pValidity, String pCardHolderName, String pCardHolderSurname, String pCardType, int pPin) {
-
-        mCardNumber = pCardNumber;
-        mCVC = pCVC;
-        mValidity = pValidity;
-        mCardHolderName = pCardHolderName;
-        mCardHolderSurname = pCardHolderSurname;
-        mCardType = pCardType;
-        mPin = pPin;
     }
 
     public Card(Parcel in) {
 
         mCardName = in.readString();
-        mCardNumber = in.readLong();
-        mCVC = in.readInt();
+        mCardNumber = in.readString();
+        mCVC = in.readString();
         mValidity = in.readString();
         mCardHolderName = in.readString();
         mCardHolderSurname = in.readString();
         mCardType = in.readString();
-        mPin = in.readInt();
+        mPin = in.readString();
         mId = in.readInt();
     }
 
-    public Card(long pCardNumber, int pCVC, String pValidity, String pCardHolder, String pCardType, int pPin) {
-
-        mCardNumber = pCardNumber;
-        mCVC = pCVC;
-        mValidity = pValidity;
-        mCardHolderName = pCardHolder;
-        mCardType = pCardType;
-        mPin = pPin;
-    }
-
-    public Card(String pCardName, long pCardNumber, int pCVC, String pValidity, String pCardHolder, String pCardType, int pPin) {
+    public Card(String pCardName, String pCardNumber, String pCVC, String pValidity, String pCardHolder, String pCardType, String pPin) {
 
         mCardName = pCardName;
         mCardNumber = pCardNumber;
@@ -85,30 +64,7 @@ public class Card implements Parcelable {
         mPin = pPin;
     }
 
-    public Card(long pMByteCardNumber, int pMByteCvc, String pMValidityContains, String pCardHoldersName, String pCardHoldersSurname, String pCardType, int pMBytePin, int pId) {
-
-        mCardNumber = pMByteCardNumber;
-        mCVC = pMByteCvc;
-        mValidity = pMValidityContains;
-        mCardHolderName = pCardHoldersName;
-        mCardHolderSurname = pCardHoldersSurname;
-        mCardType = pCardType;
-        mPin = pMBytePin;
-        mId = pId;
-    }
-
-    public Card(long pMByteCardNumber, int pMByteCvc, String pMValidityContains, String pCardHolder, String pCardType, int pMBytePin, int pId) {
-
-        mCardNumber = pMByteCardNumber;
-        mCVC = pMByteCvc;
-        mValidity = pMValidityContains;
-        mCardHolderName = pCardHolder;
-        mCardType = pCardType;
-        mPin = pMBytePin;
-        mId = pId;
-    }
-
-    public Card(String pCardName, long pMByteCardNumber, int pMByteCvc, String pMValidityContains, String pCardHolder, String pCardType, int pMBytePin, int pId) {
+    public Card(String pCardName, String pMByteCardNumber, String pMByteCvc, String pMValidityContains, String pCardHolder, String pCardType, String pMBytePin, int pId) {
 
         mCardName = pCardName;
         mCardNumber = pMByteCardNumber;
@@ -150,22 +106,22 @@ public class Card implements Parcelable {
         return mId;
     }
 
-    public void setCardNumber(long pCardNumber) {
+    public void setCardNumber(String pCardNumber) {
 
         mCardNumber = pCardNumber;
     }
 
-    public long getCardNumber() {
+    public String getCardNumber() {
 
         return mCardNumber;
     }
 
-    public void setCVC(int pCVC) {
+    public void setCVC(String pCVC) {
 
         mCVC = pCVC;
     }
 
-    public int getCVC() {
+    public String getCVC() {
 
         return mCVC;
     }
@@ -200,12 +156,12 @@ public class Card implements Parcelable {
         mCardHolderSurname = pCardHolderSurname;
     }
 
-    public int getPin() {
+    public String getPin() {
 
         return mPin;
     }
 
-    public void setPin(int pPin) {
+    public void setPin(String pPin) {
 
         mPin = pPin;
     }
@@ -220,13 +176,13 @@ public class Card implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
 
         dest.writeString(mCardName);
-        dest.writeLong(mCardNumber);
-        dest.writeInt(mCVC);
+        dest.writeString(mCardNumber);
+        dest.writeString(mCVC);
         dest.writeString(mValidity);
         dest.writeString(mCardHolderName);
         dest.writeString(mCardHolderSurname);
         dest.writeString(mCardType);
-        dest.writeInt(mPin);
+        dest.writeString(mPin);
         dest.writeInt(mId);
     }
 
